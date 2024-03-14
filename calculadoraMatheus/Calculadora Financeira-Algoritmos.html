@@ -32,26 +32,30 @@
 
 <script>
     function calcular() {
+      
+        /*DECLARAÇÃO DE VARIAVEIS*/
         var qtdOnibus = Number(inputQtdOnibus.value);
         var qtdPessoas = Number(inputQtdPessoas.value);
         var pesoOnibus = Number(inputPeso.value);
         var parada = Number(inputParada.value);
         var ar = Number(inputAr.value);
         var combustivel = Number(inputLitros.value);
+
+        /*CALCULO GASTO NORMAL (SEM NOSSO PRODUTO)*/
         var gastoLitros = combustivel * 6;
         var gastoNormalTotal = gastoLitros * qtdOnibus;
-        var pesoCheio = qtdPessoas * 70;
+       
+        /*CALCULO DE GASTO-PESO*/
+        var pesoCheio = qtdPessoas * 70 + pesoOnibus;
         var pesoExtra = (pesoCheio / pesoOnibus);
-        var gastoPeso = (0.4 * pesoExtra - 0.4) + 1;
-        var gastoPesoTotal = combustivel * gastoPeso * qtdOnibus;
+        var gastoPeso = (0.4 * pesoExtra - 0.4) * combustivel;
+        var gastoPesoTotal = gastoPeso * qtdOnibus;
+
+        /*CALCULO DE GASTO-PARADA*/
         var gastoParada = parada * 0.083;
         var gastoParadaTotal = gastoParada * qtdOnibus;
 
-        if (ar < 0) {
-            alert(`In   sira no campo ar condicionado apenas 1 (ar ligado) ou 0 (ar desligado).`)
-            resposta.innerHTML = ` `
-        }
-
+        /*CALCULO DE GASTO-AR CONDICIONADO*/
         if (ar == 0) {
             var gastoAr = 0;
             var gastoArTotal = combustivel * gastoAr * qtdOnibus;
@@ -91,7 +95,13 @@
                 <br>
                 <b>Portando, seu gasto desnecessário de combustível é de ${gastoExtraLitros} litros, o que significam ${gastoExtraReais} reais desnecessarios, com nossos serviços você poderia economizar esse dinheiro e passar a gastar ${gastoTotalMenor}</b>`
         }
-        
+
+        /*CAMPO AR CONDICIONADO INVALIDO*/
+        if (ar < 0) {
+            alert(`Insira no campo ar condicionado apenas 1 (ar ligado) ou 0 (ar desligado).`)
+            resposta.innerHTML = ` `
+        }
+
         if (ar > 1) {
             alert(`Insira no campo ar condicionado apenas 1 (ar ligado) ou 0 (ar desligado).`)
             resposta.innerHTML = ` `

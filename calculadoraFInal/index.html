@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TransControl | Calculadora</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="divLogo"><img class="logo" src="img/logoHorizontalBranca3.svg" alt=""></div>
+        <div class="lista">
+            <ul class="navegacao">
+                <li class="links">HOME</li>
+                <li class="links">SOBRE NÓS</li>
+                <li class="links">CALCULADORA</li>
+            </ul>
+            <ul class="log">
+                <li class="login">LOG IN</li>
+                <li class="cadastro">CADASTRO</li>
+            </ul>
+        </div>
+      </header>
+      <div class="calculadora">
+        <div class="box">
+            <div class="input"><p>Quantidade de onibus na frota</p><input type="text" id="inputQtdOnibus"></div>
+            <div class="input"><p>Média de lotação de passageiros</p><input type="text" name="" id="inputQtdPessoas"></div>
+        </div>
+        <div class="box">
+            <div class="input"><p>Modelo do onibus</p><input type="text" name="" id="inputModelo"></div>
+            <div class="input"><p>Quanto tempo o onibus fica parado em cada onibus</p><input type="text" name="" id="inputParada"></div>
+        </div>
+        <div class="box">
+            <div class="input"><p>Litros gastos por dia em combustivel</p><input type="text" name="" id="inputLitros"></div>
+            <div class="input"><p>O ar condicionado estava ligado?</p> <input type="checkbox" name="" id="inpAr"></div>
+        </div>
+      </div>
+</body>
+</html>
+<script>
+    var qtdOnibus = Number(inputQtdOnibus.value);
+    var qtdPessoas = Number(inputQtdPessoas.value);
+    var modelo = inputModelo.value;
+    var pesoOnibus = 0;
+    if (modelo == 'micro') {
+        pesoOnibus = 6000
+    }
+    if (modelo == 'padron'){
+        pesoOnibus = 16000
+    }
+    if (modelo == 'basico'){
+        pesoOnibus = 16000
+    }
+    if (modelo == 'articulado'){
+        pesoOnibus = 26000
+    }
+    if (modelo == 'biarticulado'){
+        pesoOnibus = 36000
+    }
+
+
+
+</script>
