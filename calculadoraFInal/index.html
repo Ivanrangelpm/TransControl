@@ -34,13 +34,18 @@
             <div class="input"><p>Litros gastos por dia em combustivel</p><input type="text" name="" id="inputLitros"></div>
             <div class="input"><p>O ar condicionado estava ligado?</p> <input type="checkbox" name="" id="inpAr"></div>
         </div>
+        <button onclick="calcular()">Calcule o prejuizo</button>
       </div>
 </body>
 </html>
 <script>
+    function calcular () {
     var qtdOnibus = Number(inputQtdOnibus.value);
     var qtdPessoas = Number(inputQtdPessoas.value);
     var modelo = inputModelo.value;
+    var parada = Number(inputParada.value);
+    var combustivel = Number(inputLitros.value);
+    var chkbox = document.getElementById('inpAr');
     var pesoOnibus = 0;
     if (modelo == 'micro') {
         pesoOnibus = 6000
@@ -58,6 +63,17 @@
         pesoOnibus = 36000
     }
 
+    var gastoLitros = combustivel * 6;
+    var gastoNormalTotal = gastoLitros * qtdOnibus;
+
+    var pesoCheio = qtdPessoas * 70 + pesoOnibus;
+    var pesoExtra = (pesoCheio / pesoOnibus);
+    var gastoPeso = (0.4 * pesoExtra - 0.4) * combustivel;
+    var gastoPesoTotal = gastoPeso * qtdOnibus;
+
+    
+
+    }
 
 
 </script>
