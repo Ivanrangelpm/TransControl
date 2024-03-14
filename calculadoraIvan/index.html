@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TransControl | Calculadora</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+    <body>
+      <header>
+        <div class="divLogo"><img class="logo" src="img/logoHorizontalBranca3.svg" alt=""></div>
+        <div class="lista">
+            <ul class="navegacao">
+                <li class="links">HOME</li>
+                <li class="links">SOBRE NÓS</li>
+                <li class="links">CALCULADORA</li>
+            </ul>
+            <ul class="log">
+                <li class="login">LOG IN</li>
+                <li class="cadastro">CADASTRO</li>
+            </ul>
+        </div>
+      </header>
+      <div class="calculadora">
+        <div class="box">
+            <div class="input"><p>Distância percorrida pelo ônibus em km:</p><input class="inp" type="text" name="" id="inpKm"></div>
+            <div class="input"><p>Média de passageiros dentro do onibus:</p><input class="inp" type="text" name="" id="inpPassageiros"></div><!--  devo pedir a média de passageiros? to usando ela para o calculo não o numero total -->
+        </div>
+        <div class="box">
+            <div class="input"><p>Total de pessoas que entraram no onibus</p><input class="inp" type="text" name="" id="inpTotalPassageiros"></div>
+            <div class="input"><p>Qual ônibus é usado nessa linha?</p><input class="inp" type="text" name="" id="inpOnibus"></div>
+        </div>
+        <div class="box boxCheck">
+        
+            <div class="input"><p>Quanto custou o disel?</p><input class="inp" type="text" name="" id="inpDisel"></div>
+            <div class="input inputAr"><p>O ar condicionado estava ligado?</p><input class="inp" type="checkbox" name="" id="inpAr"></div>
+        </div>
+        <button onclick="calcular()">Calcular Lucro/Prejuizo da viagem</button>
+        <div id="divMensagem"></div>
+      </div>
+      <div id="ComoFunciona"></div>
+    </body>
+</html>
+<script>
+    function calcular() {
+        var km = Number(inpKm.value);
+        var passageiros = Number(inpPassageiros.value);
+        var TotalPassageiros = Number(inpTotalPassageiros.value);
+        var onibus = inpOnibus.value;
+        var disel = Number(inpDisel.value);
+        var litroKm = 0;
+        var adcPorPassageiro = 0;
+        var chkbox = document.getElementById('inpAr');
+        if (onibus == 'mini'){
+            litroKm = 0.2; // 0.3
+            adcPorPassageiro = (passageiros / 150); // usei como base 20 passageiros para chegar nesse numero
+        }
+        if (onibus == 'midi'){
+            adcPorPassageiro = (passageiros /  600);
+            litroKm = 0.36; // 0.46 usei como base 62 pessoas para chegar em 600
+        }
+
+        if (onibus == 'articulado'){
+            adcPorPassageiro = (passageiros / 1500); //base 120 pessoas
+            litroKm = 0.63; // 0.71 
+        }
+        litroKm = (litroKm + adcPorPassageiro)
+
+        if(chkbox.checked) {
+            litroKm = (litroKm + (litroKm * 0.12))
+        }
+        
+        
+        var totalLitros = (km * litroKm);
+    
+        var totalPreco = ((totalLitros * disel))
+
+        var passagem = (TotalPassageiros * 4.4)
+
+        var receita = (passagem - totalPreco)
+        
+        if (receita < 0) {
+            divMensagem.innerHTML = `O custo dessa viagem foi: R$${totalPreco.toFixed(2)}, o valor arrecadado foi de R$${passagem.toFixed(2)} e gerou um prejuízo de R$${receita.toFixed(2)}`
+        }else {
+            divMensagem.innerHTML = `O custo dessa viagem foi: R$${totalPreco.toFixed(2)}, o valor arrecadado foi de R$${passagem.toFixed(2)} e gerou um lucro de R$${receita.toFixed(2)}`
+        }
+        
+        
+        
+    }
+</script> 
+
+<!--
+    Limitar casas decimais na hora de mostrar para o usuario
+    Calcular o lucro do onibus? -->
