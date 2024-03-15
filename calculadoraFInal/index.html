@@ -34,8 +34,8 @@
             <div class="input"><p>Litros gastos por dia em combustivel</p><input type="text" name="" id="inputLitros"></div>    
         </div>
         <button onclick="calcular()">Calcule o prejuizo</button>
-        <div id="divMensagem"></div>
       </div>
+      <div id="divMensagem"></div>
 </body>
 </html>
 <script>
@@ -80,13 +80,13 @@
     var gastoTotalMenor = gastoNormalTotal - gastoExtraReais;
 
     divMensagem.innerHTML = `Considerando o preço do diesel em R$6 (Media brasileira atual) e sua frota com ${qtdOnibus} ônibus, você gasta por dia um valor proximo a R$${gastoNormalTotal} com combustivel. <br> <br>
-    Porém, o peso alto do veiculo devido a grande quantidade de passageiros faz com que o motor gaste ${gastoPesoTotal} litros de combustivel extra na frota toda.
+    Porém, o peso alto do veiculo devido a grande quantidade de passageiros faz com que o motor gaste ${gastoPesoTotal.toFixed(2)} litros de combustivel extra na frota toda.
     <br>
     O tempo de parada tambem aumenta em ${gastoParadaTotal} litros de combustivel extra se somado toda a frota.
     <br>
     Para finalizar, o ar condicionado esta ligado, e isso está gastando ${gastoArTotal} litros extras da frota.
     <br> <br>
-    <b>Portando, seu gasto desnecessário de combustível é de ${gastoExtraLitros} litros, o que significam ${gastoExtraReais} reais desnecessarios, com nossos serviços você poderia economizar esse dinheiro e passar a gastar ${gastoTotalMenor}</b>`
+    <b>Portando, seu gasto desnecessário de combustível é de ${gastoExtraLitros.toFixed(2)} litros, o que significam ${gastoExtraReais.toFixed(2)} reais desnecessarios, com nossos serviços você poderia economizar esse dinheiro e passar a gastar ${gastoTotalMenor.toFixed(2)}</b>`
     }
 
 

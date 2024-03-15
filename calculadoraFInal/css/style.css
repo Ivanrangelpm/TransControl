@@ -95,3 +95,8 @@ button{
     width: 250px;
 }
 
+#divMensagem{
+    height: 400px   ;
+    margin-top: -350px;
+    width: 450px;
+}
