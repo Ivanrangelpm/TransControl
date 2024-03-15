@@ -28,13 +28,13 @@
         </div>
         <div class="box">
             <div class="input"><p>Modelo do onibus</p><input type="text" name="" id="inputModelo"></div>
-            <div class="input"><p>Quanto tempo o onibus fica parado em cada onibus</p><input type="text" name="" id="inputParada"></div>
+            <div class="input"><p>Quanto tempo o onibus fica parado em cada ponto</p><input type="text" name="" id="inputParada"></div>
         </div>
         <div class="box">
-            <div class="input"><p>Litros gastos por dia em combustivel</p><input type="text" name="" id="inputLitros"></div>
-            <div class="input"><p>O ar condicionado estava ligado?</p> <input type="checkbox" name="" id="inpAr"></div>
+            <div class="input"><p>Litros gastos por dia em combustivel</p><input type="text" name="" id="inputLitros"></div>    
         </div>
         <button onclick="calcular()">Calcule o prejuizo</button>
+        <div id="divMensagem"></div>
       </div>
 </body>
 </html>
@@ -45,7 +45,6 @@
     var modelo = inputModelo.value;
     var parada = Number(inputParada.value);
     var combustivel = Number(inputLitros.value);
-    var chkbox = document.getElementById('inpAr');
     var pesoOnibus = 0;
     if (modelo == 'micro') {
         pesoOnibus = 6000
@@ -70,9 +69,24 @@
     var pesoExtra = (pesoCheio / pesoOnibus);
     var gastoPeso = (0.4 * pesoExtra - 0.4) * combustivel;
     var gastoPesoTotal = gastoPeso * qtdOnibus;
-
+    var gastoParada = parada * 0.083;
+    var gastoParadaTotal = gastoParada * qtdOnibus;
     
 
+    var gastoAr = 0.25;
+    var gastoArTotal = combustivel * gastoAr * qtdOnibus;
+    var gastoExtraLitros = gastoPesoTotal + gastoParadaTotal + gastoArTotal;
+    var gastoExtraReais = gastoExtraLitros * 6;
+    var gastoTotalMenor = gastoNormalTotal - gastoExtraReais;
+
+    divMensagem.innerHTML = `Considerando o preço do diesel em R$6 (Media brasileira atual) e sua frota com ${qtdOnibus} ônibus, você gasta por dia um valor proximo a R$${gastoNormalTotal} com combustivel. <br> <br>
+    Porém, o peso alto do veiculo devido a grande quantidade de passageiros faz com que o motor gaste ${gastoPesoTotal} litros de combustivel extra na frota toda.
+    <br>
+    O tempo de parada tambem aumenta em ${gastoParadaTotal} litros de combustivel extra se somado toda a frota.
+    <br>
+    Para finalizar, o ar condicionado esta ligado, e isso está gastando ${gastoArTotal} litros extras da frota.
+    <br> <br>
+    <b>Portando, seu gasto desnecessário de combustível é de ${gastoExtraLitros} litros, o que significam ${gastoExtraReais} reais desnecessarios, com nossos serviços você poderia economizar esse dinheiro e passar a gastar ${gastoTotalMenor}</b>`
     }
 
 
