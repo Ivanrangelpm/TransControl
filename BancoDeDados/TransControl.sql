@@ -32,9 +32,10 @@ USE TransControl;
 
 CREATE TABLE ModeloOnibus(
 	idOnibus int primary key auto_increment NOT NULL,
-    qtdPortas int NOT NULL,
-    capacidade int NOT NULL,
-    placa char(7),
+	qtdPortas int NOT NULL,
+    	capacidade int NOT NULL,
+    	placa char(7),
+	peso int,
     CONSTRAINT chkPortas CHECK(qtdPortas >= 2 AND qtdPortas <= 8)
 );				
 
@@ -56,7 +57,6 @@ CREATE TABLE sensor(
 
 DESCRIBE Sensor;
 SELECT * FROM Sensor;
-
 
 
 
