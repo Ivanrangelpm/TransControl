@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador Financeiro</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="img/icon.svg" >
 </head>
 <body>
     <header>
@@ -13,7 +14,7 @@
             <h4>HOME</h4>
             <h4>SOBRE NÓS</h4>
             <h4>CALCULADORA</h4><h4>||</h4>
-            <h4>LOG IN</h4>
+            <h4>LOG-IN</h4>
             <h4>CADASTRO</h4>
         </div>
     </header><br><br><br><br>
@@ -22,14 +23,14 @@
         <div><p>Modelo ônibus(ambas as frotas): </p><input type="text" id="ipt_modelo"></div>
     </div><br><br>
     <div class="container-Pfrota">
-        <div class="container-Cfrota"> <h2 class="titleFrota">Frota 1</h2> 
+        <div class="container-Cfrota"> <h2 class="titleFrota">Linha Maior</h2> 
             Número de ônibus rodando: <input type="text" id="ipt_nOnibus1" class="inpFrotas"> <br>
             Média de passageiros no ônibus: <input type="text" id="ipt_media1" class="inpFrotas"> <br>
             Tempo para rota completa (minutos): <input type="text" id="ipt_tmpvolta1" class="inpFrotas"> <br>
             Número de pessoas que entraram: <input type="text" id="ipt_entrada1" class="inpFrotas"> <br>
             Numero de paradas: <input type="text" id="ipt_paradas1" class="inpFrotas">
         </div>
-        <div class="container-Cfrota"> <h2 class="titleFrota">Frota 2</h2>
+        <div class="container-Cfrota"> <h2 class="titleFrota">Linha Menor</h2>
             Número de ônibus rodando: <input type="text" id="ipt_nOnibus2" class="inpFrotas"> <br>
             Média de passageiros no ônibus: <input type="text" id="ipt_media2" class="inpFrotas"> <br>
             Tempo para rota completa (minutos): <input type="text" id="ipt_tmpvolta2" class="inpFrotas"> <br>
@@ -43,14 +44,15 @@
 </html>
 <script>
     function calcular() {
-    
+ 
+    // para zerar a div e não exibir os calculos feitos anteriormente        
     div_mensagem.innerHTML = ``
-    
-    var pesoO = 6000;
-    var limite = 47;
+    // declarando o padrao (caso não escolha o modelo do onibus)
+    var pesoO = 6000;// Peso do onibus
+    var limite = 47;// Limite de passageiros do onibus
     var modelo = ipt_modelo.value;
     
-    
+    //Declarando variáveis 
     var nOnibus1 = Number(ipt_nOnibus1.value);
     var media1 = Number(ipt_media1.value);
     var tmpvolta1 = Number(ipt_tmpvolta1.value);
@@ -63,6 +65,7 @@
     var entrada2 = Number(ipt_entrada2.value);
     var paradas2 = Number(ipt_paradas2.value);  
     
+    //calculando variaveis
     var espera1 = tmpvolta1 / nOnibus1;
     var espera2 = tmpvolta2 / nOnibus2;
     var novoespera2 = espera2;
@@ -71,7 +74,7 @@
     var novoOnibus2 = nOnibus2;
     var totalP2 = media2 * nOnibus2;
     var totalP1 = media1 * nOnibus1;
-    
+    // Trocando o peso e limite conforme o modelo
         if (modelo == 'micro') {
             pesoO = 6000;
             limite = 47;
@@ -92,15 +95,15 @@
             pesoO = 36000;
             limite = 253;
         }
-    
-    if (media1 >= media2) {
+        // Validando se o maior valor é o da esquerda
+        if (media1 >= media2) {
         padrao = 1 
     } else {
-        padrao = 2
+        alert(`Coloque o maior valor de media de passageiros na primeira caixa `)
     }
     
     if (padrao == 1){
-    
+    // Trocando onibus da frota vazia para mais cheia caso o tempo de espera nao passe de 30 minutos
         if(novoespera2 < 30) {
             novoOnibus2 = novoOnibus2 - 1;
             novoespera2 = tmpvolta2 / novoOnibus2; 
@@ -121,25 +124,27 @@
             novoespera2 = tmpvolta2 / novoOnibus2;
         }
     
+
+
         var pesoPessoa1 = 70 * media1;
         var pesoTotal1 = pesoO + pesoPessoa1;
         var razaoPeso1 = pesoPessoa1 / pesoTotal1;
         var porcAdd1 = ((razaoPeso1 / 10) * 4) + 1;
         var espera1 = tmpvolta1 / nOnibus1;
     
-    
+        // 253 = numero maximo de pessoas no onibus - 25 tempo parado (maximo de pessoas) 10(tempo minimo em uma parada)   
         var tempParada1 = (media1 / 253) * 25 + 10;
-        var gastoParada1 = tempParada1 * 0.0014;
-        var totParada1 = gastoParada1 * paradas1
-    
+        var gastoParada1 = tempParada1 * 0.0014;// 0.0014 gasto parado de todos os onibus por parada em minutos
+        var totParada1 = gastoParada1 * paradas1// Multiplicando por todas as paradas
+        // 6.5 = combustivel padrao gasto por hora (velocidade de 16km/h)    
         var litroH1 = (6.5 + totParada1)* porcAdd1;
     
-        var precoAtual1 = litroH1 * nOnibus1 * 6;
+        var precoAtual1 = litroH1 * nOnibus1 * 6;// Calculando usando o preço do disel para todos os onibus
 
-        var nVoltas1 = 1200 / tmpvolta1;
-        var totalAtual1 = precoAtual1 * 20;
+        var nVoltas1 = 1200 / tmpvolta1; //Numero de vezes q o onibus roda (1200 é 20 horas em minutos)
+        var totalAtual1 = precoAtual1 * 20; //Total de gasto por um dia (Horas rodadas por dia * preço da hora)
 
-        if (media1 > limite) {
+        if (media1 > limite) {// Se o numero de pessoas for maior do q o que cabe no onibus
             var excedente1 = media1 - limite;
             var novaMedia1 = media1 - excedente1;
             var arrecadado1 = novaMedia1 * 2.31 * nOnibus1 * nVoltas1;

@@ -48,7 +48,7 @@
 <script>
     function calcular() {
     
-    // para zerar a div
+    // para zerar a div e não exibir os calculos feitos anteriormente
     div_mensagem.innerHTML = ``
     
     var pesoO = 6000;
@@ -134,7 +134,7 @@
         var porcAdd1 = ((razaoPeso1 / 10) * 4) + 1;
         var espera1 = tmpvolta1 / nOnibus1;
     
-        // 253 = numero maximo de pessoas no onibus - 25 tempo (maximo de pessoas) 10(tempo minimo em uma parada)
+        // 253 = numero maximo de pessoas no onibus - 25 tempo parado (maximo de pessoas) 10(tempo minimo em uma parada)
         var tempParada1 = (media1 / 253) * 25 + 10;
         var gastoParada1 = tempParada1 * 0.0014; // 0.0014 gasto parado de todos os onibus por parada em minutos
         var totParada1 = gastoParada1 * paradas1 // Multiplicando por todas as paradas
