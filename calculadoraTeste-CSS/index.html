@@ -153,7 +153,8 @@
             var novaMedia1 = media1;
         }
         
-        div_mensagem.innerHTML += `<hr><h2>linha 1</h2>O preço atual, gasto em combustível, é de R$${precoAtual1.toFixed(2)} por volta da linha inteira, para um total de R$${totalAtual1.toFixed(2)} por dia. Com uma espera de ${espera1.toFixed(2)} minutos, ${nOnibus1} ônibus e média de ${novaMedia1} passageiros. O valor arrecadado é estimado em R$${arrecadado1.toFixed(2)}. <br> <br>`
+        div_mensagem.innerHTML += `<hr>
+        <h2>linha 1</h2>O preço atual, gasto em combustível, é de <span class="destaque1">R$${precoAtual1.toFixed(2)}</span> por volta da linha inteira, para um total de <span class="destaque1">R$${totalAtual1.toFixed(2)}</span> por dia. Com uma espera de <span class="destaque1">${espera1.toFixed(2)}</span> minutos, <span class="destaque2">${nOnibus1}</span> ônibus e média de <span class="destaque1">${novaMedia1}</span> passageiros. O valor arrecadado é estimado em <span class="destaque1">R$${arrecadado1.toFixed(2)}</span>. <br> <br>`
     
         var OnibusAdd = totalOnibus - novoOnibus2;
     
@@ -184,7 +185,7 @@
             var arrecadado1 = media1 * 2.31 * OnibusAdd * nVoltas1;
         }
     
-        div_mensagem.innerHTML += `O preço do combustível, após as alterações, será de R$${precoNovo1.toFixed(2)} por volta da linha inteira, para um total de R$${totalNovo1.toFixed(2)} por dia. Com uma espera de ${espera1.toFixed(2)} minutos, ${OnibusAdd} ônibus e média de ${media1.toFixed(0)} passageiros. O valor arrecadado é estimado em R$${arrecadado1.toFixed(2)}.<hr><br> `
+        div_mensagem.innerHTML += `O preço do combustível, após as alterações, será de <span class="destaque3">R$${precoNovo1.toFixed(2)}</span> por volta da linha inteira, para um total de <span class="destaque3">R$${totalNovo1.toFixed(2)}</span> por dia. Com uma espera de <span class="destaque3">${espera1.toFixed(2)}</span> minutos, ${OnibusAdd} ônibus e média de <span class="destaque3">${media1.toFixed(0)}</span> passageiros. O valor arrecadado é estimado em <span class="destaque3">R$${arrecadado1.toFixed(2)}</span>.<hr><br> `
         
     
         var pesoPessoa2 = 70 * media2;
@@ -206,7 +207,7 @@
         
         var arrecadado2 = media2 * 2.31 * nOnibus2 * nVoltas2;
         
-        div_mensagem.innerHTML += `<hr><h2>linha 2</h2>O preço atual, gasto em combustível, é de R$${precoAtual2.toFixed(2)} por volta da linha inteira, para um total de R$${totalAtual2.toFixed(2)} por dia. Com uma espera de ${espera2.toFixed(2)} minutos, ${nOnibus2} ônibus e média de ${media2.toFixed(0)} passageiros. O valor arrecadado é estimado em R$${arrecadado2.toFixed(2)}. <br> <br>`
+        div_mensagem.innerHTML += `<hr><h2>linha 2</h2>O preço atual, gasto em combustível, é de <span class="destaque1">R$${precoAtual2.toFixed(2)}</span> por volta da linha inteira, para um total de <span class="destaque1">R$${totalAtual2.toFixed(2)}</span> por dia. Com uma espera de <span class="destaque1">${espera2.toFixed(2)}</span> minutos, ${nOnibus2} ônibus e média de <span class="destaque1">${media2.toFixed(0)}</span> passageiros. O valor arrecadado é estimado em <span class="destaque1">R$${arrecadado2.toFixed(2)}</span>. <br> <br>`
     
     
         var media2 = totalP2 / novoOnibus2;
@@ -231,7 +232,7 @@
         var arrecadado2 = media2 * 2.31 * novoOnibus2 * nVoltas2;
     
         var precoNovo2 = litroH2 * novoOnibus2 * 6
-        div_mensagem.innerHTML += `O preço do combustível, após as alterações, será de R$${precoNovo2.toFixed(2)} por volta da linha inteira, para um total de R$${totalNovo2.toFixed(2)} por dia. Com uma espera de ${espera2.toFixed(2)} minutos, ${novoOnibus2} ônibus e média de ${media2.toFixed(0)} passageiros. O valor arrecadado é estimado em R$${arrecadado2.toFixed(2)}.<hr>`;
+        div_mensagem.innerHTML += `O preço do combustível, após as alterações, será de <span class="destaque3">R$${precoNovo2.toFixed(2)}</span> por volta da linha inteira, para um total de <span class="destaque3">R$${totalNovo2.toFixed(2)}</span> por dia. Com uma espera de <span class="destaque3">${espera2.toFixed(2)}</span> minutos, ${novoOnibus2} ônibus e média de <span class="destaque3">${media2.toFixed(0)}</span> passageiros. O valor arrecadado é estimado em <span class="destaque3">R$${arrecadado2.toFixed(2)}</span>.<hr>`;
     } 
     }
     </script>

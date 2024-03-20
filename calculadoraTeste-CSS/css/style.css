@@ -118,9 +118,15 @@ input{
 }
 
 
+.destaque1 {
+    color: red;
+    font-weight: bold;
+}
 
-
-
+.destaque3{
+    color: rgba(21, 166, 21, 0.763);
+    font-weight: bold;
+}
 
 
 
