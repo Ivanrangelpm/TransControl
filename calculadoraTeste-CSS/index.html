@@ -145,6 +145,7 @@
             var arrecadado1 = novaMedia1 * 2.31 * nOnibus1 * nVoltas1;
         } else {         
             var arrecadado1 = media1 * 2.31 * nOnibus1 * nVoltas1;
+            var novaMedia1 = media1;
         }
         
         div_mensagem.innerHTML += `<hr><h2>linha 1</h2>O preço atual, gasto em combustível, é de R$${precoAtual1.toFixed(2)} por volta da linha inteira, para um total de R$${totalAtual1.toFixed(2)} por dia. Com uma espera de ${espera1.toFixed(2)} minutos, ${nOnibus1} ônibus e média de ${novaMedia1} passageiros. O valor arrecadado é estimado em R$${arrecadado1.toFixed(2)}. <br> <br>`

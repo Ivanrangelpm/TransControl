@@ -64,7 +64,7 @@ input{
 
 .container-Cfrota{
     width: 400px;
-    height: 500px;
+    height: 540px;
     display: flex;
     flex-direction: column;
     /* text-align: center; */
@@ -95,6 +95,7 @@ input{
     border-left: none;
     border-right: none;
     margin-bottom: 35px;
+    margin-top: 10px;
 }
 
 .btnCalc{
