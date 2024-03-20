@@ -48,6 +48,7 @@
 <script>
     function calcular() {
     
+    // para zerar a div
     div_mensagem.innerHTML = ``
     
     var pesoO = 6000;
@@ -100,10 +101,12 @@
     if (media1 >= media2) {
         padrao = 1 
     } else {
-        padrao = 2
+        alert(`Coloque o maior valor de media de passageiros na primeira caixa `)
     }
-    
-    if (padrao == 1){
+
+
+    // Calculando se o onibus pode d
+    if (padrao == 1){ 
     
         if(novoespera2 < 30) {
             novoOnibus2 = novoOnibus2 - 1;
@@ -131,19 +134,20 @@
         var porcAdd1 = ((razaoPeso1 / 10) * 4) + 1;
         var espera1 = tmpvolta1 / nOnibus1;
     
-    
+        // 253 = numero maximo de pessoas no onibus - 25 tempo (maximo de pessoas) 10(tempo minimo em uma parada)
         var tempParada1 = (media1 / 253) * 25 + 10;
-        var gastoParada1 = tempParada1 * 0.0014;
-        var totParada1 = gastoParada1 * paradas1
+        var gastoParada1 = tempParada1 * 0.0014; // 0.0014 gasto parado de todos os onibus por parada em minutos
+        var totParada1 = gastoParada1 * paradas1 // Multiplicando por todas as paradas
     
-        var litroH1 = (6.5 + totParada1)* porcAdd1;
+        // 6.5 = combustivel padrao gasto por hora (velocidade de 16km/h)
+        var litroH1 = (6.5 + totParada1)* porcAdd1; // Calculando litros de combustivel gasto por hora
     
-        var precoAtual1 = litroH1 * nOnibus1 * 6;
+        var precoAtual1 = litroH1 * nOnibus1 * 6; // Calculando usando o preço do disel para todos os onibus
 
-        var nVoltas1 = 1200 / tmpvolta1;
-        var totalAtual1 = precoAtual1 * nVoltas1;
+        var nVoltas1 = 1200 / tmpvolta1; //Numero de vezes q o onibus roda (1200 é 20 horas em minutos)
+        var totalAtual1 = precoAtual1 * nVoltas1; //Total de gasto por um dia (numero de voltas * o preço gasto em uma volta)
 
-        if (media1 > limite) {
+        if (media1 > limite) {// Se o numero de pessoas for maior do q o que cabe no onibus
             var excedente1 = media1 - limite;
             var novaMedia1 = media1 - excedente1;
             var arrecadado1 = novaMedia1 * 2.31 * nOnibus1 * nVoltas1;
