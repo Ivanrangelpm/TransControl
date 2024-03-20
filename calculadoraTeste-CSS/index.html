@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Financeiro</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div><img src="img/logoHorizontalBranca3.svg" alt=""></div>
+        <div class="itemsHeader">
+            <h4>HOME</h4>
+            <h4>SOBRE NÓS</h4>
+            <h4>CALCULADORA</h4><h4>||</h4>
+            <h4>LOG IN</h4>
+            <h4>CADASTRO</h4>
+        </div>
+    </header><br><br><br><br>
+    <div class="mdFrota">
+        <h1>Simulador financeiro TransControl</h1>
+        <div><p>Modelo ônibus(ambas as frotas): </p><input type="text" id="ipt_modelo"></div>
+    </div><br><br>
+    <div class="container-Pfrota">
+        <div class="container-Cfrota"> <h2 class="titleFrota">Frota 1</h2> 
+            Número de ônibus rodando: <input type="text" id="ipt_nOnibus1" class="inpFrotas"> <br><br>
+            Média de passageiros no ônibus: <input type="text" id="ipt_media1" class="inpFrotas"> <br><br>
+            Tempo para rota completa (minutos): <input type="text" id="ipt_tmpvolta1" class="inpFrotas"> <br><br>
+            Número de pessoas que entraram: <input type="text" id="ipt_entrada1" class="inpFrotas"> 
+            Numero de paradas: <input type="text" id="ipt_paradas1" class="inpFrotas">
+        </div>
+        <div class="container-Cfrota"> <h2 class="titleFrota">Frota 2</h2>
+            Número de ônibus rodando: <input type="text" id="ipt_nOnibus2" class="inpFrotas"> <br>
+            Média de passageiros no ônibus: <input type="text" id="ipt_media2" class="inpFrotas"> <br>
+            Tempo para rota completa (minutos): <input type="text" id="ipt_tmpvolta2" class="inpFrotas"> <br>
+            Número de pessoas que entraram: <input type="text" id="ipt_entrada2" class="inpFrotas"> <br>
+            Número de paradas: <input type="text" id="ipt_paradas2" class="inpFrotas">
+        </div>
+    </div>
+    <div><button onclick="calcular()" class="btnCalc">Calcular</button></div>
+    <div id="div_mensagem"></div>
+</body>
+</html>
+<script>
+    function calcular() {
+    
+    div_mensagem.innerHTML = ``
+    
+    var pesoO = 6000;
+    var limite = 47;
+    var modelo = ipt_modelo.value;
+    
+    
+    var nOnibus1 = Number(ipt_nOnibus1.value);
+    var media1 = Number(ipt_media1.value);
+    var tmpvolta1 = Number(ipt_tmpvolta1.value);
+    var entrada1 = Number(ipt_entrada1.value);
+    var paradas1 = Number(ipt_paradas1.value);
+    
+    var nOnibus2 = Number(ipt_nOnibus2.value);
+    var media2 = Number(ipt_media2.value);
+    var tmpvolta2 = Number(ipt_tmpvolta2.value);
+    var entrada2 = Number(ipt_entrada2.value);
+    var paradas2 = Number(ipt_paradas2.value);  
+    
+    var espera1 = tmpvolta1 / nOnibus1;
+    var espera2 = tmpvolta2 / nOnibus2;
+    var novoespera2 = espera2;
+    var padrao = 0;
+    var totalOnibus = nOnibus1 + nOnibus2;
+    var novoOnibus2 = nOnibus2;
+    var totalP2 = media2 * nOnibus2;
+    var totalP1 = media1 * nOnibus1;
+    
+        if (modelo == 'micro') {
+            pesoO = 6000;
+            limite = 47;
+        }
+        if (modelo == 'padron'){
+            pesoO = 16000;
+            limite = 89;
+        }
+        if (modelo == 'basico'){
+            pesoO = 16000;
+            limite = 92;
+        }
+        if (modelo == 'articulado'){
+            pesoO = 26000;
+            limite = 200;
+        }
+        if (modelo == 'biarticulado'){
+            pesoO = 36000;
+            limite = 253;
+        }
+    
+    if (media1 >= media2) {
+        padrao = 1 
+    } else {
+        padrao = 2
+    }
+    
+    if (padrao == 1){
+    
+        if(novoespera2 < 30) {
+            novoOnibus2 = novoOnibus2 - 1;
+            novoespera2 = tmpvolta2 / novoOnibus2; 
+        }
+        
+        if(novoespera2 > 30) {
+            novoOnibus2 += 1;
+            novoespera2 = tmpvolta2 / novoOnibus2;
+        }
+    
+        if(novoespera2 < 30){
+            novoOnibus2 = novoOnibus2 - 1;
+            novoespera2 = tmpvolta2 / novoOnibus2;
+        }
+    
+        if(novoespera2 > 30) {
+            novoOnibus2 += 1;
+            novoespera2 = tmpvolta2 / novoOnibus2;
+        }
+    
+        var pesoPessoa1 = 70 * media1;
+        var pesoTotal1 = pesoO + pesoPessoa1;
+        var razaoPeso1 = pesoPessoa1 / pesoTotal1;
+        var porcAdd1 = ((razaoPeso1 / 10) * 4) + 1;
+        var espera1 = tmpvolta1 / nOnibus1;
+    
+    
+        var tempParada1 = (media1 / 253) * 25 + 10;
+        var gastoParada1 = tempParada1 * 0.0014;
+        var totParada1 = gastoParada1 * paradas1
+    
+        var litroH1 = (6.5 + totParada1)* porcAdd1;
+    
+        var precoAtual1 = litroH1 * nOnibus1 * 6;
+
+        var nVoltas1 = 1200 / tmpvolta1;
+        var totalAtual1 = precoAtual1 * nVoltas1;
+
+        if (media1 > limite) {
+            var excedente1 = media1 - limite;
+            var novaMedia1 = media1 - excedente1;
+            var arrecadado1 = novaMedia1 * 2.31 * nOnibus1 * nVoltas1;
+        } else {         
+            var arrecadado1 = media1 * 2.31 * nOnibus1 * nVoltas1;
+        }
+        
+        div_mensagem.innerHTML += `<hr><h2>linha 1</h2>O preço atual, gasto em combustível, é de R$${precoAtual1.toFixed(2)} por volta da linha inteira, para um total de R$${totalAtual1.toFixed(2)} por dia. Com uma espera de ${espera1.toFixed(2)} minutos, ${nOnibus1} ônibus e média de ${novaMedia1} passageiros. O valor arrecadado é estimado em R$${arrecadado1.toFixed(2)}. <br> <br>`
+    
+        var OnibusAdd = totalOnibus - novoOnibus2;
+    
+        var media1 = totalP1 / OnibusAdd;
+        var pesoPessoa1 = 70 * media1;
+        var pesoTotal1 = pesoO + pesoPessoa1;
+        var razaoPeso1 = pesoPessoa1 / pesoTotal1;
+        var porcAdd1 = ((razaoPeso1 / 10) * 4) + 1;
+        var espera1 = tmpvolta1 / OnibusAdd;
+    
+    
+        var tempParada1 = (media1 / 253) * 25 + 10;
+        var gastoParada1 = tempParada1 * 0.0014;
+        var totParada1 = gastoParada1 * paradas1
+    
+        var litroH1 = (6.5 + totParada1)* porcAdd1;
+    
+        var precoNovo1 = litroH1 * nOnibus1 * 6;
+
+        var nVoltas1 = 1200 / tmpvolta1;
+        var totalNovo1 = precoNovo1 * nVoltas1;
+
+        if (media1 > limite) {
+            var excedente1 = media1 - limite;
+            var novaMedia1 = media1 - excedente1;
+            var arrecadado1 = novaMedia1 * 2.31 * OnibusAdd * nVoltas1;
+        } else {
+            var arrecadado1 = media1 * 2.31 * OnibusAdd * nVoltas1;
+        }
+    
+        div_mensagem.innerHTML += `O preço do combustível, após as alterações, será de R$${precoNovo1.toFixed(2)} por volta da linha inteira, para um total de R$${totalNovo1.toFixed(2)} por dia. Com uma espera de ${espera1.toFixed(2)} minutos, ${OnibusAdd} ônibus e média de ${media1.toFixed(0)} passageiros. O valor arrecadado é estimado em R$${arrecadado1.toFixed(2)}.<hr><br> `
+        
+    
+        var pesoPessoa2 = 70 * media2;
+        var pesoTotal2 = pesoO + pesoPessoa2;
+        var razaoPeso2 = pesoPessoa2 / pesoTotal2;
+        var porcAdd2 = ((razaoPeso2 / 10) * 4) + 1;
+        var espera2 = tmpvolta2 / nOnibus2;
+    
+        var tempParada2 = (media2 / 253) * 25 + 10;
+        var gastoParada2 = tempParada2 * 0.0014;
+        var totParada2 = gastoParada2 * paradas2
+    
+        var litroH2 = (6.5 + totParada2)* porcAdd2;
+    
+        var precoAtual2 = litroH2 * nOnibus2 * 6;
+
+        var nVoltas2 = 1200 / tmpvolta2;
+        var totalAtual2 = precoAtual2 * nVoltas2;
+        
+        var arrecadado2 = media2 * 2.31 * nOnibus2 * nVoltas2;
+        
+        div_mensagem.innerHTML += `<hr><h2>linha 2</h2>O preço atual, gasto em combustível, é de R$${precoAtual2.toFixed(2)} por volta da linha inteira, para um total de R$${totalAtual2.toFixed(2)} por dia. Com uma espera de ${espera2.toFixed(2)} minutos, ${nOnibus2} ônibus e média de ${media2.toFixed(0)} passageiros. O valor arrecadado é estimado em R$${arrecadado2.toFixed(2)}. <br> <br>`
+    
+    
+        var media2 = totalP2 / novoOnibus2;
+    
+        var pesoPessoa2 = 70 * media2;
+        var pesoTotal2 = pesoO + pesoPessoa2;
+        var razaoPeso2 = pesoPessoa2 / pesoTotal2;
+        var porcAdd2 = ((razaoPeso2 / 10) * 4) + 1;
+        var espera2 = tmpvolta2 / novoOnibus2;
+    
+        var tempParada2 = (media2 / 253) * 25 + 10;
+        var gastoParada2 = tempParada2 * 0.0014;
+        var totParada2 = gastoParada2 * paradas2
+    
+        var litroH2 = (6.5 + totParada2)* porcAdd2;
+
+        var precoAtual2 = litroH2 * novoOnibus2 * 6;
+
+        var nVoltas2 = 1200 / tmpvolta2;
+        var totalNovo2 = precoAtual2 * nVoltas2;
+        
+        var arrecadado2 = media2 * 2.31 * novoOnibus2 * nVoltas2;
+    
+        var precoNovo2 = litroH2 * novoOnibus2 * 6
+        div_mensagem.innerHTML += `O preço do combustível, após as alterações, será de R$${precoNovo2.toFixed(2)} por volta da linha inteira, para um total de R$${totalNovo2.toFixed(2)} por dia. Com uma espera de ${espera2.toFixed(2)} minutos, ${novoOnibus2} ônibus e média de ${media2.toFixed(0)} passageiros. O valor arrecadado é estimado em R$${arrecadado2.toFixed(2)}.<hr>`;
+    } 
+    }
+    </script>
