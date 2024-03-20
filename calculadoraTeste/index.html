@@ -145,7 +145,7 @@
         var precoAtual1 = litroH1 * nOnibus1 * 6; // Calculando usando o preço do disel para todos os onibus
 
         var nVoltas1 = 1200 / tmpvolta1; //Numero de vezes q o onibus roda (1200 é 20 horas em minutos)
-        var totalAtual1 = precoAtual1 * nVoltas1; //Total de gasto por um dia (numero de voltas * o preço gasto em uma volta)
+        var totalAtual1 = precoAtual1 * 20; //Total de gasto por um dia (Horas rodadas por dia * preço da hora)
 
         if (media1 > limite) {// Se o numero de pessoas for maior do q o que cabe no onibus
             var excedente1 = media1 - limite;
@@ -204,7 +204,7 @@
         var precoAtual2 = litroH2 * nOnibus2 * 6;
 
         var nVoltas2 = 1200 / tmpvolta2;
-        var totalAtual2 = precoAtual2 * nVoltas2;
+        var totalAtual2 = precoAtual2 * 20;
         
         var arrecadado2 = media2 * 2.31 * nOnibus2 * nVoltas2;
         
@@ -228,7 +228,7 @@
         var precoAtual2 = litroH2 * novoOnibus2 * 6;
 
         var nVoltas2 = 1200 / tmpvolta2;
-        var totalNovo2 = precoAtual2 * nVoltas2;
+        var totalNovo2 = precoAtual2 * 20;
         
         var arrecadado2 = media2 * 2.31 * novoOnibus2 * nVoltas2;
     
