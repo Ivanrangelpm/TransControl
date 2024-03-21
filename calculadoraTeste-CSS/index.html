@@ -349,8 +349,10 @@ ${arrecadado2.toFixed(2)}
         var difPreju = prejutotAntes - prejutotDepois;
 
         div_mensagem.innerHTML += `<br><div class="divseparator"></div><br>
-        O prejuízo evitado, comparando ambos os prejuízos de ambos os ônibus, se dá por ${difPreju.toFixed(2)}. <br>
-        O prejuízo antes da mudança seria de aproximadamente R$${prejutotAntes}<br>
-        O prejuízo depois da mudança seria de aproximadamente R$${prejutotDepois}<br>`
+        <b style="font-size: 18;">
+        O prejuízo evitado, comparando ambos os prejuízos de ambos os ônibus, se dá por<b class="txtresults"> ${difPreju.toFixed(2)}</b>. <br>
+        O prejuízo antes da mudança seria de aproximadamente <b class="txtresults">R$${prejutotAntes}</b><br>
+        O prejuízo depois da mudança seria de aproximadamente <b class="txtresults">R$${prejutotDepois}</b><br> <br> <br>
+        </b>`
     }}
 </script>

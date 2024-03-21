@@ -4,9 +4,9 @@ INSERT INTO Cadastro VALUES
     (default, 'Viacao Osasco Ltda', 'Viacao Osasco', 'viacao@osaco.com.br', 'Av. Valter Boveri, 501A CEP: 06053-120 Jardim Novo Osasco - SP', '45645462000366', '35924261', '12345678');
 
 INSERT INTO ModeloOnibus VALUES
-    (default, 3, 120, 'JPV8440'), --Onibus Articulado
-    (default, 3, 20, 'JPV8440'), --Micro-Onibus
-    (default, 3, 70, 'JPV8440'); --Onibus convencional
+    (default, 3, 120, 'JPV8440'), -- Onibus Articulado
+    (default, 3, 20, 'JPV8440'), -- Micro-Onibus
+    (default, 3, 70, 'JPV8440'); -- Onibus convencional
 
 INSERT INTO sensor VALUES
     (default, 'ENTRADA'),
