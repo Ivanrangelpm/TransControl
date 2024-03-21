@@ -11,7 +11,7 @@ idEmpresa int primary key auto_increment,
 razaoSocial varchar(255) NOT NULL,
 nomeFantasia varchar(255),
 email varchar(40) NOT NULL,
-logradouro varchar(30) NOT NULL,
+logradouro varchar(150) NOT NULL,
 CNPJ char(14) unique NOT NULL,
 telefone char(14) NOT NULL,
 senha varchar(20) NOT NULL
