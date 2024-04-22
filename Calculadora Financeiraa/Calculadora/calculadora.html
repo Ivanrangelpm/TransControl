@@ -299,30 +299,61 @@
             var arrecadado2 = media2 * 2.31 * nOnibus2 * nVoltas2;
 
             div_mensagem.innerHTML += `
-            <h2>Linha Menos Movintada <br> Antes</h2>
-        Preço de uma volta de 
-${nOnibus2}
-        ônibus, considerando: <b class="txtinner">6 reais o Diesel</b>, <b class="txtinner">6.5 Litros por hora</b> do ônibus:
-        <br><b class="txtresults">Preço combustível por hora: R$
-${precoAtual2.toFixed(2)} 
-            </b>.<br>
-        Para obter um valor diário, se multiplica o valor da hora por <b class="txtinner">20</b> (horário médio de funcionamento):
-        <br><b class="txtresults">Preço combustível por dia: R$
-${totalAtual2.toFixed(2)}
-            </b>.<br>
-        O tempo de espera estimado, é dado pela <b class="txtinner">razão</b> entre o <b class="txtinner">número de ônibus</b> e o <b class="txtinner">tempo para uma volta completa</b>: 
-        <br><b class="txtresults">Tempo estimado de espera: 
-${espera2.toFixed(2)}
-            minutos</b>.<br>
-${modelo}
-        , obtém-se a média de pessoas:
-        <br><b class="txtresults"> A média de pessoas estima-se em 
-${media2.toFixed(0)}
-        pessoas</b>.<br>
-        O valor arrecadado considera a tarida média em R$2,31, fazendo a média entre preço completo, gratuidades e passagens com 50% de desconto. O valor é multiplicado pelo <b class="txtinner">número de ônibus</b>, <b class="txtinner">número de voltas</b> e a <b class="txtinner">média de passageiros</b>, e obtém-se:
-        <br><b class="txtresults">O valor arrecadado é estimado em R$
-${arrecadado2.toFixed(2)}
-        </b>.<br>`
+            <h2>Linha menos movimentada Antes</h2>
+        <table>
+    
+    <tr>
+        <th>Preço Combustivel: Hora</th>
+        <td class = 'inicial'>${precoAtual2.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+    </tr>
+    
+    <tr>
+        <th>Preço combustível: Dia</th>
+        <td class = 'descontos'>${totalAtual2.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+    </tr>
+    
+    <tr>
+        <th>Tempo de Espera estimado</th>
+        <td class = 'descontos'>${espera2} minutos</td>
+    </tr>
+
+    <tr>
+        <th>Média de pessoas por Ônibus</th>
+        <td class = 'descontos'>${media2}</td>
+    </tr>
+    
+        <tr>
+            <th>Valor Arrecadado</th>
+            <td class = 'prejuizo'>${arrecadado2.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+        </tr>
+    </table>
+            
+            `;
+//             div_mensagem.innerHTML += `
+//             <h2>Linha Menos Movintada <br> Antes</h2>
+//         Preço de uma volta de 
+// ${nOnibus2}
+//         ônibus, considerando: <b class="txtinner">6 reais o Diesel</b>, <b class="txtinner">6.5 Litros por hora</b> do ônibus:
+//         <br><b class="txtresults">Preço combustível por hora: R$
+// ${precoAtual2.toFixed(2)} 
+//             </b>.<br>
+//         Para obter um valor diário, se multiplica o valor da hora por <b class="txtinner">20</b> (horário médio de funcionamento):
+//         <br><b class="txtresults">Preço combustível por dia: R$
+// ${totalAtual2.toFixed(2)}
+//             </b>.<br>
+//         O tempo de espera estimado, é dado pela <b class="txtinner">razão</b> entre o <b class="txtinner">número de ônibus</b> e o <b class="txtinner">tempo para uma volta completa</b>: 
+//         <br><b class="txtresults">Tempo estimado de espera: 
+// ${espera2.toFixed(2)}
+//             minutos</b>.<br>
+// ${modelo}
+//         , obtém-se a média de pessoas:
+//         <br><b class="txtresults"> A média de pessoas estima-se em 
+// ${media2.toFixed(0)}
+//         pessoas</b>.<br>
+//         O valor arrecadado considera a tarida média em R$2,31, fazendo a média entre preço completo, gratuidades e passagens com 50% de desconto. O valor é multiplicado pelo <b class="txtinner">número de ônibus</b>, <b class="txtinner">número de voltas</b> e a <b class="txtinner">média de passageiros</b>, e obtém-se:
+//         <br><b class="txtresults">O valor arrecadado é estimado em R$
+// ${arrecadado2.toFixed(2)}
+//         </b>.<br>`
 
             var media2 = totalP2 / novoOnibus2;
 
