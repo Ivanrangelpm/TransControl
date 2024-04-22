@@ -1,26 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles/Cadastro2.css" />
-    <link
-      rel="shortcut icon"
-      href="../img/LogoSEMescrita.png"
-      type="image/x-icon"
-    />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/Cadastro2.css">
+    <link rel="shortcut icon" href="../img/LogoSEMescrita.png" type="image/x-icon">
     <title>TransControl | Cadastro Empresa</title>
   </head>
   <body>
     <header>
-      <a href="../index.html"
-        ><img src="../img/LogoSEMescrita.png" alt="Logo da Empresa"
-      /></a>
+      <a href="index.html"><img src="../img/LogoSEMescrita.png" alt="Logo da Empresa"></a>
       <div class="itemsHeader">
-        <h4><a href="../index.html">Início</a></h4>
-        <h4><a href="../index.html#sobre-nos">Sobre Nós</a></h4>
+        <h4><a href="index.html">Início</a></h4>
+        <h4><a href="index.html#sobre-nos">Sobre Nós</a></h4>
         <h4>||</h4>
-        <buttonn class="botao" onclick="opcaoHeader()"></buttonn>
+        <button class="botao" onclick="opcaoHeader()"></button>
       </div>
     </header>
     <div class="background">
@@ -35,40 +29,36 @@
           <h2 style="text-align: center">Cadastro Empresa</h2>
           <form id="cadastroForm" onsubmit="return validarFormulario()">
             <div class="input-container">
-              Razão Social: <br />
-              <input type="text" id="ipt_razao" placeholder="Razão Social" />
+              Razão Social: <br>
+              <input type="text" id="ipt_razao" placeholder="Razão Social">
             </div>
             <div class="input-container">
-              Nome: <br />
-              <input type="text" id="ipt_nome" placeholder="Nome" />
+              Nome: <br>
+              <input type="text" id="ipt_nome" placeholder="Nome">
             </div>
             <div class="input-container">
-              CNPJ: <br />
-              <input type="number" id="ipt_cnpj" placeholder="CNPJ" />
+              CNPJ: <br>
+              <input type="number" id="ipt_cnpj" placeholder="CNPJ">
             </div>
             <div class="input-container">
-              Email: <br />
-              <input type="text" id="ipt_email" placeholder="Email" />
+              Email: <br>
+              <input type="text" id="ipt_email" placeholder="Email">
             </div>
             <div class="input-container">
-              Logradouro: <br />
-              <input type="text" id="ipt_logradouro" placeholder="Logradouro" />
+              Logradouro: <br>
+              <input type="text" id="ipt_logradouro" placeholder="Logradouro">
             </div>
             <div class="input-container">
-              Telefone: <br />
-              <input type="number" id="ipt_telefone" placeholder="Telefone" />
+              Telefone: <br>
+              <input type="number" id="ipt_telefone" placeholder="Telefone">
             </div>
             <div class="input-container">
-              Senha: <br />
-              <input type="password" id="ipt_senha" placeholder="Senha" />
+              Senha: <br>
+              <input type="password" id="ipt_senha" placeholder="Senha">
             </div>
             <div class="input-container">
-              Chave Única: <br />
-              <input
-                type="number"
-                id="ipt_chaveUnica"
-                placeholder="Chave Única"
-              />
+              Chave Única: <br>
+              <input type="number" id="ipt_chaveUnica" placeholder="Chave Única">
             </div>
             <button type="submit">Cadastrar</button>
           </form>
