@@ -87,7 +87,7 @@
           return false;
         }
 
-        if (senha.length < 8) {
+        if (senha.length <= 8) {
           alert("A senha deve ter pelo menos 8 caracteres");
           return false;
         }
@@ -96,7 +96,7 @@
         var possuiNumero = false;
         var caracteresEspeciais = "!@#$%^&*()-_+=[]{}|;:',.<>?";
 
-        for (var i = 0; i < senha.length; i++) {
+        for (var i = 0; i <= senha.length; i++) {
           var caractere = senha[i];
 
           if (caracteresEspeciais.indexOf(caractere) !== -1) {
