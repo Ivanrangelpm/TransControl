@@ -70,14 +70,14 @@
         var confirmarSenha = ipt_senhaConfirm.value;
         var chaveAcesso = Number(ipt_chave).value;
 
+        var erro = false
+
         if (email.indexOf("@") === -1) {
-          alert("O e-mail deve conter um @");
-          return false;
+          erro = true
         }
 
         if (senha.length <= 8) {
-          alert("A senha deve ter pelo menos 8 caracteres");
-          return false;
+          erro = true
         }
 
         var possuiCaractereEspecial = false;
@@ -95,21 +95,27 @@
           }
         }
         if (!possuiCaractereEspecial || !possuiNumero) {
-          alert(
-            "A senha deve conter pelo menos 1 caractere especial e 1 número"
-          );
-          return false;
+          erro = true;
         }
 
         if (senha !== confirmarSenha) {
-          alert("As senhas não coincidem");
-          return false;
+          erro = true;
         }
 
-        alert("Cadastro realizado com sucesso!");
-        window.location.href = "login.html";
-
-        return true;
+        if(erro == false){
+          alert("Cadastro realizado com sucesso!");
+          window.location.href = "login.html";
+        } else if(email.indexOf("@") === -1){
+          alert("O e-mail deve conter um @");
+        } else if(senha.length <= 8){
+          alert("A senha deve ter pelo menos 8 caracteres");
+        } else if(!possuiCaractereEspecial || !possuiNumero){
+          alert(
+            "A senha deve conter pelo menos 1 caractere especial e 1 número"
+          );
+        } else if(senha !== confirmarSenha){
+          alert("As senhas não coincidem"); 
+        }
       }
     </script>
   </body>

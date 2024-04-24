@@ -27,7 +27,7 @@
       <div class="container">
         <div class="Cadastro">
           <h2 style="text-align: center">Cadastro Empresa</h2>
-          <form id="cadastroForm" onsubmit="return validarFormulario()">
+          <form id="cadastroForm">
             <div class="input-container">
               Razão Social: <br>
               <input type="text" id="ipt_razao" placeholder="Razão Social">
@@ -60,7 +60,7 @@
               Chave Única: <br>
               <input type="number" id="ipt_chaveUnica" placeholder="Chave Única">
             </div>
-            <button type="submit">Cadastrar</button>
+            <button onclick="validarFormulario()">Cadastrar</button>
           </form>
         </div>
       </div>
@@ -93,39 +93,34 @@
         var senha = ipt_senha.value;
         var chaveUnica = Number(ipt_chaveUnica.value);
 
+        var erro = false
+
         if (razaoSocial === "") {
-          alert("Campo obrigatório");
-          return false;
+          erro = true
         }
 
         if (nome === "") {
-          alert("Campo obrigatório");
-          return false;
+          erro = true
         }
 
         if (cnpj === "") {
-          alert("CNPJ inválido");
-          return false;
+          erro = true
         }
 
         if (email === "" || email.indexOf("@") === -1) {
-          alert("Email inválido");
-          return false;
+          erro = true
         }
 
         if (logradouro === "") {
-          alert("Campo obrigatório");
-          return false;
+          erro = true
         }
 
         if (telefone === "") {
-          alert("Campo obrigatório");
-          return false;
+          erro = true
         }
 
         if (senha === "" || senha.length <= 8) {
-          alert("Senha inválida! Deve ter pelo menos 8 caracteres");
-          return false;
+          erro = true
         }
 
         var possuiCaractereEspecial = false;
@@ -144,21 +139,37 @@
         }
 
         if (!possuiCaractereEspecial || !possuiNumero) {
-          alert(
-            "A senha deve conter pelo menos 1 caractere especial e 1 número"
-          );
-          return false;
+          erro = true
         }
 
         if (chaveUnica === "") {
-          alert("Chave Única inválida");
-          return false;
+          erro = true
         }
 
-        alert("Cadastro realizado com sucesso!");
-        window.location.href = "login.html";
-
-        return true;
+        if(erro == true){
+          alert("Cadastro realizado com sucesso!");
+          window.location.href = "login.html";
+        } else if(razaoSocial === ""){
+          alert("Campo obrigatório");
+        } else if(nome === ""){
+          alert("Campo obrigatório");
+        } else if(cnpj === ""){
+          alert("CNPJ inválido");
+        } else if(email === "" || email.indexOf("@") === -1){
+          alert("Email inválido");
+        } else if(logradouro === ""){
+          alert("Campo obrigatório");
+        } else if(telefone === ""){
+          alert("Campo obrigatório");
+        } else if(senha === "" || senha.length <= 8){
+          alert("Senha inválida! Deve ter pelo menos 8 caracteres");
+        } else if(!possuiCaractereEspecial || !possuiNumero){
+          alert(
+            "A senha deve conter pelo menos 1 caractere especial e 1 número"
+          );
+        } else if(chaveUnica === ""){
+          alert("Chave Única inválida");
+        }
       }
     </script>
   </body>

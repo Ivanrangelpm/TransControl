@@ -29,7 +29,6 @@
           <h2>Login</h2>
           <input id="ipt_email" type="text" placeholder="E-mail" required>
           <input id="ipt_senha" type="password" placeholder="Senha" required>
-          <input id="ipt_confirmaSenha" type="password" placeholder="Confirme a senha" required>
           <button id="botaoEnviar" onclick="validarFormulario()">Entrar</button>
           <a href="TelaDeCadastro.html" class="link">Ainda não tem login?</a>
         </div>
@@ -56,46 +55,46 @@
       }
 
       function validarFormulario() {
-		var email = ipt_email.value
+		    var email = ipt_email.value
         var senha = ipt_senha.value
-        var confirmarSenha = ipt_confirmaSenha.value
 
-        tentativas++;
+        var erro = false
+        var emailPadrao = 'murilo@gmail.com'
+        var senhaPadrao = '@Murilo1234'
+        tentativas++
 
         for (var i = 0; i < maxTentativas; i++) {
-          if (email.indexOf("@") === -1) {
-            alert("O e-mail deve conter um @");
+          if (email != emailPadrao) {
             if (tentativas === maxTentativas) {
               desabilitarFormulario();
             }
-            return false;
-          }
-
-
-          if (senha !== confirmarSenha) {
-            alert("As senhas não coincidem");
+            erro = true
+          } else if (senha !== senhaPadrao) {
             if (tentativas === maxTentativas) {
               desabilitarFormulario();
             }
-            return false;
+            erro = true;
           }
         }
 
-        alert("Login realizado com sucesso!");
-        window.location.href = "../dashboard/mainPage.html";
+        if(erro == false){
+          alert("Login realizado com sucesso!");
+          window.location.href = "../dashboard/mainPage.html";
+        } else if(email != emailPadrao){
+          alert("Email ou senha inválidos")
+        } else if(senha !== senhaPadrao){
+          alert("Email ou senha inválidos")
+        }
 
-        return true;
       }
 
       function desabilitarFormulario() {
         var campoEmail = document.getElementById("ipt_email");
         var campoSenha = document.getElementById("ipt_senha");
-        var campoConfirmarSenha = document.getElementById("ipt_confirmaSenha");
         var botaoEnviar = document.getElementById("botaoEnviar");
 
         campoEmail.disabled = true;
         campoSenha.disabled = true;
-        campoConfirmarSenha.disabled = true;
         botaoEnviar.disabled = true;
 
         alert(
