@@ -90,13 +90,15 @@ CREATE TABLE Onibus(
 	placa char(7),
 	peso int, -- Em KG
     fkLinha int,
-    CONSTRAINT fklinha foreign key (fkLinha) references linhaOnibus(idLinha)
+    fkEmpresaOnibus int,
+    CONSTRAINT fklinha foreign key (fkLinha) references linhaOnibus(idLinha),
+    CONSTRAINT fkEmpresaOnibus foreign key (fkEmpresaOnibus) references Empresa(idEmpresa)
 ) auto_increment = 50;
 
 INSERT INTO Onibus VALUES
-    (default, 3, 120, 'Onibus Articulado ','JPV8440', 26000, 1 ),
-    (default, 2, 20, 'Micro-Onibus' ,'BRA5679', 4000, 2), 
-    (default, 3, 70, 'Onibus convencional','JTW9010', 16000, 3); 
+    (default, 3, 120, 'Onibus Articulado ','JPV8440', 26000, 1, 30 ),
+    (default, 2, 20, 'Micro-Onibus' ,'BRA5679', 4000, 2, 31), 
+    (default, 3, 70, 'Onibus convencional','JTW9010', 16000, 3, 32); 
     
 DESCRIBE Onibus;
 SELECT * FROM Onibus;
@@ -165,7 +167,7 @@ CREATE TABLE dados(
 	horarioAtivacao datetime DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT chkDado CHECK(ativacao = 0 OR ativacao = 1),
     fkSensor int,
-    CONSTRAINT fkSensor foreign key (fkSensor) references Sensor(idSensor)
+    CONSTRAINT fkSensor foreign key (fkSensor) references Sensor (idSensor)
     ) auto_increment = 90;
 
 INSERT INTO dados VALUES
@@ -173,10 +175,76 @@ INSERT INTO dados VALUES
     (default, 0, default,81),
     (default, 1, default,82);
 
+SELECT sum(ativacao),fkSensor from dados group by fkSensor;
+
+SELECT s.idSensor, s.portaSensor, sum(d.ativacao) as ativacao from Sensor as s, dados as d 
+group by s.idSensor, s.portaSensor;
+
 DESCRIBE dados;
 SELECT * FROM dados;
 
 -- RELACIONAMENTO DAS TABELAS 
+
+-- ONIBUS, LINHAS E EMPRESA 
+
+SELECT * FROM linhaOnibus as Linha join Onibus as onibus on onibus.fkLinha = Linha.idLinha;
+
+SELECT linhaOnibus.nome as Linha , Onibus.modeloOnibus from linhaOnibus
+join Onibus on Onibus.fkLinha = linhaOnibus.idLinha;
+
+SELECT linhaOnibus.nome as Linha , Onibus.modeloOnibus as Onibus, Empresa.NomeFantasia as Empresa from linhaOnibus
+join Onibus on Onibus.fkLinha = linhaOnibus.idLinha
+join Empresa on Empresa.idEmpresa = Onibus.fkEmpresaOnibus;
+
+
+-- EMPRESA E ENDEREÇO
+
+SELECT * FROM Empresa join endereco on Empresa.fkEnderecoEmpresa = endereco.idEndereco;
+
+SELECT Empresa.NomeFantasia as NomeEmpresa , endereco.* from Empresa 
+join endereco on endereco.idEndereco = Empresa.fkEnderecoEmpresa;
+
+-- EMPRESA E FUNCIONARIO 
+
+SELECT * FROM Empresa join funcionario on funcionario.fkEmpresa = Empresa.idEmpresa;
+
+SELECT Empresa.NomeFantasia as NomeEmpresa , funcionario.nome as NomeFuncionario from Empresa 
+join funcionario on Empresa.idEmpresa = funcionario.fkEmpresa;
+
+-- ONIBUS E HISTORICO (LINHA)
+
+SELECT * FROM Onibus join historico on historico.fkOnibusHistorico = Onibus.idOnibus;
+
+SELECT Onibus.modeloOnibus as Modelo, historico.* from Onibus 
+join historico on historico.fkOnibusHistorico = Onibus.idOnibus;
+
+SELECT Onibus.modeloOnibus as Modelo, historico.* , linhaOnibus.nome as Linha from Onibus 
+join historico on historico.fkOnibusHistorico = Onibus.idOnibus
+join linhaOnibus on Onibus.fkLinha = linhaOnibus.idLinha;
+
+-- ONIBUS E ALERTA (LINHA)
+
+SELECT * FROM Onibus join Alerta on Alerta.fkOnibusAlerta = Onibus.idOnibus;
+
+SELECT Onibus.modeloOnibus as Modelo, Alerta.* from Onibus 
+join Alerta on Alerta.fkOnibusAlerta = Onibus.idOnibus;
+
+SELECT Onibus.modeloOnibus as Modelo, Alerta.*, linhaOnibus.nome as Linha from Onibus 
+join Alerta on Alerta.fkOnibusAlerta = Onibus.idOnibus
+join linhaOnibus on Onibus.fkLinha = linhaOnibus.idLinha;
+
+--  ONIBUS E SENSOR (LINHA)
+
+SELECT * FROM Onibus join Sensor on Sensor.fkOnibusSensor = Onibus.idOnibus;
+
+SELECT Onibus.modeloOnibus as Modelo, Sensor.* from Onibus 
+join Sensor on Sensor.fkOnibusSensor = Onibus.idOnibus;
+
+SELECT Onibus.modeloOnibus as Modelo, Sensor.*, linhaOnibus.nome as Linha, dados.* from Onibus 
+join Sensor on Sensor.fkOnibusSensor = Onibus.idOnibus
+join linhaOnibus on Onibus.fkLinha = linhaOnibus.idLinha
+join dados on Sensor.idSensor= dados.fkSensor;
+
 
 
 
