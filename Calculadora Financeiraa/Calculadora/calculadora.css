@@ -1,6 +1,4 @@
-*{
-    font-family: Courier;
-}
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
 body{
     padding: 0;
@@ -9,6 +7,7 @@ body{
     background-size: cover;
     color: black;
     text-align: center;
+    font-family: "Roboto", sans-serif;
 }
 
 header{
@@ -23,6 +22,24 @@ header{
     z-index: 1;
 }
 
+.botao {
+    width: 50px;
+    height: 50px;
+    margin-top: .9%;
+    align-items: center;
+    background-image: url("../../img/hamburguer.png");
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 100%;
+    cursor: pointer;
+    transition: 0.3s;
+    align-items: center;
+    justify-content: center;
+  }
+
+
 img{
     top: 0;
     height: 200px;
@@ -36,6 +53,17 @@ img{
     margin-right: 50px;
     color: white;
 }
+
+a{
+    color: #fff;
+    text-decoration: none;
+}
+
+a:hover{
+    color: #f5cc00;
+    text-decoration: underline;
+}
+
 
 input{
     width: 150px;
