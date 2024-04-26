@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="../img/LogoSEMescrita.png" type="image/x-icon">
+    <title>TransControl | Home</title>
+  </head>
+  <body>
+    <header>
+      <a href="index.html"><img src="../img/LogoSEMescrita.png" alt="Logo da Empresa"></a>
+      <div class="itemsHeader">
+        <h4><a href="index.html">Início</a></h4>
+        <h4><a href="index.html#sobre-nos">Sobre Nós</a></h4>
+        <h4><a href="../Calculadora Financeiraa/Calculadora/calculadora.html">Simulador Financeiro</a></h4>
+        <h4>||</h4>
+        <buttonn class="botao" onclick="opcaoHeader()"></buttonn>
+      </div>
+    </header>
+    <div class="background">
+      <div class="underheader">
+        <div id="options" class="options">
+          <a href="login.html">Login</a>
+          <a href="TelaDeCadastro.html">Cadastro</a>
+        </div>
+      </div>
+
+      <div class="container-main">
+        <h1><span>T</span>rans<span>C</span>ontro<span>l</span></h1>
+        <p>Otimização da sua <span>FROTA</span> de forma eficiente</p>
+      </div>
+    </div>
+
+    <section id="nossos-servicos">
+      <h2>Nossos Serviços</h2>
+      <div class="servicos-container">
+        <div class="servico-card">
+          <h3>Análise de Rotas e Horários</h3>
+          <p>
+            Utilizamos análise de dados avançada para otimizar suas rotas e
+            horários, reduzindo custos e melhorando a eficiência.
+          </p>
+        </div>
+        <div class="servico-card">
+          <h3>Gerenciamento de Frota</h3>
+          <p>
+            Fornecemos soluções para gerenciar sua frota de ônibus de forma
+            eficiente, garantindo manutenção adequada e maximizando a
+            disponibilidade.
+          </p>
+        </div>
+        <div class="servico-card">
+          <h3>Consultoria Financeira</h3>
+          <p>
+            Oferecemos consultoria especializada em finanças para ajudar a
+            otimizar seus investimentos e melhorar a rentabilidade geral.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre-nos">
+      <h1 class="titulo-sobreNos">Sobre Nós</h1>
+      <div class="container">
+        <div class="card">
+          <h2>Nossa Missão</h2>
+          <p>
+            Nossa missão é oferecer soluções tecnológicas avançadas que permitam
+            às empresas de transporte público otimizar suas operações, reduzir
+            custos.
+          </p>
+        </div>
+        <div class="card">
+          <h2>Nossa Visão</h2>
+          <p>
+            Nossa visão é ser líder no mercado de soluções para transporte
+            público, reconhecida pela excelência e inovação em nossos produtos e
+            serviços.
+          </p>
+        </div>
+        <div class="card nossos-valores">
+          <h2>Nossos Valores</h2>
+          <ul>
+            <li>
+              <b>Inovação</b>: Buscamos constantemente novas maneiras de
+              melhorar e aprimorar nossas soluções.
+            </li>
+            <li>
+              <b>Compromisso</b>: Comprometemo-nos a oferecer produtos e
+              serviços de alta qualidade que atendam às necessidades de nossos
+              clientes.
+            </li>
+            <li>
+              <b>Integridade</b>: Agimos com honestidade, transparência e ética
+              em todas as nossas operações.
+            </li>
+            <li>
+              <b>Colaboração</b>: Valorizamos o trabalho em equipe e a
+              colaboração para alcançar resultados excepcionais.
+            </li>
+            <li>
+              <b>Sustentabilidade</b>: Preocupamo-nos com o impacto ambiental de
+              nossas operações e buscamos soluções sustentáveis para o
+              transporte público.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <div class="footer">
+        <div class="container">
+          <p>Feito por TransControl - SPTECH - 1CCO &copy;</p>
+          <br>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+<script>
+  function opcaoHeader() {
+    var options = document.getElementById("options");
+    if (options.style.display === "block") {
+      options.style.display = "none";
+    } else {
+      options.style.display = "block";
+    }
+  }
+</script>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Main page</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="icon" type="image/x-icon" href="img/icon.svg">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="sidebar">
+            <!-- Conteúdo do sidebar --> 
+            <div class="img">
+                <img src="../dashboard/img/logo.png" alt="">
+            </div>
+
+            <!-- Botão "Main page" -->
+            <button class="botaoSidebar">
+                <img src="../dashboard/img/mainPage.png">
+                <div class="h3"><h3>Main page</h3></div>
+            </button>
+
+            <!-- Botão "Teste1" -->
+            <div class="botaoSidebar2">
+                <img src="../dashboard/img/mainPage.png">
+                 <div class="h3"><h3>Em breve</h3></div>
+            </div>
+
+            <!-- Botão "Teste2" -->
+            <div class="botaoSidebar2">
+                <img src="../dashboard/img/mainPage.png">
+                 <div class="h3"><h3>Em breve</h3></div>
+            </div>
+
+            <!-- Botão "Teste3" -->
+            <div class="botaoSidebar2">
+                <img src="../dashboard/img/mainPage.png">
+                 <div class="h3"><h3>Em breve</h3></div>
+            </div>
+
+            <!-- Botão "Teste4" -->
+            <div class="botaoSidebar2">
+                <img src="../dashboard/img/mainPage.png">
+                 <div class="h3"><h3>Em breve</h3></div>
+            </div>
+
+        </div>
+        <div class="content">
+            <div class="header">
+                <header>
+                    
+                    <div class="itemsHeader">
+                        <h4>INICIO</h4>
+                        <h4>SOBRE NÓS</h4>
+                        <h4>||</h4>
+                        <button class="botao" onclick="opcaoHeader()"></button>
+                        <div id="options" style="left: 94%;" class="options">
+                          <a href="#">Perfil</a>
+                          <a href="#">Configurações</a>
+                          <a href="#">Sair</a>
+                        </div>
+                    </div>
+                </header>
+            </div>
+            <div class="main-content">
+                <!-- Conteúdo principal principal -->
+
+                <div class="container_api">
+                    <!-- <div class="h2"><h2>DADOS SEMESTRAIS</h2></div> -->
+                <div class="grafico">
+                    <div class="h2"><h2 style="color: white;">Margem semestral</h2></div>
+                    <canvas id="myChart"></canvas>
+                </div>
+
+                <div class="grafico">
+                  <div class="h2"><h2 style="color: white;">Margem semestral</h2></div>
+                    <canvas id="GrafLinha"></canvas>
+                </div>
+
+                  </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    const elementos = document.querySelectorAll('#myChart');
+    //const elementos = document.querySelectorAll('#myChart, #myChart2');
+  
+elementos.forEach(elemento => {
+
+    const gradient = elemento.getContext('2d').createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(24, 213, 239, 0.4)'); // Cor mais transparente
+    gradient.addColorStop(1, 'rgba(24, 213, 239, 0.1)'); // Cor mais sólida
+
+
+    new Chart(elemento, {
+        type: 'bar',
+        data: {
+            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                borderWidth: 2,
+                backgroundColor: gradient,
+                borderColor: 'rgba(24, 213, 239, 1)',
+                
+                
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            indexAxis: 'x',
+        barPercentage: 0.6, // Colocar a largura dos dados
+        }
+    });
+});
+
+
+
+
+
+
+
+    //CÓDIGO ORIGINAL!!!!!!!!!!!!
+    // new Chart(ctx, {
+    //   type: 'bar',
+    //   data: {
+    //     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    //     datasets: [{
+    //       label: '# of Votes',
+    //       data: [12, 19, 3, 5, 2, 3],
+    //       borderWidth: 1
+    //     }]
+    //   },
+    //   options: {
+    //     scales: {
+    //       y: {
+    //         beginAtZero: true
+    //       }
+    //     }
+    //   }
+    // });
+
+    var contextoGrafLinha = document.getElementById('GrafLinha').getContext('2d');
+
+var GrafLinha = new Chart(
+    contextoGrafLinha,
+    {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+            datasets: [{
+                label: 'Dados',
+                data: [20, 22, 24, 26, 28, 30],
+                borderColor: '#ffd902',
+                backgroundColor: '#ffe135',
+                pointRadius: 5, // Tamanho dos pontos no gráfico
+                pointBackgroundColor: '#ffd902', // Cor dos pontos
+                pointBorderColor: '#fff', // Cor da borda dos pontos
+                pointHoverRadius: 7, // Tamanho dos pontos ao passar o mouse
+                pointHoverBackgroundColor: '#fff', // Cor de fundo dos pontos ao passar o mouse
+                pointHoverBorderColor: '#ffd902', // Cor da borda dos pontos ao passar o mouse
+                pointHitRadius: 10, // Raio de detecção do mouse para os pontos
+                pointBorderWidth: 2 // Largura da borda dos pontos
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    distribution: 'series',
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true
+                    },
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            animation: {
+                duration: 0
+            }
+        }
+    }
+);
+
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    
+</script>
+
+</html>
+<script>
+    // API da dashboard "LINE CHAR"
+    const elemento = document.getElementById('Line');
+    const configs = {
+  type: 'line',
+  data: data,
+};
+
+
+const labelss = Utils.months({count: 7});
+const datas = {
+  labels: labelss,
+  datasets: [{
+    label: 'My First Dataset',
+    datas: [65, 59, 80, 81, 56, 55, 40],
+    fill: false,
+    borderColor: 'rgb(75, 192, 192)',
+    tension: 0.1
+  }]
+};
+</script>
+
+
+
+<script>
+
+    //Função para o botão do usuário
+    function opcaoHeader() {
+  var options = document.getElementById("options");
+  if (options.style.display === "block") {
+    options.style.display = "none";
+  } else {
+    options.style.display = "block";
+  }
+}
+</script>
