@@ -38,7 +38,16 @@ h3{
     font-size: 17px;
     color: white;
 }
+h4 a {
+    text-decoration: none;
+    color: white;
+}
+h4 a:hover {
+    text-decoration: underline #f5cc00;
+    color: #f5cc00;
+  }
 
+/*  */
 .header {
     background-color: #001d3d;
     color: #fff; 
@@ -66,7 +75,7 @@ h3{
 .itemsHeader{
     display: flex;
     column-gap: 7vh;
-    margin-right: 3.5vw;
+    margin-right: 3.9vw;
     color: white;
 }
 
@@ -82,14 +91,13 @@ input{
 .botao {
     width: 8vh;
     height: 8vh;
-    align-items: center;
     background-color: yellow;
     border: none;
+    border-right: 40px;
     padding: 3vh 3vh;
     border-radius: 100%;
     cursor: pointer;
     transition: 0.3s;
-    align-items: center;
     justify-content: center;
 
   }
@@ -99,11 +107,9 @@ input{
   }
   
   .options {
-    display: none;
     position: absolute;
     top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-60%);
     background-color: #f1f1f1;
     padding: 10px;
     border-radius: 10px;
@@ -159,9 +165,7 @@ input{
     height: 6vh;
 }
 
-/* .wrapper .sidebar .containerSidebar{
-    height: 200vh;
-} */
+
 
 /* FIM DO SIDEBAR */
 
@@ -291,12 +295,12 @@ do "@media (max-width: 768px)" */
 .main-content .alertas .tudoBem {
     height: 50px;
     width: 50px;
-    background-color: rgba(9, 212, 219, 0.404);
-    border: 1px solid #09d4db;
+    background-color: rgba(50, 205, 50, 0.404);
+    border: 1px solid #32CD32;
     transition: 1s;
 }
 
 .main-content .alertas .tudoBem:hover {
-    background-color: #09d4db;
-    box-shadow: 0 0 10px rgba(9, 212, 219,0.8);
+    background-color: #32CD32;
+    box-shadow: 0 0 10px rgba(50, 205, 50,0.8);
 }
