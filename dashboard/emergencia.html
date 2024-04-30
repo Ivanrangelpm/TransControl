@@ -13,41 +13,43 @@
     <div class="wrapper">
         <div class="sidebar">
             <!-- Conteúdo do sidebar --> 
-            <div class="img">
-                <img src="../dashboard/img/logo.png" alt="">
-            </div>
+            
+                <div class="img">
+                    <img src="../dashboard/img/logo.png" alt="">
+                </div>
 
-            <!-- Botão "Main page" -->
-            <button class="botaoSidebar">
-                <img src="../dashboard/img/mainPage.png">
-                <div class="h3"><h3>Main page</h3></div>
-            </button>
+                <!-- Botão "Main page" -->
+                <button class="botaoSidebar" onclick="window.location.href='mainPage.html'">
+                    <img src="../dashboard/img/mainPage.png">
+                    <div class="h3"><h3>Main page</h3></div>
+                </button>
 
-            <!-- Botão "Teste1" -->
-            <button class="botaoSidebar" onclick="window.location.href='fluxos.html'">
-                <img src="../dashboard/img/mainPage.png">
-                 <div class="h3"><h3>Fluxos</h3></div>
-            </button>
+                <!-- Botão "Teste1" -->
+                <button class="botaoSidebar" onclick="window.location.href='fluxos.html'">
+                    <img src="../dashboard/img/mainPage.png">
+                    <div class="h3"><h3>Fluxos</h3></div>
+                </button>
 
-            <!-- Botão "Teste2" -->
-            <button class="botaoSidebar" onclick="window.location.href='metricas.html'">
-                <img src="../dashboard/img/mainPage.png">
-                 <div class="h3"><h3>Métricas</h3></div>
-            </button>
+                <!-- Botão "Teste2" -->
+                <button class="botaoSidebar" onclick="window.location.href='metricas.html'">
+                    <img src="../dashboard/img/mainPage.png">
+                    <div class="h3"><h3>Métricas</h3></div>
+                </button>
 
-            <!-- Botão "Teste3" -->
-            <button class="botaoSidebar" onclick="window.location.href='emergencia.html'">
-                <img src="../dashboard/img/mainPage.png">
-                <div class="h3"><h3>Emergência</h3></div>
-            </button>
+                <!-- Botão "Teste3" -->
+                <button class="botaoSidebar">
+                    <img src="../dashboard/img/mainPage.png">
+                    <div class="h3"><h3>Em breve</h3></div>
+                </button>
 
-            <!-- Botão "Teste4" -->
-            <button class="botaoSidebar">
-                <img src="../dashboard/img/mainPage.png">
-                 <div class="h3"><h3>Em breve</h3></div>
-            </button>
+                <!-- Botão "Teste4" -->
+                <button class="botaoSidebar">
+                    <img src="../dashboard/img/mainPage.png">
+                    <div class="h3"><h3>Em breve</h3></div>
+                </button>
 
-        </div>
+
+    </div>
         <div class="content">
             <div class="header">
                 <header>
@@ -70,24 +72,14 @@
 
                 <div class="container_api">
                     <!-- <div class="h2"><h2>DADOS SEMESTRAIS</h2></div> -->
-                    <div class="grafico">
-                        <div class="h2"><h2 style="color: white;">Margem semestral</h2></div>
-                        <canvas id="myChart"></canvas>
-                    </div>
 
-                    <div class="grafico">
-                    <div class="h2"><h2 style="color: white;">Margem semestral</h2></div>
-                        <canvas id="GrafLinha"></canvas>
-                    </div>
+                <div class="grafico2">
+                    <div class="h2"><h2 style="color: white;">Métrica de março - 2024</h2></div>
+                      <canvas id="GrafLinha2"></canvas>
+                  </div>
 
-                </div>
+                  </div>
 
-                <!-- DIVS DOS ALERTAS -->
-                <div class="alertas">
-                    <div class="emergencia" onclick="window.location.href='emergencia.html'"></div>  <!-- Alerta vermelho -->
-                    <div class="atencao"></div>     <!-- Alerta amarelo -->
-                    <div class="tudoBem"></div>     <!-- Alerta verde -->
-                </div>
             </div>
         </div>
     </div>
@@ -109,10 +101,10 @@ elementos.forEach(elemento => {
         type: 'bar',
         data: {
             
-            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'],
+            labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'],
             datasets: [{
                 label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                data: [12, 19, 3, 5],
                 borderWidth: 2,
                 backgroundColor: gradient,
                 borderColor: 'rgba(24, 213, 239, 1)',
@@ -140,10 +132,77 @@ var GrafLinha = new Chart(
     {
         type: 'line',
         data: {
-            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+            labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'],
             datasets: [{
                 label: 'Dados',
-                data: [20, 22, 24, 26, 28, 30],
+                data: [20, 22, 24, 26],
+                borderColor: '#ffd902',
+                backgroundColor: '#ffe135',
+                pointRadius: 5, // Tamanho dos pontos no gráfico
+                pointBackgroundColor: '#ffd902', // Cor dos pontos
+                pointBorderColor: '#fff', // Cor da borda dos pontos
+                pointHoverRadius: 7, // Tamanho dos pontos ao passar o mouse
+                pointHoverBackgroundColor: '#fff', // Cor de fundo dos pontos ao passar o mouse
+                pointHoverBorderColor: '#ffd902', // Cor da borda dos pontos ao passar o mouse
+                pointHitRadius: 10, // Raio de detecção do mouse para os pontos
+                pointBorderWidth: 2 // Largura da borda dos pontos
+            }]
+        },
+        options: {
+                xAxes: [{
+                    distribution: 'series',
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true
+                    },
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            animation: {
+                duration: 1
+            }
+        }
+    
+);
+
+  </script>
+
+
+<script>
+
+    //Função para o botão do usuário
+    function opcaoHeader() {
+  var options = document.getElementById("options");
+  if (options.style.display === "block") {
+    options.style.display = "none";
+  } else {
+    options.style.display = "block";
+  }
+}
+
+
+
+
+// GRÁFICO DE LINHA DE ERRO!!!!!!!
+
+
+var contextoGrafLinha2 = document.getElementById('GrafLinha2').getContext('2d');
+
+var GrafLinha2 = new Chart(
+    contextoGrafLinha2,
+    {
+        type: 'line',
+        data: {
+            labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'],
+            datasets: [{
+                label: 'Dados',
+                data: [20, 23, 12, 15],
                 borderColor: '#ffd902',
                 backgroundColor: '#ffe135',
                 pointRadius: 5, // Tamanho dos pontos no gráfico

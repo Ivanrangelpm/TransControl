@@ -1,9 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
 *{
-    font-family: Courier;
+    font-family: arial;
 } 
 
 html{
-    background-color: #060125;
+    background-color: #000814;
 }
 
 body{
@@ -26,7 +28,7 @@ header{
     display: flex;
     align-items: center;
     justify-content:end;
-    background-color: #1E1454;
+    background-color: #001d3d;
     z-index: 1;
     width: 100%;
 
@@ -38,7 +40,7 @@ h3{
 }
 
 .header {
-    background-color: #1E1454;
+    background-color: #001d3d;
     color: #fff; 
     border-bottom: 1px solid white;
     width: 100%;
@@ -132,11 +134,11 @@ input{
 
 /* INÍCIO SIDEBAR */
 .sidebar {
-    background-color: #1E1454; 
+    background-color: #001d3d; 
     color: #fff;
     width: 15%; 
     border-right: 1px solid white;
-    height: 100vh;
+    height: 135vh;
 }
 
 
@@ -145,7 +147,7 @@ input{
     height: 7%;
     display: flex;
     background-color: transparent;
-    border-radius: 8px;
+    /* border-radius: 8px; */
     justify-content: space-around;
     padding: 0.2rem;
     margin-left: 3%;
@@ -157,21 +159,21 @@ input{
     height: 6vh;
 }
 
+/* .wrapper .sidebar .containerSidebar{
+    height: 200vh;
+} */
+
+/* FIM DO SIDEBAR */
 
 
 
-.wrapper .sidebar .botaoSidebar2{
-    width: 90%;
-    height: 7%;
-    display: flex;
-    background-color: transparent;
-    border-radius: 8px;
-    justify-content: space-around;
-    padding: 0.2rem;
-    margin-left: 3%;
-    margin-bottom: 10%;
-    
+.wrapper .sidebar .botaoSidebar:hover{
+    background-color: #003566;
+    width: 95%;
+    padding: 1;
 }
+
+
 
 .wrapper .sidebar .botaoSidebar2:hover{
     width: 90%;
@@ -211,7 +213,7 @@ do "@media (max-width: 768px)" */
 }
 
 .main-content .container_api {
-    background-color: #140B48;
+    background-color: #001d3d;
     width: 90%;
     height: auto; 
     display: flex;
@@ -226,7 +228,75 @@ do "@media (max-width: 768px)" */
     width: 45%; 
     height: 50vh; 
     border: 2px solid #09d4db;
-    border-radius: 16px;
     margin: 10px; 
     background-color: #05448091;
+}
+
+.main-content .container_api .grafico2 {
+    width: 45%; 
+    height: 50vh; 
+    border: 2px solid #da0d0d;
+    margin: 10px; 
+    background-color: #fa010165;
+}
+
+
+/* ALERTAS */
+
+
+.main-content .alertas {
+    margin-top: 5%;
+    background-color: #001d3d;
+    width: 90%;
+    height: auto; 
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start; 
+    flex-wrap: wrap;
+    padding: 2%;
+    border-radius: 15px;
+}
+
+.main-content .alertas .emergencia {
+    height: 50px;
+    width: 50px;
+    background-color: rgba(255, 0, 0, 0.404);
+    border: 1px solid red;
+    transition: 1s;
+}
+
+.main-content .alertas .emergencia:hover {
+    height: 50px;
+    width: 50px;
+    background-color: red;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+}
+
+.main-content .alertas .atencao {
+    height: 50px;
+    width: 50px;
+    background-color: rgba(255, 255, 0, 0.404);
+    border: 1px solid yellow;
+    transition: 1s;
+}
+
+.main-content .alertas .atencao:hover {
+    height: 50px;
+    width: 50px;
+    background-color: yellow;
+    box-shadow: 0 0 10px rgba(255, 255, 0, 0.8);
+}
+
+
+.main-content .alertas .tudoBem {
+    height: 50px;
+    width: 50px;
+    background-color: rgba(9, 212, 219, 0.404);
+    border: 1px solid #09d4db;
+    transition: 1s;
+}
+
+.main-content .alertas .tudoBem:hover {
+    background-color: #09d4db;
+    box-shadow: 0 0 10px rgba(9, 212, 219,0.8);
 }
