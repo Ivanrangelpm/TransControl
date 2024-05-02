@@ -107,6 +107,7 @@ input{
   }
   
   .options {
+    display: none; 
     position: absolute;
     top: 100%;
     transform: translateX(-60%);
@@ -264,17 +265,18 @@ do "@media (max-width: 768px)" */
 .main-content .alertas .emergencia {
     height: 50px;
     width: 50px;
-    background-color: rgba(255, 0, 0, 0.404);
-    border: 1px solid red;
+    background-color: red;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
     transition: 1s;
 }
 
+/*
 .main-content .alertas .emergencia:hover {
     height: 50px;
     width: 50px;
     background-color: red;
     box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
-}
+} */
 
 .main-content .alertas .atencao {
     height: 50px;

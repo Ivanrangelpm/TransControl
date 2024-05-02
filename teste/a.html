@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper .sidebar .selectWrapper {
+    position: relative;
+    width: 90%;
+    height: 7%;
+    display: flex;
+    background-color: transparent;
+    /* border-radius: 8px; */
+    justify-content: space-around;
+    padding: 0.2rem;
+    margin-left: 3%;
+    margin-bottom: 10%;
+}
+
+.wrapper .sidebar .botaoSidebar {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+    height: 100%;
+    padding: 5px 30px 5px 10px; /* Ajuste conforme necessário */
+    border: 1px solid #ccc; /* Estilo da borda */
+    background: url('seta.png') no-repeat right center; /* Ícone da seta (substitua 'seta.png' pelo caminho da sua imagem) */
+    background-size: 20px; /* Tamanho do ícone da seta */
+    cursor: pointer;
+}
+
+.wrapper .sidebar .imgBotoes {
+    width: 7vh;
+    height: 6vh;
+}
+
+.wrapper .sidebar .imgBotoes img {
+    width: 100%;
+    height: 100%;
+}
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="sidebar">
+            <div class="selectWrapper">
+                <select class="botaoSidebar">
+                    <option value="mainPage">Main Page</option>
+                    <option value="outraPagina">Outra Página</option>
+                </select>
+                <div class="imgBotoes">
+                    <img src="../dashboard/img/mainPage.png" alt="Main Page">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

@@ -37,15 +37,15 @@
                 </button>
 
                 <!-- Botão "Teste3" -->
-                <button class="botaoSidebar">
+                <button class="botaoSidebar" onclick="window.location.href='emergencia.html'">
                     <img src="../dashboard/img/mainPage.png">
                     <div class="h3"><h3>Emergência</h3></div>
                 </button>
 
                 <!-- Botão "Teste4" -->
-                <button class="botaoSidebar">
+                <button class="botaoSidebar" onclick="window.location.href='emergencia.html'">
                     <img src="../dashboard/img/mainPage.png">
-                    <div class="h3"><h3>Em breve</h3></div>
+                    <div class="h3"><h3>Longo prazo</h3></div>
                 </button>
 
 
@@ -108,8 +108,8 @@ var GrafLinha2 = new Chart(
         data: {
             labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'],
             datasets: [{
-                label: 'Dados',
-                data: [20, 23, 12, 15],
+                label: 'Dados registrados',
+                data: [40000, 55000, 30000, 43000],
                 borderColor: '#ffd902',
                 backgroundColor: '#ffe135',
                 pointRadius: 5, // Tamanho dos pontos no gráfico
@@ -120,6 +120,19 @@ var GrafLinha2 = new Chart(
                 pointHoverBorderColor: '#ffd902', // Cor da borda dos pontos ao passar o mouse
                 pointHitRadius: 10, // Raio de detecção do mouse para os pontos
                 pointBorderWidth: 2 // Largura da borda dos pontos
+            },
+            {
+                label: 'Dados mínimos',
+                    data: [50000, 50000, 50000, 50000],
+                    borderColor: '#00ccff',
+                    backgroundColor: '#66d9ff',
+                    pointRadius: 5,
+                    pointBackgroundColor: '#00ccff',
+                    pointBorderColor: '#fff',
+                    pointHoverRadius: 7,
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#00ccff',
+                    pointHitRadius: 10
             }]
         },
         options: {
