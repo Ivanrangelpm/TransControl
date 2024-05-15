@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Dashboard - Main page</title>
+	<script src="../js/sessao.js"></script>
+	<link rel="stylesheet" href="../css/dashboard.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body onload="validarSessao()">
+	<div class="wrapper">
+		<div class="sidebar">
+			<!-- Conteúdo do sidebar -->
+			<div class="img">
+				<img src="../dashboard/img/logo.png" alt="">
+			</div>
+
+			<!-- Botão "Main page" -->
+			<button class="botaoSidebar" onclick="window.location.href='mainPage.html'">
+				<img src="../dashboard/img/mainPage.png">
+				<div class="h3">
+					<h3>Main page</h3>
+				</div>
+			</button>
+
+			<!-- Botão "Teste1" -->
+			<div class="dropdown-container">
+				<button class="botaoSidebar" id="linhasButton">
+					<img src="../dashboard/img/mainPage.png">
+					<div class="h3">
+						<h3>Linhas</h3>
+					</div>
+				</button>
+				<div id="linhasDropdown" class="dropdown-content">
+					<ul>
+						<li><a href="comparacao.html">Comparações</li></a>
+						<li><a href="linha104.html">Linha 104</li></a>
+						<li><a href="linha200.html">Linha 200</li></a>
+						<li><a href="linha300.html">Linha 300</li></a>
+						<li><a href="linha400.html">Linha 400</li></a>
+					</ul>
+				</div>
+			</div>
+
+
+			<!-- Botão "Teste2" -->
+			<button class="botaoSidebar" onclick="window.location.href='metricas.html'">
+				<img src="../dashboard/img/mainPage.png">
+				<div class="h3">
+					<h3>Métricas</h3>
+				</div>
+			</button>
+
+			<!-- Botão "Teste3" -->
+			<button class="botaoSidebar" onclick="window.location.href='emergencia.html'">
+				<img src="../dashboard/img/mainPage.png">
+				<div class="h3">
+					<h3>Emergência</h3>
+				</div>
+			</button>
+
+			<!-- Botão "Teste4" -->
+			<button class="botaoSidebar">
+				<img src="../dashboard/img/mainPage.png">
+				<div class="h3">
+					<h3>Longo prazo</h3>
+				</div>
+			</button>
+
+		</div>
+		<div class="content">
+			<div class="header">
+				<header>
+
+					<div class="itemsHeader">
+						<h4><a href="../pages/index.html">INICIO</a></h4>
+						<h4><a href="../pages/index.html#sobre-nos">SOBRE NÓS</a></h4>
+						<h4>||</h4>
+						<button class="botao" onclick="opcaoHeader()"></button>
+						<div id="options" style="left: 94%;" class="options">
+							<a href="#">Perfil</a>
+							<a href="#">Configurações</a>
+							<a href="#">Sair</a>
+						</div>
+					</div>
+				</header>
+			</div>
+			<div class="main-content">
+				<!-- Conteúdo principal principal -->
+
+				<div class="container_api">
+					<!-- <div class="h2"><h2>DADOS SEMESTRAIS</h2></div> -->
+					<div class="grafico">
+						<div class="h2">
+							<h2 style="color: white;">Margem semestral</h2>
+						</div>
+						<canvas id="myChart"></canvas>
+					</div>
+
+					<div class="grafico">
+						<div class="h2">
+							<h2 style="color: white;">Margem semestral</h2>
+						</div>
+						<canvas id="GrafLinha"></canvas>
+					</div>
+
+				</div>
+
+				<!-- DIVS DOS ALERTAS -->
+				<div class="alertas">
+					<div class="emergencia" onclick="window.location.href='emergencia.html'"></div>
+					<!-- Alerta vermelho -->
+					<div class="atencao"></div> <!-- Alerta amarelo -->
+					<div class="tudoBem"></div> <!-- Alerta verde -->
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
+
+<script>
+	const elementos = document.querySelectorAll('#myChart');
+	//const elementos = document.querySelectorAll('#myChart, #myChart2');
+
+	elementos.forEach(elemento => {
+
+		const gradient = elemento.getContext('2d').createLinearGradient(0, 0, 0, 400);
+		gradient.addColorStop(0, 'rgba(24, 213, 239, 0.4)'); // Cor mais transparente
+		gradient.addColorStop(1, 'rgba(24, 213, 239, 0.1)'); // Cor mais sólida
+
+
+		new Chart(elemento, {
+			type: 'bar',
+			data: {
+
+				labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'],
+				datasets: [{
+					label: '# of Votes',
+					data: [12, 19, 3, 5, 2, 3],
+					borderWidth: 2,
+					backgroundColor: gradient,
+					borderColor: 'rgba(24, 213, 239, 1)',
+
+
+				}]
+			},
+			options: {
+				scales: {
+					y: {
+						beginAtZero: true
+					}
+				},
+				indexAxis: 'x',
+				barPercentage: 0.6, // Colocar a largura dos dados
+			}
+		});
+	});
+
+	// GRÁFICO DE LINHA!!!!!!!!!!!!!!!!
+	var contextoGrafLinha = document.getElementById('GrafLinha').getContext('2d');
+
+	var GrafLinha = new Chart(
+		contextoGrafLinha,
+		{
+			type: 'line',
+			data: {
+				labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+				datasets: [{
+					label: 'Dados',
+					data: [20, 22, 24, 26, 28, 30],
+					borderColor: '#ffd902',
+					backgroundColor: '#ffe135',
+					pointRadius: 5, // Tamanho dos pontos no gráfico
+					pointBackgroundColor: '#ffd902', // Cor dos pontos
+					pointBorderColor: '#fff', // Cor da borda dos pontos
+					pointHoverRadius: 7, // Tamanho dos pontos ao passar o mouse
+					pointHoverBackgroundColor: '#fff', // Cor de fundo dos pontos ao passar o mouse
+					pointHoverBorderColor: '#ffd902', // Cor da borda dos pontos ao passar o mouse
+					pointHitRadius: 10, // Raio de detecção do mouse para os pontos
+					pointBorderWidth: 2 // Largura da borda dos pontos
+				}]
+			},
+			options: {
+				xAxes: [{
+					distribution: 'series',
+					ticks: {
+						beginAtZero: true
+					}
+				}],
+				yAxes: [{
+					scaleLabel: {
+						display: true
+					},
+					ticks: {
+						beginAtZero: true
+					}
+				}]
+			},
+			animation: {
+				duration: 1
+			}
+		}
+
+	);
+
+</script>
+
+
+<script>
+
+	//Função para o botão do usuário
+	function opcaoHeader() {
+		var options = document.getElementById("options");
+		if (options.style.display === "block") {
+			options.style.display = "none";
+		} else {
+			options.style.display = "block";
+		}
+	}
+	
+	// JavaScript para o dropdown "Linhas"
+	document.addEventListener('DOMContentLoaded', (event) => {
+		const linhasButton = document.getElementById('linhasButton');
+		const linhasDropdown = document.getElementById('linhasDropdown');
+		const nextButtons = document.querySelectorAll('.botaoSidebar');
+
+		linhasButton.addEventListener('click', () => {
+			if (linhasDropdown.classList.contains('show')) {
+				linhasDropdown.classList.remove('show');
+				nextButtons.forEach(button => {
+					if (button !== linhasButton) {
+						button.style.marginTop = '0';
+					}
+				});
+			} else {
+				linhasDropdown.classList.add('show');
+				nextButtons.forEach(button => {
+					if (button !== linhasButton && button.previousElementSibling === linhasDropdown.parentElement) {
+						button.style.marginTop = `${linhasDropdown.scrollHeight}px`;
+					}
+				});
+			}
+		});
+	});
+
+</script>

@@ -1,8 +1,6 @@
 CREATE DATABASE TransControl;
+
 USE TransControl;
-DROP DATABASE TransControl;
-
-
 -- TABELA 1 (LINHA DO ONIBUS)
 
 CREATE TABLE linhaOnibus(
@@ -41,29 +39,30 @@ SELECT * FROM endereco;
 -- TABELA 3 (Empresa)
 
 CREATE TABLE Empresa (
-idEmpresa int primary key auto_increment,
+idEmpresa int primary key,
 razaoSocial varchar(255) NOT NULL,
 nomeFantasia varchar(255),
 email varchar(40) NOT NULL,
-CNPJ char(14) unique NOT NULL,
+cnpj char(14) unique NOT NULL,
 telefone char(14) NOT NULL,
 senha varchar(20) NOT NULL,
 fkEnderecoEmpresa int,
 CONSTRAINT fkEnderecoEmpresa foreign key (fkEnderecoEmpresa) references endereco(idEndereco)
-) auto_increment=30;
+);
 
 INSERT INTO Empresa VALUES
-    (default, 'Empresa Metropolitana de Transportes Urbanos de São Paulo', 'EMTU', 'imprensa@emtu.sp.gov.br', '58518069000191', '08007240555', '12345678', 20),
-    (default, 'BB Transporte e Turismo', 'BBTT', 'turismo@benficabbtt.com.br', '48748230000160', '41992730', '12345678', 21),
-    (default, 'Viacao Osasco Ltda', 'Viacao Osasco', 'viacao@osaco.com.br', '45645462000366', '35924261', '12345678', 22);
+    (1, 'Empresa Metropolitana de Transportes Urbanos de São Paulo', 'EMTU', 'imprensa@emtu.sp.gov.br', '58518069000191', '08007240555', '12345678', 20),
+    (2, 'BB Transporte e Turismo', 'BBTT', 'turismo@benficabbtt.com.br', '48748230000160', '41992730', '12345678', 21),
+    (3, 'Viacao Osasco Ltda', 'Viacao Osasco', 'viacao@osaco.com.br', '45645462000366', '35924261', '12345678', 22);
 
 DESCRIBE Empresa;
 SELECT * FROM Empresa;
 
+
 -- TABELA 4 (FUNCIONARIO)
 
-create table funcionario(
-idFuncionario int primary key auto_increment,
+create table usuario(
+id int primary key auto_increment,
 nome varchar (45) not null,
 email varchar(45) unique not null,
 senha varchar(20) not null,
@@ -71,13 +70,7 @@ fkEmpresa int,
 CONSTRAINT fkEmpresa foreign key (fkEmpresa) references Empresa(idEmpresa)
 ) auto_increment= 40;
 
-insert into funcionario values
-(default, 'Luiz André Martins', 'luizandre@gmail.com', '989210', 30),
-(default, 'luana Maria Moraes', 'luanamoraes@gmail.com', 'laranja123', 31),
-(default, 'José Mario da Silva', 'josémario@gmail.com', '251922', 32);
-
-DESCRIBE funcionario;
-SELECT * FROM funcionario;
+SELECT * FROM usuario;
 
 -- TABELA 5 (ONIBUS)
 
@@ -244,8 +237,3 @@ SELECT Onibus.modeloOnibus as Modelo, Sensor.*, linhaOnibus.nome as Linha, dados
 join Sensor on Sensor.fkOnibusSensor = Onibus.idOnibus
 join linhaOnibus on Onibus.fkLinha = linhaOnibus.idLinha
 join dados on Sensor.idSensor= dados.fkSensor;
-
-
-
-
-

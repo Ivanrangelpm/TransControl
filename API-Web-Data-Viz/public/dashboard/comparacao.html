@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Dashboard - Comparação</title>
+	<script src="../js/sessao.js"></script>
+	<link rel="stylesheet" href="../css/dashboard.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body onload="validarSessao()">
+	<div class="wrapper">
+		<div class="sidebar">
+			<!-- Conteúdo do sidebar -->
+
+			<div class="img">
+				<img src="../dashboard/img/logo.png" alt="">
+			</div>
+
+			<!-- Botão "Main page" -->
+			<button class="botaoSidebar" onclick="window.location.href='mainPage.html'">
+				<img src="../dashboard/img/mainPage.png">
+				<div class="h3">
+					<h3>Main page</h3>
+				</div>
+			</button>
+
+			<div class="dropdown-container">
+				<button class="botaoSidebar" id="linhasButton">
+					<img src="../dashboard/img/mainPage.png">
+					<div class="h3">
+						<h3>Linhas</h3>
+					</div>
+				</button>
+				<div id="linhasDropdown" class="dropdown-content">
+					<ul>
+						<li><a href="comparacao.html">Comparações</li></a>
+						<li><a href="linha104.html">Linha 104</li></a>
+						<li><a href="linha200.html">Linha 200</li></a>
+						<li><a href="linha300.html">Linha 300</li></a>
+						<li><a href="linha400.html">Linha 400</li></a>
+					</ul>
+				</div>
+			</div>
+
+			<!-- Botão "Teste2" -->
+			<button class="botaoSidebar" onclick="window.location.href='metricas.html'">
+				<img src="../dashboard/img/mainPage.png">
+				<div class="h3">
+					<h3>Métricas</h3>
+				</div>
+			</button>
+
+			<!-- Botão "Teste3" -->
+			<button class="botaoSidebar" onclick="window.location.href='emergencia.html'">
+				<img src="../dashboard/img/mainPage.png">
+				<div class="h3">
+					<h3>Emergência</h3>
+				</div>
+			</button>
+
+			<!-- Botão "Teste4" -->
+			<button class="botaoSidebar" onclick="window.location.href='longoPrazo.html'">
+				<img src="../dashboard/img/mainPage.png">
+				<div class="h3">
+					<h3>Longo prazo</h3>
+				</div>
+			</button>
+		</div>
+		<div class="content">
+			<div class="header">
+				<header>
+					<div class="itemsHeader">
+						<h4><a href="../pages/index.html">INICIO</a></h4>
+						<h4><a href="../pages/index.html#sobre-nos">SOBRE NÓS</a></h4>
+						<h4>||</h4>
+						<button class="botao" onclick="opcaoHeader()"></button>
+						<div id="options" style="left: 94%;" class="options">
+							<a href="#">Perfil</a>
+							<a href="#">Configurações</a>
+							<a href="#">Sair</a>
+						</div>
+					</div>
+				</header>
+			</div>
+			<div class="main-content">
+				<!-- Conteúdo principal principal -->
+
+				<div class="container_api">
+					<div class="grafico">
+						<div class="h2">
+							<h2 style="color: white;">Comparação no Fluxo - Linhas 104 e 200</h2>
+						</div>
+						<canvas id="comparisonChart"></canvas>
+					</div>
+					<!-- Adicionando a nova div abaixo do gráfico de comparação -->
+					<div class="informacoes-onibus">
+						<div id="infoLinha104" class="caixa-onibus">Ônibus na Linha 104: --</div>
+						<div id="infoLinha200" class="caixa-onibus">Ônibus na Linha 200: --</div>
+					</div>
+
+					<div class="grafico">
+						<div class="h2">
+							<h2 style="color: white;">Comparação no Fluxo - Linhas 300 e 400</h2>
+						</div>
+						<canvas id="comparisonChart2"></canvas>
+					</div>
+					<!-- Adicionando a nova div abaixo do segundo gráfico de comparação -->
+					<div class="informacoes-onibus">
+						<div id="infoLinha300" class="caixa-onibus">Ônibus na Linha 300: 18</div>
+						<div id="infoLinha400" class="caixa-onibus">Ônibus na Linha 400: 25</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
+
+<script>
+	// Função para gerar um número aleatório entre min (inclusive) e max (exclusive)
+	function numeroAleatorio(min, max) {
+		return Math.floor(Math.random() * (max - min) + min);
+	}
+
+	// Função para gerar dados aleatórios para o gráfico de comparação
+	function gerarDadosAleatorios() {
+		return [numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000)];
+	}
+
+	// GRÁFICO DE COMPARAÇÃO
+	var contextoComparacao = document.getElementById('comparisonChart').getContext('2d');
+
+	var graficoComparacao = new Chart(contextoComparacao, {
+		type: 'line',
+		data: {
+			labels: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+			datasets: [{
+				label: 'Linha 104',
+				data: gerarDadosAleatorios(),
+				borderColor: '#FF5733',
+				backgroundColor: 'rgba(255, 87, 51, 0.2)',
+				pointRadius: 5,
+				pointBackgroundColor: '#FF5733',
+				pointBorderColor: '#fff',
+				pointHoverRadius: 7,
+				pointHoverBackgroundColor: '#fff',
+				pointHoverBorderColor: '#FF5733',
+				pointHitRadius: 10,
+				pointBorderWidth: 2
+			},
+			{
+				label: 'Linha 200',
+				data: gerarDadosAleatorios(),
+				borderColor: '#33FF57',
+				backgroundColor: 'rgba(51, 255, 87, 0.2)',
+				pointRadius: 5,
+				pointBackgroundColor: '#33FF57',
+				pointBorderColor: '#fff',
+				pointHoverRadius: 7,
+				pointHoverBackgroundColor: '#fff',
+				pointHoverBorderColor: '#33FF57',
+				pointHitRadius: 10,
+				pointBorderWidth: 2
+			}]
+		},
+		options: {
+			scales: {
+				x: {
+					beginAtZero: true
+				},
+				y: {
+					scaleLabel: {
+						display: true
+					},
+					ticks: {
+						beginAtZero: true
+					}
+				}
+			},
+			animation: {
+				duration: 1
+			}
+		}
+	});
+
+	// GRÁFICO DE COMPARAÇÃO 2
+	var contextoComparacao2 = document.getElementById('comparisonChart2').getContext('2d');
+
+	var graficoComparacao2 = new Chart(contextoComparacao2, {
+		type: 'line',
+		data: {
+			labels: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+			datasets: [{
+				label: 'Linha 300',
+				data: gerarDadosAleatorios(),
+				borderColor: '#FF5733',
+				backgroundColor: 'rgba(255, 87, 51, 0.2)',
+				pointRadius: 5,
+				pointBackgroundColor: '#FF5733',
+				pointBorderColor: '#fff',
+				pointHoverRadius: 7,
+				pointHoverBackgroundColor: '#fff',
+				pointHoverBorderColor: '#FF5733',
+				pointHitRadius: 10,
+				pointBorderWidth: 2
+			},
+			{
+				label: 'Linha 400',
+				data: gerarDadosAleatorios(),
+				borderColor: '#33FF57',
+				backgroundColor: 'rgba(51, 255, 87, 0.2)',
+				pointRadius: 5,
+				pointBackgroundColor: '#33FF57',
+				pointBorderColor: '#fff',
+				pointHoverRadius: 7,
+				pointHoverBackgroundColor: '#fff',
+				pointHoverBorderColor: '#33FF57',
+				pointHitRadius: 10,
+				pointBorderWidth: 2
+			}]
+		},
+		options: {
+			scales: {
+				x: {
+					beginAtZero: true
+				},
+				y: {
+					scaleLabel: {
+						display: true
+					},
+					ticks: {
+						beginAtZero: true
+					}
+				}
+			},
+			animation: {
+				duration: 1
+			}
+		}
+	});
+
+	document.addEventListener('DOMContentLoaded', function () {
+		// Atualizar dados aleatórios para o gráfico de comparação
+		function atualizarGraficoComparacao() {
+			graficoComparacao.data.datasets[0].data = gerarDadosAleatorios();
+			graficoComparacao.data.datasets[1].data = gerarDadosAleatorios();
+			graficoComparacao.update();
+		}
+
+		function atualizarGraficoComparacao2() {
+			graficoComparacao2.data.datasets[0].data = gerarDadosAleatorios();
+			graficoComparacao2.data.datasets[1].data = gerarDadosAleatorios();
+			graficoComparacao2.update();
+		}
+
+		// Atualizar informações sobre os ônibus
+		function atualizarInfoOnibus() {
+			document.getElementById('infoLinha104').innerText = `Ônibus na Linha 104: ${numeroAleatorio(10, 30)}`;
+			document.getElementById('infoLinha200').innerText = `Ônibus na Linha 200: ${numeroAleatorio(10, 30)}`;
+			document.getElementById('infoLinha300').innerText = `Ônibus na Linha 300: ${numeroAleatorio(10, 30)}`;
+			document.getElementById('infoLinha400').innerText = `Ônibus na Linha 400: ${numeroAleatorio(10, 30)}`;
+		}
+
+		// Chamando as funções para atualizar os dados ao carregar a página
+		window.onload = function () {
+			atualizarGraficoComparacao();
+			atualizarGraficoComparacao2();
+			atualizarInfoOnibus();
+		};
+
+		// Chamando as funções para atualizar os dados ao recarregar a página
+		window.addEventListener('load', function () {
+			atualizarGraficoComparacao();
+			atualizarGraficoComparacao2();
+			atualizarInfoOnibus();
+		});
+	});
+</script>
+
+<script>
+
+	//Função para o botão do usuário
+	function opcaoHeader() {
+		var options = document.getElementById("options");
+		if (options.style.display === "block") {
+			options.style.display = "none";
+		} else {
+			options.style.display = "block";
+		}
+	}
+
+	// JavaScript para o dropdown "Linhas"
+	document.addEventListener('DOMContentLoaded', (event) => {
+		const linhasButton = document.getElementById('linhasButton');
+		const linhasDropdown = document.getElementById('linhasDropdown');
+		const nextButtons = document.querySelectorAll('.botaoSidebar');
+
+		linhasButton.addEventListener('click', () => {
+			if (linhasDropdown.classList.contains('show')) {
+				linhasDropdown.classList.remove('show');
+				nextButtons.forEach(button => {
+					if (button !== linhasButton) {
+						button.style.marginTop = '0';
+					}
+				});
+			} else {
+				linhasDropdown.classList.add('show');
+				nextButtons.forEach(button => {
+					if (button !== linhasButton && button.previousElementSibling === linhasDropdown.parentElement) {
+						button.style.marginTop = `${linhasDropdown.scrollHeight}px`;
+					}
+				});
+			}
+		});
+	});
+</script>

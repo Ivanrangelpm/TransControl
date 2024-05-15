@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Dashboard - Linha 104</title>
+	<script src="../js/sessao.js"></script>
+	<link rel="stylesheet" href="../css/dashboard.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body onload="validarSessao()">
+	<div class="wrapper">
+		<div class="sidebar">
+			<!-- Conteúdo do sidebar -->
+
+			<div class="img">
+				<img src="../dashboard/img/logo.png" alt="">
+			</div>
+
+			<!-- Botão "Main page" -->
+			<button class="botaoSidebar" onclick="window.location.href='mainPage.html'">
+				<img src="../dashboard/img/mainPage.png">
+				<div class="h3">
+					<h3>Main page</h3>
+				</div>
+			</button>
+
+			<div class="dropdown-container">
+				<button class="botaoSidebar" id="linhasButton">
+					<img src="../dashboard/img/mainPage.png">
+					<div class="h3">
+						<h3>Linhas</h3>
+					</div>
+				</button>
+				<div id="linhasDropdown" class="dropdown-content">
+					<ul>
+						<li><a href="comparacao.html">Comparações</a></li>
+						<li><a href="linha104.html">Linha 104</a></li>
+						<li><a href="linha200.html">Linha 200</a></li>
+						<li><a href="linha300.html">Linha 300</a></li>
+						<li><a href="linha400.html">Linha 400</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<!-- Botão "Teste2" -->
+			<button class="botaoSidebar" onclick="window.location.href='metricas.html'">
+				<img src="../dashboard/img/mainPage.png">
+				<div class="h3">
+					<h3>Métricas</h3>
+				</div>
+			</button>
+
+			<!-- Botão "Teste3" -->
+			<button class="botaoSidebar" onclick="window.location.href='emergencia.html'">
+				<img src="../dashboard/img/mainPage.png">
+				<div class="h3">
+					<h3>Emergência</h3>
+				</div>
+			</button>
+
+			<!-- Botão "Teste4" -->
+			<button class="botaoSidebar" onclick="window.location.href='longoPrazo.html'">
+				<img src="../dashboard/img/mainPage.png">
+				<div class="h3">
+					<h3>Longo prazo</h3>
+				</div>
+			</button>
+		</div>
+		<div class="content">
+			<div class="header">
+				<header>
+					<div class="itemsHeader">
+						<h4><a href="../pages/index.html">INICIO</a></h4>
+						<h4><a href="../pages/index.html#sobre-nos">SOBRE NÓS</a></h4>
+						<h4>||</h4>
+						<button class="botao" onclick="opcaoHeader()"></button>
+						<div id="options" style="left: 94%;" class="options">
+							<a href="#">Perfil</a>
+							<a href="#">Configurações</a>
+							<a href="#">Sair</a>
+						</div>
+					</div>
+				</header>
+			</div>
+			<div class="main-content">
+				<!-- Conteúdo principal principal -->
+
+				<div class="container_api">
+					<div class="grafico">
+						<div class="h2">
+							<h2 style="color: white;">Fluxo diário - Linha 104</h2>
+						</div>
+						<canvas id="fluxoDiario"></canvas>
+					</div>
+
+					<div class="grafico">
+						<div class="h2">
+							<h2 style="color: white;">Fluxo semanal - Linha 104</h2>
+						</div>
+						<canvas id="fluxoSemanal"></canvas>
+					</div>
+
+					<div class="grafico">
+						<div class="h2">
+							<h2 style="color: white;">Fluxo mensal - Linha 104</h2>
+						</div>
+						<canvas id="fluxoMensal"></canvas>
+					</div>
+
+					<div class="onibus">
+						<h2>Ônibus rodando</h2>
+						<p>Quantidade de ônibus rodando: <span id="quantidadeOnibus"></span></p>
+					</div>
+
+					<div class="alertas-graficos">
+						<h2>Gráficos com Problemas</h2>
+						<canvas id="graficoAlertas"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/dashboard.js"></script>
+</body>
+
+</html>

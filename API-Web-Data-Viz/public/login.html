@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TransControl | Login</title>
+  <script src="./js/sessao.js"></script>
+  <link rel="stylesheet" href="./css/login.css">
+  <link rel="shortcut icon" href="../img/LogoSEMescrita.png" type="image/x-icon">
+</head>
+
+<body>
+  <header>
+    <a href="index.html"><img src="./css/img/LogoSEMescrita.png"" alt="Logo da Empresa" ></a>
+    <div class="itemsHeader">
+      <h4><a href="index.html">Início</a></h4>
+      <h4><a href="index.html#sobre-nos">Sobre Nós</a></h4>
+      <h4><a href="./Calculadora Financeiraa/Calculadora/calculadora.html">Simulador Financeiro</a></h4>
+      <h4>||</h4>
+      <buttonn class="botao" onclick="opcaoHeader()"></buttonn>
+    </div>
+  </header>
+  <div class="background">
+    <div class="underheader">
+      <div id="options" class="options">
+        <a href="login.html">Login</a>
+        <a href="TelaDeCadastro.html">Cadastro</a>
+      </div>
+    </div>
+    <div class="container">
+      <div class="alerta_erro">
+        <div class="card_erro" id="cardErro">
+          <span id="mensagem_erro"></span>
+        </div>
+      </div>
+      <div class="login">
+        <h2>Login</h2>
+        <input id="ipt_email" type="text" placeholder="E-mail" required>
+        <input id="ipt_senha" type="password" placeholder="Senha" required>
+        <button id="botaoEnviar" onclick="entrar()">Entrar</button>
+        <a href="TelaDeCadastro.html" class="link">Ainda não tem login?</a>
+        <div id="div_aguardar" class="loading-div">
+          <img src="./assets/circle-loading.gif" id="loading-gif">
+        </div>
+      </div>
+
+      <div id="div_erros_login"></div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer">
+      <div class="container">
+        <p>Feito por TransControl - SPTECH - 1CCO &copy;</p>
+      </div>
+    </div>
+  </footer>
+  <script>
+    var maxTentativas = 3;
+    var tentativas = 0;
+
+    function opcaoHeader() {
+      var options = document.getElementById("options");
+      if (options.style.display === "block") {
+        options.style.display = "none";
+      } else {
+        options.style.display = "block";
+      }
+    }
+
+    function entrar() {
+      aguardar();
+
+      var emailVar = ipt_email.value;
+      var senhaVar = ipt_senha.value;
+
+      if (emailVar == "" || senhaVar == "") {
+        cardErro.style.display = "block"
+        mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+        finalizarAguardar();
+        return false;
+      }
+      else {
+        setInterval(sumirMensagem, 5000)
+      }
+
+      console.log("FORM LOGIN: ", emailVar);
+      console.log("FORM SENHA: ", senhaVar);
+
+      fetch("/usuarios/autenticar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          emailServer: emailVar,
+          senhaServer: senhaVar
+        })
+      }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO entrar()!")
+
+        if (resposta.ok) {
+          console.log(resposta);
+
+          resposta.json().then(json => {
+            console.log(json);
+            console.log(JSON.stringify(json));
+            sessionStorage.EMAIL_USUARIO = json.email;
+            sessionStorage.NOME_USUARIO = json.nome;
+            sessionStorage.ID_USUARIO = json.id;
+            sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
+
+           
+            window.location = "./dashboard/mainPage.html";
+            
+            
+          });
+
+        } else {
+
+          console.log("Houve um erro ao tentar realizar o login!");
+
+          resposta.text().then(texto => {
+            console.error(texto);
+            finalizarAguardar(texto);
+          });
+        }
+
+      }).catch(function (erro) {
+        console.log(erro);
+      })
+
+      return false;
+    }
+
+    function sumirMensagem() {
+      cardErro.style.display = "none"
+    }
+
+    function desabilitarFormulario() {
+      var campoEmail = document.getElementById("ipt_email");
+      var campoSenha = document.getElementById("ipt_senha");
+      var botaoEnviar = document.getElementById("botaoEnviar");
+
+      campoEmail.disabled = true;
+      campoSenha.disabled = true;
+      botaoEnviar.disabled = true;
+
+      alert(
+        "Você excedeu o número máximo de tentativas de login. Tente novamente mais tarde."
+      );
+    }
+    
+  </script>
+</body>
+
+</html>

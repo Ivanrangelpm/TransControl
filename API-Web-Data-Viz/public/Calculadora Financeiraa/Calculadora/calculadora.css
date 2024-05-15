@@ -1,0 +1,217 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+body{
+    padding: 0;
+    margin: 0; 
+    background-image: url("backgroundtranscontrol.png"); 
+    background-size: cover;
+    color: black;
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+}
+
+header{
+    position: relative;
+    width: 100%;
+    height: 70px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #001d3d;
+    z-index: 1;
+}
+
+.botao {
+    width: 50px;
+    height: 50px;
+    margin-top: .9%;
+    align-items: center;
+    background-image: url("../../img/hamburguer.png");
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 100%;
+    cursor: pointer;
+    transition: 0.3s;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+img{
+    top: 0;
+    height: 200px;
+    width: 145px;
+    clip-path: inset(50px 20px 69px 0 round 50px);
+}
+
+.itemsHeader{
+    display: flex;
+    column-gap: 25px;
+    margin-right: 50px;
+    color: white;
+}
+
+a{
+    color: #fff;
+    text-decoration: none;
+}
+
+a:hover{
+    color: #f5cc00;
+    text-decoration: underline;
+}
+
+
+input{
+    width: 150px;
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+    outline: none;
+}
+
+.mdFrota{
+    width: 400px;
+    margin-right: auto;
+    margin-left: auto;
+    /* background-color: #831010; */
+}
+
+.container-Pfrota {
+    position: relative;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+    z-index: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.container-Cfrota {
+    width: calc(50% - 20px);
+    max-width: 35rem;
+    height: auto;
+    flex-direction: column;
+    display: flex;
+    margin-bottom: 40px;
+    background-color: rgba(255, 255, 255, 0.616);
+    margin-right: 20px;
+    margin-left: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.titleFrota{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: auto;
+    margin-left: auto;
+    height: 60px;
+    width: 250px;
+   border-radius: 5%;
+    transform: translateY(-45px);
+    background-color: #f5cc00;
+    color: white;
+}
+
+.inpFrotas{
+    border: 1px solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-bottom: 35px;
+    margin-top: 10px;
+}
+
+.btnCalc{
+    width: 160px;
+    font-size: 25px;
+    font-family: monospace;
+    background-color: #001d3d;
+    color: white;
+    border: 2px solid #f5cc00;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.btnCalc:hover{
+    background-color: #262523;
+}
+
+.divMsg{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    border: 2px solid;
+}
+
+.txtinner{
+    font-weight: bold;
+}
+
+.txtresults {
+    color: #db0000;
+    font-weight: bolder;
+}
+
+.divresults {
+    margin: 10%;
+    background-color: white;
+}
+
+.divseparator {
+    background-color: #262523;
+    width: 100%;
+    height: 3px;
+    justify-content: center;
+}
+  
+.botao {
+    width: 50px;
+    height: 50px;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 100%;
+    cursor: pointer;
+    transition: 0.3s;
+    align-items: center;
+    justify-content: center;
+
+  }
+  
+  .botao:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.2);
+  }
+  
+  .options a {
+    display: block;
+    padding: 5px;
+    right: 0;
+    text-decoration: none;
+    color: #333;
+    
+  }
+  
+  .options a:hover {
+    background-color: #ddd;
+  }
