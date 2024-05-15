@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Dashboard - Emergência</title>
+	<title>Dashboard - Comparação</title>
 	<link rel="stylesheet" href="dashboard.css">
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -26,7 +26,6 @@
 				</div>
 			</button>
 
-			<!-- Botão "Teste1" -->
 			<div class="dropdown-container">
 				<button class="botaoSidebar" id="linhasButton">
 					<img src="../dashboard/img/mainPage.png">
@@ -62,7 +61,7 @@
 			</button>
 
 			<!-- Botão "Teste4" -->
-			<button class="botaoSidebar" onclick="window.location.href='emergencia.html'">
+			<button class="botaoSidebar" onclick="window.location.href='longoPrazo.html'">
 				<img src="../dashboard/img/mainPage.png">
 				<div class="h3">
 					<h3>Longo prazo</h3>
@@ -79,9 +78,7 @@
 						<h4><a href="../pages/index.html">INICIO</a></h4>
 						<h4><a href="../pages/index.html#sobre-nos">SOBRE NÓS</a></h4>
 						<h4>||</h4>
-						<div class="divBotaoHeader">
-							<button class="botao" onclick="opcaoHeader()"></button>
-						</div>
+						<button class="botao" onclick="opcaoHeader()"></button>
 						<div id="options" style="left: 94%;" class="options">
 							<a href="#">Perfil</a>
 							<a href="#">Configurações</a>
@@ -95,10 +92,23 @@
 
 				<div class="container_api">
 					<!-- <div class="h2"><h2>DADOS SEMESTRAIS</h2></div> -->
-
-					<div class="grafico2">
+					<div class="grafico">
 						<div class="h2">
-							<h2 style="color: white;">Métrica de março - 2024</h2>
+							<h2 style="color: white;">Fluxo diário</h2>
+						</div>
+						<canvas id="myChart"></canvas>
+					</div>
+
+					<div class="grafico">
+						<div class="h2">
+							<h2 style="color: white;">fluxo semanal</h2>
+						</div>
+						<canvas id="GrafLinha"></canvas>
+					</div>
+
+					<div class="grafico">
+						<div class="h2">
+							<h2 style="color: white;">fluxo mensal</h2>
 						</div>
 						<canvas id="GrafLinha2"></canvas>
 					</div>
@@ -112,10 +122,105 @@
 
 </html>
 
+<script>
+	const elementos = document.querySelectorAll('#myChart');
+	//const elementos = document.querySelectorAll('#myChart, #myChart2');
+
+	elementos.forEach(elemento => {
+
+		const gradient = elemento.getContext('2d').createLinearGradient(0, 0, 0, 400);
+		gradient.addColorStop(0, 'rgba(24, 213, 239, 0.4)'); // Cor mais transparente
+		gradient.addColorStop(1, 'rgba(24, 213, 239, 0.1)'); // Cor mais sólida
+
+
+		new Chart(elemento, {
+			type: 'bar',
+			data: {
+
+				labels: ['6:00', '10:00', '12:00', '15:00', '19:00', '21:00', '00:00'],
+				datasets: [{
+					label: 'Entradas diárias',
+					data: [1000, 1300, 3000, 1500, 2200, 1200, 800],
+					borderWidth: 2,
+					backgroundColor: gradient,
+					borderColor: 'rgba(24, 213, 239, 1)',
+
+
+				}]
+			},
+			options: {
+				scales: {
+					y: {
+						beginAtZero: true
+					}
+				},
+				indexAxis: 'x',
+				barPercentage: 0.6, // Colocar a largura dos dados
+			}
+		});
+	});
+
+	// GRÁFICO DE LINHA!!!!!!!!!!!!!!!!
+	var contextoGrafLinha = document.getElementById('GrafLinha').getContext('2d');
+
+	var GrafLinha = new Chart(
+		contextoGrafLinha,
+		{
+			type: 'line',
+			data: {
+				labels: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado'],
+				datasets: [{
+					label: 'Dados',
+					data: [7000, 18000, 13000, 18000, 12000, 22000, 19000],
+					borderColor: '#ffd902',
+					backgroundColor: '#ffe135',
+					pointRadius: 5, // Tamanho dos pontos no gráfico
+					pointBackgroundColor: '#ffd902', // Cor dos pontos
+					pointBorderColor: '#fff', // Cor da borda dos pontos
+					pointHoverRadius: 7, // Tamanho dos pontos ao passar o mouse
+					pointHoverBackgroundColor: '#fff', // Cor de fundo dos pontos ao passar o mouse
+					pointHoverBorderColor: '#ffd902', // Cor da borda dos pontos ao passar o mouse
+					pointHitRadius: 10, // Raio de detecção do mouse para os pontos
+					pointBorderWidth: 2 // Largura da borda dos pontos
+				}]
+			},
+			options: {
+				xAxes: [{
+					distribution: 'series',
+					ticks: {
+						beginAtZero: true
+					}
+				}],
+				yAxes: [{
+					scaleLabel: {
+						display: true
+					},
+					ticks: {
+						beginAtZero: true
+					}
+				}]
+			},
+			animation: {
+				duration: 1
+			}
+		}
+
+	);
+
+</script>
 
 
 <script>
 
+	//Função para o botão do usuário
+	function opcaoHeader() {
+		var options = document.getElementById("options");
+		if (options.style.display === "block") {
+			options.style.display = "none";
+		} else {
+			options.style.display = "block";
+		}
+	}
 
 
 
@@ -130,9 +235,9 @@
 		{
 			type: 'line',
 			data: {
-				labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'],
+				labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
 				datasets: [{
-					label: 'Dados registrados',
+					label: 'Dados',
 					data: [40000, 55000, 30000, 43000],
 					borderColor: '#ffd902',
 					backgroundColor: '#ffe135',
@@ -144,19 +249,6 @@
 					pointHoverBorderColor: '#ffd902', // Cor da borda dos pontos ao passar o mouse
 					pointHitRadius: 10, // Raio de detecção do mouse para os pontos
 					pointBorderWidth: 2 // Largura da borda dos pontos
-				},
-				{
-					label: 'Dados mínimos',
-					data: [50000, 50000, 50000, 50000],
-					borderColor: '#00ccff',
-					backgroundColor: '#66d9ff',
-					pointRadius: 5,
-					pointBackgroundColor: '#00ccff',
-					pointBorderColor: '#fff',
-					pointHoverRadius: 7,
-					pointHoverBackgroundColor: '#fff',
-					pointHoverBorderColor: '#00ccff',
-					pointHitRadius: 10
 				}]
 			},
 			options: {
