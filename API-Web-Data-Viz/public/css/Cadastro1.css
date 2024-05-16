@@ -26,6 +26,7 @@ a{
   margin-top: 2%;
   padding-top: 20px;
   width: 30%;
+  height: 600px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -46,6 +47,7 @@ h2 {
 input[type="text"],
 input[type="password"],
 input[type="email"],
+select,
 button {
   display: block;
   width: 89%;
@@ -54,6 +56,7 @@ button {
   border: 1px solid #001d3d;
   border-radius: 5px;
 }
+
 
 button {
   background-color: #001d3d;
@@ -99,6 +102,7 @@ img {
   clip-path: inset(50px 20px 69px 0 round 50px);
 }
 
+
 .itemsHeader {
   display: flex;
   column-gap: 25px;
@@ -117,7 +121,7 @@ img {
   width: 30px;
   height: 30px;
   align-items: center;
-  background-image: url('./img/hamburguer.png;');
+  background-image: url('./img/hamburguer.png');
   background-size: cover;
   background-color: transparent;
   border: none;

@@ -40,6 +40,7 @@ a{
   display: flex;
   justify-content: center;
   align-items: center;
+  
 }
 
 h2 {
@@ -48,6 +49,8 @@ h2 {
 
 input[type="text"],
 input[type="password"],
+input[type="email"],
+select,
 button {
   display: block;
   width: 89%;
@@ -73,6 +76,30 @@ button {
 }
 
 button:hover {
+  background-color: #114379;
+}
+
+.buttonCadastrar {
+  display: block;
+  width: 89%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #001d3d;
+  border-radius: 5px;
+}
+
+
+.buttonCadastrar {
+  background-color: #001d3d;
+  color: #fff;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  transition: .4s ease-in-out;
+  margin-top: 1rem;
+}
+
+.buttonCadastrar:hover {
   background-color: #114379;
 }
 
@@ -159,6 +186,21 @@ img {
   text-decoration: underline #f5cc00;
   color: #f5cc00;
 }
+
+.Cadastro {
+  background-color: #ffffff7e;
+  padding: 20px;
+  height: 85%;
+  width: 20%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0px 0px 34px 12px rgba(0,0,0,0.75);
+}
+
 
 /* FOOTER */
 
