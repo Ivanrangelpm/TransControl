@@ -92,32 +92,47 @@
 				<!-- Conteúdo principal principal -->
 
 				<div class="container_api">
-					<!-- <div class="h2"><h2>DADOS SEMESTRAIS</h2></div> -->
-					<div class="grafico">
+
+					<div class="grafico grafico-total">
 						<div class="h2">
-							<h2 style="color: white;">Margem semestral</h2>
+							<h2 style="color: white;">Total de Ônibus Rodando</h2>
+							<h2 style="color: chartreuse;">267</h2>
 						</div>
-						<canvas id="myChart"></canvas>
+					</div>
+
+					<div class="grafico grafico-total">
+						<div class="h2">
+							<h2 style="color: white;">Média de Fluxo de Pessoas</h2>
+							<h2 style="color: chartreuse;">270.7</h2>
+						</div>
 					</div>
 
 					<div class="grafico">
 						<div class="h2">
-							<h2 style="color: white;">Margem semestral</h2>
+							<h2 style="color: white;">Comparação por semana</h2>
 						</div>
-						<canvas id="GrafLinha"></canvas>
+						<canvas id="comparisonChart"></canvas>
 					</div>
 
+					<!-- Gráfico de pizza para alertas -->
+					<div class="grafico-pizza">
+						<div class="h2">
+							<h2 style="color: white;">Alertas Gerais</h2>
+						</div>
+						<canvas id="graficoAlertas"></canvas>
+					</div>
 				</div>
 
 				<!-- DIVS DOS ALERTAS -->
 				<div class="alertas">
 					<div class="emergencia" onclick="window.location.href='emergencia.html'">
-					<div class="divAlertText">Emergência: 2 </div></div>
+						<div class="divAlertText">Emergência: 2 </div>
+					</div>
 					<!-- Alerta vermelho -->
 					<div class="atencao">
 						<div class="divAlertText">Atenção: 2 </div>
 					</div> <!-- Alerta amarelo -->
-					
+
 				</div>
 			</div>
 		</div>
@@ -126,7 +141,7 @@
 
 </html>
 
-<script>
+<!-- <script>
 	const elementos = document.querySelectorAll('#myChart');
 	//const elementos = document.querySelectorAll('#myChart, #myChart2');
 
@@ -211,7 +226,7 @@
 
 	);
 
-</script>
+</script> -->
 
 
 <script>
@@ -225,7 +240,7 @@
 			options.style.display = "block";
 		}
 	}
-	
+
 	// JavaScript para o dropdown "Linhas"
 	document.addEventListener('DOMContentLoaded', (event) => {
 		const linhasButton = document.getElementById('linhasButton');
@@ -251,4 +266,123 @@
 		});
 	});
 
+</script>
+
+<script>
+	function numeroAleatorio(min, max) {
+		return Math.floor(Math.random() * (max - min) + min);
+	}
+
+	// Função para gerar dados aleatórios para o gráfico de comparação
+	function gerarDadosAleatorios() {
+		return [numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000)];
+	}
+
+	// GRÁFICO DE COMPARAÇÃO
+	var contextoComparacao = document.getElementById('comparisonChart').getContext('2d');
+
+	var graficoComparacao = new Chart(contextoComparacao, {
+		type: 'line',
+		data: {
+			labels: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+			datasets: [{
+				label: 'Linha 104',
+				data: gerarDadosAleatorios(),
+				borderColor: '#FF5733',
+				backgroundColor: 'rgba(255, 87, 51, 0.2)',
+				pointRadius: 5,
+				pointBackgroundColor: '#FF5733',
+				pointBorderColor: '#fff',
+				pointHoverRadius: 7,
+				pointHoverBackgroundColor: '#fff',
+				pointHoverBorderColor: '#FF5733',
+				pointHitRadius: 10,
+				pointBorderWidth: 2
+			},
+			{
+				label: 'Linha 200',
+				data: gerarDadosAleatorios(),
+				borderColor: '#33FF57',
+				backgroundColor: 'rgba(51, 255, 87, 0.2)',
+				pointRadius: 5,
+				pointBackgroundColor: '#33FF57',
+				pointBorderColor: '#fff',
+				pointHoverRadius: 7,
+				pointHoverBackgroundColor: '#fff',
+				pointHoverBorderColor: '#33FF57',
+				pointHitRadius: 10,
+				pointBorderWidth: 2
+			},{
+				label: 'Linha 300',
+				data: gerarDadosAleatorios(),
+				borderColor: '#33FF57',
+				backgroundColor: 'rgba(145, 29, 89, 0.8)',
+				pointRadius: 5,
+				pointBackgroundColor: '#911d59cc',
+				pointBorderColor: '#fff',
+				pointHoverRadius: 7,
+				pointHoverBackgroundColor: '#fff',
+				pointHoverBorderColor: '#911d59cc',
+				pointHitRadius: 10,
+				pointBorderWidth: 2
+			}
+		]
+		},
+		options: {
+			scales: {
+				x: {
+					beginAtZero: true
+				},
+				y: {
+					scaleLabel: {
+						display: true
+					},
+					ticks: {
+						beginAtZero: true
+					}
+				}
+			},
+			animation: {
+				duration: 1
+			}
+		}
+	});
+
+	document.addEventListener('DOMContentLoaded', function () {
+		// Atualizar dados aleatórios para o gráfico de comparação
+		function atualizarGraficoComparacao() {
+			graficoComparacao.data.datasets[0].data = gerarDadosAleatorios();
+			graficoComparacao.data.datasets[1].data = gerarDadosAleatorios();
+			graficoComparacao.update();
+		}
+	});
+
+	// Criar gráfico de pizza para alertas
+	const contextoGraficoAlertas = document.getElementById('graficoAlertas').getContext('2d');
+	new Chart(contextoGraficoAlertas, {
+		type: 'pie',
+		data: {
+			labels: ['Em Alerta', 'Normal'],
+			datasets: [{
+				label: 'Alertas',
+				data: [alertas, 12 - alertas],
+				backgroundColor: ['#ff0000', '#00ff00']
+			}]
+		},
+		options: {
+			responsive: true,
+			plugins: {
+				legend: {
+					position: 'top'
+				},
+				tooltip: {
+					callbacks: {
+						label: function (tooltipItem) {
+							return tooltipItem.label + ': ' + tooltipItem.raw;
+						}
+					}
+				}
+			}
+		}
+	});
 </script>
