@@ -100,18 +100,18 @@
 						</div>
 					</div>
 
-					<div class="grafico grafico-total">
+					<div class="grafico-total">
 						<div class="h2">
 							<h2 style="color: white;">Média de Fluxo de Pessoas</h2>
 							<h2 style="color: chartreuse;">270.7</h2>
 						</div>
 					</div>
 
-					<div class="grafico">
+					<div class="comparacao-main">
 						<div class="h2">
 							<h2 style="color: white;">Comparação por semana</h2>
 						</div>
-						<canvas id="comparisonChart"></canvas>
+						<canvas id="comparisonChart" width="700" height="190"></canvas>
 					</div>
 
 					<!-- Gráfico de pizza para alertas -->
@@ -282,14 +282,14 @@
 	var contextoComparacao = document.getElementById('comparisonChart').getContext('2d');
 
 	var graficoComparacao = new Chart(contextoComparacao, {
-		type: 'line',
+		type: 'bar',
 		data: {
 			labels: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
 			datasets: [{
 				label: 'Linha 104',
 				data: gerarDadosAleatorios(),
 				borderColor: '#FF5733',
-				backgroundColor: 'rgba(255, 87, 51, 0.2)',
+				backgroundColor: 'rgba(255, 87, 51)',
 				pointRadius: 5,
 				pointBackgroundColor: '#FF5733',
 				pointBorderColor: '#fff',
@@ -303,7 +303,7 @@
 				label: 'Linha 200',
 				data: gerarDadosAleatorios(),
 				borderColor: '#33FF57',
-				backgroundColor: 'rgba(51, 255, 87, 0.2)',
+				backgroundColor: 'rgba(51, 255, 87)',
 				pointRadius: 5,
 				pointBackgroundColor: '#33FF57',
 				pointBorderColor: '#fff',
@@ -316,13 +316,26 @@
 				label: 'Linha 300',
 				data: gerarDadosAleatorios(),
 				borderColor: '#33FF57',
-				backgroundColor: 'rgba(145, 29, 89, 0.8)',
+				backgroundColor: 'rgba(145, 29, 89)',
 				pointRadius: 5,
 				pointBackgroundColor: '#911d59cc',
 				pointBorderColor: '#fff',
 				pointHoverRadius: 7,
 				pointHoverBackgroundColor: '#fff',
 				pointHoverBorderColor: '#911d59cc',
+				pointHitRadius: 10,
+				pointBorderWidth: 2
+			},{
+				label: 'Linha 400',
+				data: gerarDadosAleatorios(),
+				borderColor: '#33FF57',
+				backgroundColor: 'rgba(51, 255, 87)',
+				pointRadius: 5,
+				pointBackgroundColor: '#33FF57',
+				pointBorderColor: '#fff',
+				pointHoverRadius: 7,
+				pointHoverBackgroundColor: '#fff',
+				pointHoverBorderColor: '#33FF57',
 				pointHitRadius: 10,
 				pointBorderWidth: 2
 			}

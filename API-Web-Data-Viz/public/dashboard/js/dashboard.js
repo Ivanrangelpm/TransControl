@@ -102,8 +102,8 @@ function opcaoHeader() {
 }
 
 // JavaScript para o dropdown "Linhas"
-document.addEventListener('DOMContentLoaded', (event) => {
-    const linhasButton = document.getElementById('linhasButton');
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const linhasButton = document.getElementById('linhasButton');
     const linhasDropdown = document.getElementById('linhasDropdown');
     const nextButtons = document.querySelectorAll('.botaoSidebar');
 
