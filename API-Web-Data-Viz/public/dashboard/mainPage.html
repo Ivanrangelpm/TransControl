@@ -10,7 +10,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="validarSessao()">
+<body onload="validarSessao(); atualizarGraficoPizza();">
 	<div class="wrapper">
 		<div class="sidebar">
 			<!-- Conteúdo do sidebar -->
@@ -36,23 +36,14 @@
 				</button>
 				<div id="linhasDropdown" class="dropdown-content">
 					<ul>
-						<li><a href="comparacao.html">Comparações</li></a>
-						<li><a href="linha104.html">Linha 104</li></a>
-						<li><a href="linha200.html">Linha 200</li></a>
-						<li><a href="linha300.html">Linha 300</li></a>
-						<li><a href="linha400.html">Linha 400</li></a>
+						<li><a href="comparacao.html">Comparações</a></li>
+						<li><a href="linha104.html">Linha 104</a></li>
+						<li><a href="linha200.html">Linha 200</a></li>
+						<li><a href="linha300.html">Linha 300</a></li>
+						<li><a href="linha400.html">Linha 400</a></li>
 					</ul>
 				</div>
 			</div>
-
-
-			<!-- Botão "Teste2" -->
-			<button class="botaoSidebar" onclick="window.location.href='metricas.html'">
-				<img src="../dashboard/img/mainPage.png">
-				<div class="h3">
-					<h3>Métricas</h3>
-				</div>
-			</button>
 
 			<!-- Botão "Teste3" -->
 			<button class="botaoSidebar" onclick="window.location.href='emergencia.html'">
@@ -69,12 +60,10 @@
 					<h3>Longo prazo</h3>
 				</div>
 			</button>
-
 		</div>
 		<div class="content">
 			<div class="header">
 				<header>
-
 					<div class="itemsHeader">
 						<h4><a href="../pages/index.html">INICIO</a></h4>
 						<h4><a href="../pages/index.html#sobre-nos">SOBRE NÓS</a></h4>
@@ -89,21 +78,18 @@
 				</header>
 			</div>
 			<div class="main-content">
-				<!-- Conteúdo principal principal -->
-
 				<div class="container_api">
-
 					<div class="grafico grafico-total">
 						<div class="h2">
 							<h2 style="color: white;">Total de Ônibus Rodando</h2>
-							<h2 style="color: chartreuse;">267</h2>
+							<h2 style="color: chartreuse; font-size: 40px;">267</h2>
 						</div>
 					</div>
 
 					<div class="grafico-total">
 						<div class="h2">
 							<h2 style="color: white;">Média de Fluxo de Pessoas</h2>
-							<h2 style="color: chartreuse;">270.7</h2>
+							<h2 style="color: chartreuse; font-size: 40px;">270.7</h2>
 						</div>
 					</div>
 
@@ -117,7 +103,7 @@
 					<!-- Gráfico de pizza para alertas -->
 					<div class="grafico-pizza">
 						<div class="h2">
-							<h2 style="color: white;">Alertas Gerais</h2>
+							<h2 style="color: white;">Alertas Das Linhas</h2>
 						</div>
 						<canvas id="graficoAlertas"></canvas>
 					</div>
@@ -126,276 +112,155 @@
 				<!-- DIVS DOS ALERTAS -->
 				<div class="alertas">
 					<div class="emergencia" onclick="window.location.href='emergencia.html'">
-						<div class="divAlertText">Emergência: 2 </div>
+						<div class="divAlertText">Emergência: 2</div>
 					</div>
 					<!-- Alerta vermelho -->
 					<div class="atencao">
-						<div class="divAlertText">Atenção: 2 </div>
+						<div class="divAlertText">Atenção: 2</div>
 					</div> <!-- Alerta amarelo -->
-
 				</div>
 			</div>
 		</div>
 	</div>
-</body>
 
-</html>
+	<script>
+		//Função para o botão do usuário
+		function opcaoHeader() {
+			var options = document.getElementById("options");
+			if (options.style.display === "block") {
+				options.style.display = "none";
+			} else {
+				options.style.display = "block";
+			}
+		}
 
-<!-- <script>
-	const elementos = document.querySelectorAll('#myChart');
-	//const elementos = document.querySelectorAll('#myChart, #myChart2');
+		// JavaScript para o dropdown "Linhas"
+		document.addEventListener('DOMContentLoaded', (event) => {
+			const linhasButton = document.getElementById('linhasButton');
+			const linhasDropdown = document.getElementById('linhasDropdown');
+			const nextButtons = document.querySelectorAll('.botaoSidebar');
 
-	elementos.forEach(elemento => {
+			linhasButton.addEventListener('click', () => {
+				if (linhasDropdown.classList.contains('show')) {
+					linhasDropdown.classList.remove('show');
+					nextButtons.forEach(button => {
+						if (button !== linhasButton) {
+							button.style.marginTop = '0';
+						}
+					});
+				} else {
+					linhasDropdown.classList.add('show');
+					nextButtons.forEach(button => {
+						if (button !== linhasButton && button.previousElementSibling === linhasDropdown.parentElement) {
+							button.style.marginTop = `${linhasDropdown.scrollHeight}px`;
+						}
+					});
+				}
+			});
+		});
 
-		const gradient = elemento.getContext('2d').createLinearGradient(0, 0, 0, 400);
-		gradient.addColorStop(0, 'rgba(24, 213, 239, 0.4)'); // Cor mais transparente
-		gradient.addColorStop(1, 'rgba(24, 213, 239, 0.1)'); // Cor mais sólida
+		function numeroAleatorio(min, max) {
+			return Math.floor(Math.random() * (max - min) + min);
+		}
 
+		// Função para gerar dados aleatórios para o gráfico de comparação
+		function gerarDadosAleatorios() {
+			return [numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000)];
+		}
 
-		new Chart(elemento, {
+		// GRÁFICO DE COMPARAÇÃO
+		var contextoComparacao = document.getElementById('comparisonChart').getContext('2d');
+		var graficoComparacao = new Chart(contextoComparacao, {
 			type: 'bar',
 			data: {
-
-				labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'],
+				labels: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
 				datasets: [{
-					label: '# of Votes',
-					data: [12, 19, 3, 5, 2, 3],
+					label: 'Linha 104',
+					data: gerarDadosAleatorios(),
+					borderColor: '#0077b6',
+					backgroundColor: '#0076b6b6',
 					borderWidth: 2,
-					backgroundColor: gradient,
-					borderColor: 'rgba(24, 213, 239, 1)',
-
-
-				}]
+					borderRadius: 5,
+					borderSkipped: false
+				},
+				{
+					label: 'Linha 200',
+					data: gerarDadosAleatorios(),
+					borderColor: '#00b4d8',
+					backgroundColor: '#00b4d888',
+					borderWidth: 2,
+					borderRadius: 5,
+					borderSkipped: false
+				}, {
+					label: 'Linha 300',
+					data: gerarDadosAleatorios(),
+					borderColor: '#caf0f8',
+					backgroundColor: '#caf0f8dc',
+					borderWidth: 2,
+					borderRadius: 5,
+					borderSkipped: false
+				}, {
+					label: 'Linha 400',
+					data: gerarDadosAleatorios(),
+					borderColor: '#90e0ef',
+					backgroundColor: '#90e1ef85',
+					borderWidth: 2,
+					borderRadius: 5,
+					borderSkipped: false
+				}
+				]
 			},
 			options: {
 				scales: {
-					y: {
+					x: {
 						beginAtZero: true
+					},
+					y: {
+						scaleLabel: {
+							display: true
+						},
+						ticks: {
+							beginAtZero: true
+						}
 					}
 				},
-				indexAxis: 'x',
-				barPercentage: 0.6, // Colocar a largura dos dados
+				animation: {
+					duration: 1
+				}
 			}
 		});
-	});
 
-	// GRÁFICO DE LINHA!!!!!!!!!!!!!!!!
-	var contextoGrafLinha = document.getElementById('GrafLinha').getContext('2d');
+		// Função para atualizar o gráfico de pizza
+		var alertas = numeroAleatorio(0, 12); // Gera um número aleatório de alertas entre 0 e 12
 
-	var GrafLinha = new Chart(
-		contextoGrafLinha,
-		{
-			type: 'line',
+		var contextoGraficoAlertas = document.getElementById('graficoAlertas').getContext('2d');
+		new Chart(contextoGraficoAlertas, {
+			type: 'pie',
 			data: {
-				labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+				labels: ['Em Alerta', 'Normal'],
 				datasets: [{
-					label: 'Dados',
-					data: [20, 22, 24, 26, 28, 30],
-					borderColor: '#ffd902',
-					backgroundColor: '#ffe135',
-					pointRadius: 5, // Tamanho dos pontos no gráfico
-					pointBackgroundColor: '#ffd902', // Cor dos pontos
-					pointBorderColor: '#fff', // Cor da borda dos pontos
-					pointHoverRadius: 7, // Tamanho dos pontos ao passar o mouse
-					pointHoverBackgroundColor: '#fff', // Cor de fundo dos pontos ao passar o mouse
-					pointHoverBorderColor: '#ffd902', // Cor da borda dos pontos ao passar o mouse
-					pointHitRadius: 10, // Raio de detecção do mouse para os pontos
-					pointBorderWidth: 2 // Largura da borda dos pontos
+					label: 'Alertas',
+					data: [alertas, 12 - alertas],
+					backgroundColor: ['#ff0000', '#00ff00']
 				}]
 			},
 			options: {
-				xAxes: [{
-					distribution: 'series',
-					ticks: {
-						beginAtZero: true
-					}
-				}],
-				yAxes: [{
-					scaleLabel: {
-						display: true
+				responsive: true,
+				plugins: {
+					legend: {
+						position: 'top'
 					},
-					ticks: {
-						beginAtZero: true
-					}
-				}]
-			},
-			animation: {
-				duration: 1
-			}
-		}
-
-	);
-
-</script> -->
-
-
-<script>
-
-	//Função para o botão do usuário
-	function opcaoHeader() {
-		var options = document.getElementById("options");
-		if (options.style.display === "block") {
-			options.style.display = "none";
-		} else {
-			options.style.display = "block";
-		}
-	}
-
-	// JavaScript para o dropdown "Linhas"
-	document.addEventListener('DOMContentLoaded', (event) => {
-		const linhasButton = document.getElementById('linhasButton');
-		const linhasDropdown = document.getElementById('linhasDropdown');
-		const nextButtons = document.querySelectorAll('.botaoSidebar');
-
-		linhasButton.addEventListener('click', () => {
-			if (linhasDropdown.classList.contains('show')) {
-				linhasDropdown.classList.remove('show');
-				nextButtons.forEach(button => {
-					if (button !== linhasButton) {
-						button.style.marginTop = '0';
-					}
-				});
-			} else {
-				linhasDropdown.classList.add('show');
-				nextButtons.forEach(button => {
-					if (button !== linhasButton && button.previousElementSibling === linhasDropdown.parentElement) {
-						button.style.marginTop = `${linhasDropdown.scrollHeight}px`;
-					}
-				});
-			}
-		});
-	});
-
-</script>
-
-<script>
-	function numeroAleatorio(min, max) {
-		return Math.floor(Math.random() * (max - min) + min);
-	}
-
-	// Função para gerar dados aleatórios para o gráfico de comparação
-	function gerarDadosAleatorios() {
-		return [numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000)];
-	}
-
-	// GRÁFICO DE COMPARAÇÃO
-	var contextoComparacao = document.getElementById('comparisonChart').getContext('2d');
-
-	var graficoComparacao = new Chart(contextoComparacao, {
-		type: 'bar',
-		data: {
-			labels: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-			datasets: [{
-				label: 'Linha 104',
-				data: gerarDadosAleatorios(),
-				borderColor: '#FF5733',
-				backgroundColor: 'rgba(255, 87, 51)',
-				pointRadius: 5,
-				pointBackgroundColor: '#FF5733',
-				pointBorderColor: '#fff',
-				pointHoverRadius: 7,
-				pointHoverBackgroundColor: '#fff',
-				pointHoverBorderColor: '#FF5733',
-				pointHitRadius: 10,
-				pointBorderWidth: 2
-			},
-			{
-				label: 'Linha 200',
-				data: gerarDadosAleatorios(),
-				borderColor: '#33FF57',
-				backgroundColor: 'rgba(51, 255, 87)',
-				pointRadius: 5,
-				pointBackgroundColor: '#33FF57',
-				pointBorderColor: '#fff',
-				pointHoverRadius: 7,
-				pointHoverBackgroundColor: '#fff',
-				pointHoverBorderColor: '#33FF57',
-				pointHitRadius: 10,
-				pointBorderWidth: 2
-			},{
-				label: 'Linha 300',
-				data: gerarDadosAleatorios(),
-				borderColor: '#33FF57',
-				backgroundColor: 'rgba(145, 29, 89)',
-				pointRadius: 5,
-				pointBackgroundColor: '#911d59cc',
-				pointBorderColor: '#fff',
-				pointHoverRadius: 7,
-				pointHoverBackgroundColor: '#fff',
-				pointHoverBorderColor: '#911d59cc',
-				pointHitRadius: 10,
-				pointBorderWidth: 2
-			},{
-				label: 'Linha 400',
-				data: gerarDadosAleatorios(),
-				borderColor: '#33FF57',
-				backgroundColor: 'rgba(51, 255, 87)',
-				pointRadius: 5,
-				pointBackgroundColor: '#33FF57',
-				pointBorderColor: '#fff',
-				pointHoverRadius: 7,
-				pointHoverBackgroundColor: '#fff',
-				pointHoverBorderColor: '#33FF57',
-				pointHitRadius: 10,
-				pointBorderWidth: 2
-			}
-		]
-		},
-		options: {
-			scales: {
-				x: {
-					beginAtZero: true
-				},
-				y: {
-					scaleLabel: {
-						display: true
-					},
-					ticks: {
-						beginAtZero: true
-					}
-				}
-			},
-			animation: {
-				duration: 1
-			}
-		}
-	});
-
-	document.addEventListener('DOMContentLoaded', function () {
-		// Atualizar dados aleatórios para o gráfico de comparação
-		function atualizarGraficoComparacao() {
-			graficoComparacao.data.datasets[0].data = gerarDadosAleatorios();
-			graficoComparacao.data.datasets[1].data = gerarDadosAleatorios();
-			graficoComparacao.update();
-		}
-	});
-
-	// Criar gráfico de pizza para alertas
-	const contextoGraficoAlertas = document.getElementById('graficoAlertas').getContext('2d');
-	new Chart(contextoGraficoAlertas, {
-		type: 'pie',
-		data: {
-			labels: ['Em Alerta', 'Normal'],
-			datasets: [{
-				label: 'Alertas',
-				data: [alertas, 12 - alertas],
-				backgroundColor: ['#ff0000', '#00ff00']
-			}]
-		},
-		options: {
-			responsive: true,
-			plugins: {
-				legend: {
-					position: 'top'
-				},
-				tooltip: {
-					callbacks: {
-						label: function (tooltipItem) {
-							return tooltipItem.label + ': ' + tooltipItem.raw;
+					tooltip: {
+						callbacks: {
+							label: function (tooltipItem) {
+								return tooltipItem.label + ': ' + tooltipItem.raw;
+							}
 						}
 					}
 				}
 			}
-		}
-	});
-</script>
+		});
+	</script>
+</body>
+
+</html>
