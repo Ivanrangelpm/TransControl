@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Dashboard - Emergência</title>
-	<script src="../js/sessao.js"></script>
+	<!-- <script src="../js/sessao.js"></script> -->
 	<link rel="stylesheet" href="../css/dashboard.css">
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -55,7 +55,7 @@
 			</button>
 
 			<!-- Botão "Teste4" -->
-			<button class="botaoSidebar" onclick="window.location.href='emergencia.html'">
+			<button class="botaoSidebar" onclick="window.location.href='longoPrazo.html'">
 				<img src="../dashboard/img/mainPage.png">
 				<div class="h3">
 					<h3>Longo prazo</h3>
@@ -93,7 +93,14 @@
 						<div class="h2">
 							<h2 style="color: white;">Fluxo semanal - Linha 104</h2>
 						</div>
-						<canvas id="GrafLinha2"></canvas>
+						<canvas id="fluxoSemanal104"></canvas>
+					</div>
+
+					<div class="grafico2">
+						<div class="h2">
+							<h2 style="color: white;">Fluxo semanal - Linha 200</h2>
+						</div>
+						<canvas id="fluxoSemanal200"></canvas>
 					</div>
 
 				</div>
@@ -116,40 +123,36 @@
 	// GRÁFICO DE LINHA DE ERRO!!!!!!!
 
 
-	var contextoGrafLinha2 = document.getElementById('GrafLinha2').getContext('2d');
+	var contextoFluxoSemanal104 = document.getElementById('fluxoSemanal104').getContext('2d');
 
-	var GrafLinha2 = new Chart(
-		contextoGrafLinha2,
+	var fluxoSemanal104 = new Chart(
+		contextoFluxoSemanal104,
 		{
 			type: 'line',
 			data: {
-				labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'],
+				labels: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
 				datasets: [{
 					label: 'Dados registrados',
-					data: [40000, 55000, 30000, 43000],
-					borderColor: '#ffd902',
-					backgroundColor: '#ffe135',
+					data: [40000, 55000, 30000, 43000, 53000, 37000, 43000],
+					borderColor: '#00b4d888',
+					backgroundColor: '#00b4d888',
 					pointRadius: 5, // Tamanho dos pontos no gráfico
-					pointBackgroundColor: '#ffd902', // Cor dos pontos
-					pointBorderColor: '#fff', // Cor da borda dos pontos
+					pointBackgroundColor: '#00b4d888', // Cor dos pontos
+					pointBorderColor: '#00b4d888', // Cor da borda dos pontos
 					pointHoverRadius: 7, // Tamanho dos pontos ao passar o mouse
 					pointHoverBackgroundColor: '#fff', // Cor de fundo dos pontos ao passar o mouse
-					pointHoverBorderColor: '#ffd902', // Cor da borda dos pontos ao passar o mouse
+					pointHoverBorderColor: '#00b4d888', // Cor da borda dos pontos ao passar o mouse
 					pointHitRadius: 10, // Raio de detecção do mouse para os pontos
 					pointBorderWidth: 2 // Largura da borda dos pontos
 				},
 				{
 					label: 'Dados mínimos',
-					data: [50000, 50000, 50000, 50000],
+					data: [50000, 50000, 50000, 50000, 50000, 50000, 50000],
 					borderColor: '#00ccff',
 					backgroundColor: '#66d9ff',
-					pointRadius: 5,
-					pointBackgroundColor: '#00ccff',
-					pointBorderColor: '#fff',
 					pointHoverRadius: 7,
 					pointHoverBackgroundColor: '#fff',
 					pointHoverBorderColor: '#00ccff',
-					pointHitRadius: 10
 				}]
 			},
 			options: {
@@ -174,6 +177,63 @@
 		}
 
 	);
+
+	// Gráfico vermelho da linha 200
+
+	var contextoFluxoSemanal200 = document.getElementById('fluxoSemanal200').getContext('2d');
+
+var fluxoSemanal200 = new Chart(
+	contextoFluxoSemanal200,
+	{
+		type: 'line',
+		data: {
+			labels: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+			datasets: [{
+				label: 'Dados registrados',
+				data: [40000, 55000, 40900, 47500, 47000, 43000, 47000],
+				borderColor: '#00b4d888',
+				backgroundColor: '#00b4d888',
+				pointRadius: 5, // Tamanho dos pontos no gráfico
+				pointBackgroundColor: '#00b4d888', // Cor dos pontos
+				pointBorderColor: '#00b4d888', // Cor da borda dos pontos
+				pointHoverRadius: 7, // Tamanho dos pontos ao passar o mouse
+				pointHoverBackgroundColor: '#00b4d888', // Cor de fundo dos pontos ao passar o mouse
+				pointHoverBorderColor: '#ffd902', // Cor da borda dos pontos ao passar o mouse
+				pointHitRadius: 10, // Raio de detecção do mouse para os pontos
+				pointBorderWidth: 2 // Largura da borda dos pontos
+			},
+			{
+				label: 'Dados mínimos',
+				data: [50000, 50000, 50000, 50000, 50000, 50000, 50000],
+				borderColor: '#00ccff',
+				backgroundColor: '#66d9ff',
+				pointHoverRadius: 7,
+				pointHoverBackgroundColor: '#fff',
+				pointHoverBorderColor: '#00ccff',
+			}]
+		},
+		options: {
+			xAxes: [{
+				distribution: 'series',
+				ticks: {
+					beginAtZero: true
+				}
+			}],
+			yAxes: [{
+				scaleLabel: {
+					display: true
+				},
+				ticks: {
+					beginAtZero: true
+				}
+			}]
+		},
+		animation: {
+			duration: 1
+		}
+	}
+
+);
 
 </script>
 

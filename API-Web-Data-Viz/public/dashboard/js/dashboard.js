@@ -29,20 +29,20 @@ const criarGraficoLinha = (elementoId, labels, data, meta, label) => {
             datasets: [{
                 label: label,
                 data: data,
-                borderColor: '#ffd902',
-                backgroundColor: '#ffe135',
+                borderColor: '#00b4d888',
+                backgroundColor: '#00b4d888',
                 pointRadius: 5,
-                pointBackgroundColor: '#ffd902',
+                pointBackgroundColor: '#00b4d888',
                 pointBorderColor: '#fff',
                 pointHoverRadius: 7,
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: '#ffd902',
+                pointHoverBackgroundColor: '#00b4d888',
+                pointHoverBorderColor: '#00b4d888',
                 pointHitRadius: 10,
                 pointBorderWidth: 2
             }, {
                 label: 'Meta',
                 data: Array(data.length).fill(meta),
-                borderColor: '#ff0000',
+                borderColor: '#66d9ff',
                 borderWidth: 2,
                 pointRadius: 0,
                 type: 'line'
@@ -125,3 +125,10 @@ function opcaoHeader() {
         }
     });
 });
+
+
+// Dashboard da tela 'Longo prazo'. Dado: Fluxo mensal linha 104 Janeiro - 2023
+
+
+// Dashboard da tela 'Longo prazo'. Dado: Fluxo mensal linha 104 Janeiro - 2023
+

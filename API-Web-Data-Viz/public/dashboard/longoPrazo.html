@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Dashboard - Emergência</title>
-	<script src="../js/sessao.js"></script>
+	<!-- <script src="../js/sessao.js"></script> -->
 	<link rel="stylesheet" href="../css/dashboard.css">
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -87,13 +87,24 @@
 				<!-- Conteúdo principal principal -->
 
 				<div class="container_api">
+
+					<div class="texto-longoPrazo"><h1>Dados registrados de 2023</h1>
+						<hr>
+					</div>
 					<!-- <div class="h2"><h2>DADOS SEMESTRAIS</h2></div> -->
 
 					<div class="grafico2">
 						<div class="h2">
-							<h2 style="color: white;">Fluxo mensal linha 104 Janeiro - 2023</h2>
+							<h2 style="color: white;">Fluxo semestral 1 - 2023</h2>
 						</div>
 						<canvas id="GrafLinha2"></canvas>
+					</div>
+
+					<div class="grafico">
+						<div class="h2">
+							<h2 style="color: white;">Fluxo semestral 2 - 2023</h2>
+						</div>
+						<canvas id="fluxoSemestral"></canvas>
 					</div>
 
 				</div>
@@ -105,77 +116,122 @@
 
 </html>
 
+<Script>
+// Gráfico de 2023
+var contextoGrafLinha2 = document.getElementById('GrafLinha2').getContext('2d');
 
-
-<script>
-
-
-
-
-
-	// GRÁFICO DE LINHA DE ERRO!!!!!!!
-
-
-	var contextoGrafLinha2 = document.getElementById('GrafLinha2').getContext('2d');
-
-	var GrafLinha2 = new Chart(
-		contextoGrafLinha2,
-		{
-			type: 'line',
-			data: {
-				labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'],
-				datasets: [{
-					label: 'Dados registrados',
-					data: [40000, 55000, 30000, 43000],
-					borderColor: '#ffd902',
-					backgroundColor: '#ffe135',
-					pointRadius: 5, // Tamanho dos pontos no gráfico
-					pointBackgroundColor: '#ffd902', // Cor dos pontos
-					pointBorderColor: '#fff', // Cor da borda dos pontos
-					pointHoverRadius: 7, // Tamanho dos pontos ao passar o mouse
-					pointHoverBackgroundColor: '#fff', // Cor de fundo dos pontos ao passar o mouse
-					pointHoverBorderColor: '#ffd902', // Cor da borda dos pontos ao passar o mouse
-					pointHitRadius: 10, // Raio de detecção do mouse para os pontos
-					pointBorderWidth: 2 // Largura da borda dos pontos
+var GrafLinha2 = new Chart(
+	contextoGrafLinha2,
+	{
+		type: 'line',
+		data: {
+			labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+			datasets: [{
+				label: 'Dados registrados',
+				data: [40000, 55000, 38000, 43000, 46000, 44000],
+				borderColor: '#00b4d888',
+				backgroundColor: '#00b4d888',
+				pointRadius: 5, // Tamanho dos pontos no gráfico
+				pointBackgroundColor: '#00b4d888', // Cor dos pontos
+				pointBorderColor: '#fff', // Cor da borda dos pontos
+				pointHoverRadius: 7, // Tamanho dos pontos ao passar o mouse
+				pointHoverBackgroundColor: '#00b4d888', // Cor de fundo dos pontos ao passar o mouse
+				pointHoverBorderColor: '#00b4d888', // Cor da borda dos pontos ao passar o mouse
+				pointHitRadius: 10, // Raio de detecção do mouse para os pontos
+				pointBorderWidth: 2 // Largura da borda dos pontos
+			},
+			{
+				label: 'Dados mínimos',
+				data: [50000, 50000, 50000, 50000, 50000, 50000],
+				borderColor: '#00ccff',
+				backgroundColor: '#66d9ff',
+				pointHoverRadius: 7,
+				pointHoverBackgroundColor: '#fff',
+				pointHoverBorderColor: '#00ccff',
+			}]
+		},
+		options: {
+			xAxes: [{
+				distribution: 'series',
+				ticks: {
+					beginAtZero: true
+				}
+			}],
+			yAxes: [{
+				scaleLabel: {
+					display: true
 				},
-				{
-					label: 'Dados mínimos',
-					data: [50000, 50000, 50000, 50000],
-					borderColor: '#00ccff',
-					backgroundColor: '#66d9ff',
-					pointRadius: 5,
-					pointBackgroundColor: '#00ccff',
-					pointBorderColor: '#fff',
-					pointHoverRadius: 7,
-					pointHoverBackgroundColor: '#fff',
-					pointHoverBorderColor: '#00ccff',
-					pointHitRadius: 10
-				}]
-			},
-			options: {
-				xAxes: [{
-					distribution: 'series',
-					ticks: {
-						beginAtZero: true
-					}
-				}],
-				yAxes: [{
-					scaleLabel: {
-						display: true
-					},
-					ticks: {
-						beginAtZero: true
-					}
-				}]
-			},
-			animation: {
-				duration: 1
-			}
+				ticks: {
+					beginAtZero: true
+				}
+			}]
+		},
+		animation: {
+			duration: 1
 		}
+	}
 
-	);
+);
 
-</script>
+// Gráfico do segundo semestre de 2023
+
+
+// Gráfico de 2022
+	var contextoFluxoSemestral = document.getElementById('fluxoSemestral').getContext('2d');
+
+var fluxoSemestral = new Chart(
+	contextoFluxoSemestral,
+	{
+		type: 'line',
+		data: {
+			labels: ['Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+			datasets: [{
+				label: 'Dados registrados',
+				data: [40000, 55000, 60000, 62000, 67000, 70000],
+				borderColor: '#00b4d888',
+				backgroundColor: '#00b4d888',
+				pointRadius: 5, // Tamanho dos pontos no gráfico
+				pointBackgroundColor: '#00b4d888', // Cor dos pontos
+				pointBorderColor: '#00b4d888', // Cor da borda dos pontos
+				pointHoverRadius: 7, // Tamanho dos pontos ao passar o mouse
+				pointHoverBackgroundColor: '#00b4d888', // Cor de fundo dos pontos ao passar o mouse
+				pointHoverBorderColor: '#ffd902', // Cor da borda dos pontos ao passar o mouse
+				pointHitRadius: 10, // Raio de detecção do mouse para os pontos
+				pointBorderWidth: 2 // Largura da borda dos pontos
+			},
+			{
+				label: 'Dados mínimos',
+				data: [50000, 50000, 50000, 50000, 50000, 50000],
+				borderColor: '#00ccff',
+				backgroundColor: '#66d9ff',
+				pointHoverRadius: 7,
+				pointHoverBackgroundColor: '#fff',
+				pointHoverBorderColor: '#00ccff',
+			}]
+		},
+		options: {
+			xAxes: [{
+				distribution: 'series',
+				ticks: {
+					beginAtZero: true
+				}
+			}],
+			yAxes: [{
+				scaleLabel: {
+					display: true
+				},
+				ticks: {
+					beginAtZero: true
+				}
+			}]
+		},
+		animation: {
+			duration: 1
+		}
+	}
+
+);
+</Script>
 
 
 <script>

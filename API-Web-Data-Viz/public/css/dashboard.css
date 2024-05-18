@@ -458,3 +458,15 @@ do "@media (max-width: 768px)" */
 .alertas-graficos h3, .onibus h2 {
     margin-bottom: 10px;
 }
+
+/* Textos da tela 'longoPrazo.html' do dashboard */
+
+.main-content .container_api .texto-longoPrazo{
+	width: 100%;
+	align-self: flex-start;
+	text-align: left;
+}
+
+.main-content .container_api .texto-longoPrazo h1{
+	color: white;
+}
