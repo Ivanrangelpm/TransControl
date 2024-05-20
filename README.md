@@ -1,6 +1,6 @@
 <img src="https://i.postimg.cc/gwB8hjsS/1.png" width="200px">
 
-_Projeto de pesquisa e inovação para a terceira sprint com o tema de Formula 1, utilizando a api WebDataViz_
+_Projeto de pesquisa e inovação para a terceira sprint, utilizando a api WebDataViz_
 
 <hr>
 
