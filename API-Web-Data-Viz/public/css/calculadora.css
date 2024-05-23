@@ -1,11 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
 *{
-    font-family: Courier;
+    font-family: "Roboto", sans-serif;
 }
 
 body{
     padding: 0;
     margin: 0; 
-    background-image: url("backgroundtranscontrol.png"); 
+    background-image: url("img/Background.png"); 
     background-size: cover;
     color: black;
     text-align: center;
@@ -144,10 +146,13 @@ input{
     justify-content: center;
 }
   
+
 .botao {
     width: 50px;
     height: 50px;
     align-items: center;
+    background-image: url("../css/img/hamburguer.png");
+    background-size: cover;
     background-color: transparent;
     border: none;
     padding: 10px 10px;
@@ -156,34 +161,55 @@ input{
     transition: 0.3s;
     align-items: center;
     justify-content: center;
-
-  }
-  
-  .botao:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .options {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #f1f1f1;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.2);
-  }
-  
-  .options a {
-    display: block;
-    padding: 5px;
-    right: 0;
-    text-decoration: none;
-    color: #333;
+    }
     
-  }
   
-  .options a:hover {
-    background-color: #ddd;
-  }
+  
+    .options {
+        height: 60px;
+        display: none;
+        top: 100%;
+        margin-right: 30px;
+        background-color: #003566;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.2);
+        text-align: left;
+    }
+    
+    .options a {
+        display: block;
+        padding: 5px;
+        right: 0;
+        text-decoration: none;
+        color: #fff;
+    }
+    
+    .options a:hover {
+        background-color: #003566;
+        color: #f5cc00;
+    }
+
+  .itemsHeader {
+	display: flex;
+	column-gap: 25px;
+	margin-right: 50px;
+	color: white;
+	align-items: center;
+}
+
+.itemsHeader a {
+	text-decoration: none;
+	color: #fff;
+}
+
+.itemsHeader a:hover {
+	text-decoration: underline #f5cc00;
+	color: #f5cc00;
+}
+
+.underheader {
+	display: flex;
+	justify-content: end;
+	height: 80px;
+}
