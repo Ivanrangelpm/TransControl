@@ -15,10 +15,11 @@ a{
   background-image: url('./img/Background.png');
   background-size: cover;
   background-position: center;
-  height: 91.2vh;
+  height: 100%;
   flex-direction: column;
   display: flex;
 }
+
 
 .login {
   background-color: #ffffff7e;
@@ -188,9 +189,9 @@ img {
 }
 
 .Cadastro {
-  background-color: #ffffff7e;
-  padding: 20px;
-  height: 85%;
+  background-color: #ffffff7c;
+  padding: 10px;
+  height: 75%;
   width: 20%;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -206,7 +207,7 @@ img {
 
 .footer {
   height: 100px;
-  background-color: #003566;
+  background-color: #001d3d;
   color: #fff;
   display: flex;
   align-items: center;
@@ -236,3 +237,16 @@ img {
 #div_erros_login {
   display: none
 }
+
+.servicos-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 2rem;
+}
+
+
+
+
+
+
