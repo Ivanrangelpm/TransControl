@@ -48,7 +48,7 @@ telefone char(14) NOT NULL,
 senha varchar(20) NOT NULL,
 fkEnderecoEmpresa int,
 CONSTRAINT fkEnderecoEmpresa foreign key (fkEnderecoEmpresa) references endereco(idEndereco)
-);
+) ;
 
 INSERT INTO Empresa VALUES
     (1, 'Empresa Metropolitana de Transportes Urbanos de São Paulo', 'EMTU', 'imprensa@emtu.sp.gov.br', '58518069000191', '08007240555', '12345678', 20),
@@ -76,22 +76,20 @@ SELECT * FROM usuario;
 
 CREATE TABLE Onibus(
 	idOnibus int primary key auto_increment NOT NULL,
-	qtdPortas int NOT NULL,
-    CONSTRAINT chkPortas CHECK(qtdPortas >= 2 AND qtdPortas <= 8),
     capacidade int NOT NULL,
     modeloOnibus varchar (45),
 	placa char(7),
 	peso int, -- Em KG
     fkLinha int,
     fkEmpresaOnibus int,
-    CONSTRAINT fklinha foreign key (fkLinha) references linhaOnibus(idLinha),
+    CONSTRAINT fkLinha foreign key (fkLinha) references linhaOnibus(idLinha),
     CONSTRAINT fkEmpresaOnibus foreign key (fkEmpresaOnibus) references Empresa(idEmpresa)
 ) auto_increment = 50;
 
 INSERT INTO Onibus VALUES
-    (default, 3, 120, 'Onibus Articulado ','JPV8440', 26000, 1, 30 ),
-    (default, 2, 20, 'Micro-Onibus' ,'BRA5679', 4000, 2, 31), 
-    (default, 3, 70, 'Onibus convencional','JTW9010', 16000, 3, 32); 
+    (default, 120, 'Onibus Articulado ','JPV8440', 26000, 1, 1 ),
+    (default, 20, 'Micro-Onibus' ,'BRA5679', 4000, 2, 2), 
+    (default, 70, 'Onibus convencional','JTW9010', 16000, 3, 3); 
     
 DESCRIBE Onibus;
 SELECT * FROM Onibus;
@@ -138,16 +136,14 @@ SELECT * FROM Alerta;
 
 CREATE TABLE Sensor(
 	idSensor int primary key auto_increment,
-	portaSensor varchar(7) NOT NULL,
-    CONSTRAINT chkPorta CHECK(portaSensor = 'SAIDA' OR portaSensor = 'ENTRADA'),
     fkOnibusSensor int,
 	CONSTRAINT fkOnibusSensor foreign key (fkOnibusSensor) references Onibus(idOnibus)
 ) auto_increment= 80;
 
 INSERT INTO Sensor VALUES
-    (default, 'ENTRADA',51),
-    (default, 'SAIDA',50),
-    (default, 'SAIDA',52);
+    (default, 51),
+    (default, 50),
+    (default, 52);
     
 DESCRIBE Sensor;
 SELECT * FROM Sensor;
