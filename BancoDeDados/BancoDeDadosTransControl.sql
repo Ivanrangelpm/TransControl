@@ -2364,31 +2364,31 @@ INSERT INTO dados VALUES
     (default, 1, '2024-05-29 23:09:00',82),
     (default, 1, '2024-05-29 23:10:00',82);
 
-SELECT
-    HOUR(d.horarioAtivacao) AS Hora,
-    COUNT(*) AS Total_Pessoas
-FROM
-    dados d
-    JOIN Sensor as s ON d.fkSensor = s.idSensor
-    JOIN Onibus as o ON s.fkOnibusSensor = o.idOnibus
-WHERE
+select
+    hour(d.horarioAtivacao) as Hora,
+    count(*) as Total_Pessoas
+from
+    dados as d
+    join Sensor as s on d.fkSensor = s.idSensor
+    join Onibus as o on s.fkOnibusSensor = o.idOnibus
+where
     o.idOnibus = 52
-    AND DATE(d.horarioAtivacao) = CURDATE()
-GROUP BY
-    HOUR(d.horarioAtivacao);
+    and date(d.horarioAtivacao) = curdate()
+group by
+    hour(d.horarioAtivacao);
 
 
-SELECT
-    DAYNAME(d.horarioAtivacao) AS Dia_Semana,
-    COUNT(*) AS Total_Pessoas
-FROM
-    dados d
-    INNER JOIN Sensor s ON d.fkSensor = s.idSensor
-    INNER JOIN Onibus o ON s.fkOnibusSensor = o.idOnibus
-WHERE
+select
+    dayname(d.horarioAtivacao) as Dia_Semana,
+    count(*) as Total_Pessoas
+from
+    dados as d
+    join Sensor as s on d.fkSensor = s.idSensor
+    join Onibus as o on s.fkOnibusSensor = o.idOnibus
+where
     o.idOnibus = 52
-GROUP BY
-    DAYNAME(d.horarioAtivacao);
+group by
+    dayname(d.horarioAtivacao);
 
 
 SELECT sum(ativacao),fkSensor from dados group by fkSensor;
