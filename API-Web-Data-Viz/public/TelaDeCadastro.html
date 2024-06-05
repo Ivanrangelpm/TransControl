@@ -2,176 +2,197 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="./js/sessao.js"></script>
-  <link rel="stylesheet" href="../css/login.css">
-  <link rel="shortcut icon" href="./css/img/LogoSEMescrita.png" type="image/x-icon">
-  <title>TransControl | Cadastro Cliente</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="./js/sessao.js"></script>
+	<link rel="stylesheet" href="./css/cadastro.css">
+	<link rel="shortcut icon" href="../css/img/LOGO.png" type="image/x-icon">
+	<title>TransControl | Cadastro</title>
 </head>
 
 <body onload="listar()">
-  <header>
-    <a href="index.html"><img src="../css/img/LogoSEMescrita.png" alt="Logo da Empresa"></a>
-    <div class="itemsHeader">
-      <h4><a href="index.html">Início</a></h4>
-      <h4><a href="index.html#sobre-nos">Sobre Nós</a></h4>
-      <h4><a href="./Calculadora Financeiraa/Calculadora/calculadora.html">Simulador Financeiro</a></h4>
-      <h4>||</h4>
-      <buttonn class="botao" onclick="opcaoHeader()"></buttonn>
-    </div>
-  </header>
-  <div class="background">
-    <div class="underheader">
-      <div id="options" class="options">
-        <a href="login.html">Login</a>
-        <a href="TelaDeCadastro.html">Cadastro</a>
-      </div>
-    </div>
-    <div class="container">
-      <div class="alerta_erro">
-        <div class="card_erro" id="cardErro">
-          <span id="mensagem_erro"></span>
-        </div>
-      </div>
-      <div class="Cadastro">
-        <h2>Cadastro</h2>
-        <div id="cadastroForm">
-          Empresa: <br>
-          <select style="width: 100%;" name="Empresas" id="listaEmpresas">
-            <option selected>Selecione uma empresa</option>
-          </select> 
-          Nome: 
-          <input type="text" id="ipt_nome" placeholder="Nome"> 
-          Email:
-          <input type="email" id="ipt_email" placeholder="Email"> 
-          Senha: 
-          <input type="password" id="ipt_senha" placeholder="Senha"> 
-          Confirmar Senha:
-          <input type="password" id="ipt_senhaConfirm" placeholder="Confirmar Senha"> 
-          <br>
-          <button class="buttonCadastrar" onclick="cadastrar()">Cadastrar</button>
-        </div>
-        <div id="div_aguardar" class="loading-div">
-          <img src="./assets/circle-loading.gif" id="loading-gif">
-        </div>
-        <div id="div_erros_login"></div>
-        </div>
-    </div>
-  </div>
-  <section id="nossos-servicos">
-  
-    </div>
-  </section>
+	<header>
+		<a href="index.html"><img class="icone1" src="./css/img/LogoSEMescrita.png" alt="Logo da Empresa"></a>
+		<div class="itemsHeader">
+			<h4><a href="index.html">Início</a></h4>
+			<h4><a href="index.html#sobre-nos">Sobre Nós</a></h4>
+			<h4><a href="./Calculadora Financeiraa/Calculadora/calculadora.html">Simulador Financeiro</a></h4>
+			<h4>||</h4>
+			<buttonn class="botao" onclick="opcaoHeader()"></buttonn>
+			<div class="menu-1">
+				<div> <img class="hamburguer" src="./css/img/hamburguer.png" alt=""></div>
+			</div>
 
-  <footer>
+			<nav class="menu">
+				<ul> <br> <br>
+					<li><a href="login.html">Login</a></li> <br>
+					<li><a href="cadastro.html">Cadastro</a></li> <br>
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+	<div class="container">
+		<div class="form">
+			<h2>Cadastro</h2>
+			<form>
+				<select style="width: 90%;" name="Empresas" id="listaEmpresas">
+					<option selected>Selecione uma empresa</option>
+				</select>
+				<input type="text" id="ipt_nome" placeholder="Nome">
+				<input type="email" id="ipt_email" placeholder="Email">
+				<input type="password" id="ipt_senha" placeholder="Senha">
+				<input type="password" id="ipt_senhaConfirm" placeholder="Confirmar Senha">
+				<button class="buttonCadastrar" onclick="cadastrar()">Cadastrar</button>
+			</form>
+		</div>
+		<div class="image">
+			<img src="./css/img/icone.png	" alt="">
+		</div>
+		
+		<div class="alerta_erro">
+			<div class="card_erro" id="cardErro">
+				<span id="mensagem_erro"></span>
+			</div>
+		</div>
+	</div>
+
+	<div id="div_aguardar" class="loading-div">
+		<!-- <img src="./assets/circle-loading.gif" id="loading-gif"> -->
+	</div>
+	<div id="div_erros_login"></div>
+
+
+	</div>
+	<div class="continnua">
+
+
+	</div>
+
+</body>
+
+<footer>
     <div class="footer">
-      <div class="container">
+      <div class="container2">
         <p>Feito por TransControl - SPTECH - 1CCO &copy;</p>
       </div>
     </div>
   </footer>
 
-  <script>
-    function opcaoHeader() {
-      var options = document.getElementById("options");
-      if (options.style.display === "block") {
-        options.style.display = "none";
-      } else {
-        options.style.display = "block";
-      }
-    }
+<script>
 
-    function cadastrar() {
-      aguardar();
+	// Seleciona o botão do menu
+	const menuToggle = document.querySelector('.menu-1');
+	// Seleciona o menu de navegação
+	const menu = document.querySelector('.menu');
 
-      //Recupere o valor da nova input pelo nome do id
-      // Agora vá para o método fetch logo abaixo
-      var nomeVar = ipt_nome.value;
-      var emailVar = ipt_email.value;
-      var senhaVar = ipt_senha.value;
-      var confirmacaoSenhaVar = ipt_senhaConfirm.value;
-      var empresaVar = listaEmpresas.value;
-      if (
-        nomeVar == "" ||
-        emailVar == "" ||
-        senhaVar == "" ||
-        confirmacaoSenhaVar == "" ||
-        empresaVar == ""
-      ) {
-        cardErro.style.display = "block";
-        mensagem_erro.innerHTML =
-          "(Mensagem de erro para todos os campos em branco)";
+	// Adiciona um evento de clique ao botão do menu
+	menuToggle.addEventListener('click', function () {
+		// Alterna a classe 'active' no menu de navegação
+		menu.classList.toggle('active');
+	});
 
-        finalizarAguardar();
-        return false;
-      } else {
+	// Adiciona um evento de clique ao documento inteiro
+	document.addEventListener('click', function (event) {
+		// Verifica se o clique ocorreu fora do menu
+		if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
+			// Fecha o menu
+			menu.classList.remove('active');
+		}
+	});
 
-      // Enviando o valor da nova input
-      
-      fetch("/usuarios/cadastrar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        // crie um atributo que recebe o valor recuperado aqui
-        // Agora vá para o arquivo routes/usuario.js
-        nomeServer: nomeVar,
-        emailServer: emailVar,
-        senhaServer: senhaVar,
-        empresaServer: empresaVar
-      }),
-    })
-      .then(function (resposta) {
-        console.log("resposta: ", resposta);
 
-        if (resposta.ok) {
-          cardErro.style.display = "block";
 
-          mensagem_erro.innerHTML =
-            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+	function cadastrar() {
+		aguardar();
 
-          setTimeout(() => {
-            window.location = "login.html";
-          }, "2000");
+		//Recupere o valor da nova input pelo nome do id
+		// Agora vá para o método fetch logo abaixo
+		var nomeVar = ipt_nome.value;
+		var emailVar = ipt_email.value;
+		var senhaVar = ipt_senha.value;
+		var confirmacaoSenhaVar = ipt_senhaConfirm.value;
+		var empresaVar = listaEmpresas.value;
+		if (
+			nomeVar == "" ||
+			emailVar == "" ||
+			senhaVar == "" ||
+			confirmacaoSenhaVar == "" ||
+			empresaVar == ""
+		) {
+			cardErro.style.display = "block";
+			mensagem_erro.innerHTML =
+				"(Mensagem de erro para todos os campos em branco)";
 
-          limparFormulario();
-          finalizarAguardar();
-        } else {
-          throw "Houve um erro ao tentar realizar o cadastro!";
-        }
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-        finalizarAguardar();
-      });
+			finalizarAguardar();
+			return false;
+		} else {
 
-    return false;
-  
-  }
-}
+			// Enviando o valor da nova input
 
-    function sumirMensagem() {
-    cardErro.style.display = "none";
-  }
+			fetch("/usuarios/cadastrar", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					// crie um atributo que recebe o valor recuperado aqui
+					// Agora vá para o arquivo routes/usuario.js
+					nomeServer: nomeVar,
+					emailServer: emailVar,
+					senhaServer: senhaVar,
+					empresaServer: empresaVar
+				}),
+			})
+				.then(function (resposta) {
+					console.log("resposta: ", resposta);
 
-    function listar() {
-      fetch("/empresas/listar", {
-        method: "GET",
-      })
-        .then(function (resposta) {
-          resposta.json().then((empresas) => {
-            empresas.forEach((Empresa) => {
-              listaEmpresas.innerHTML += `<option value ='${Empresa.idEmpresa}'>${Empresa.idEmpresa}</option>`;
-            });
-          });
-        })
-        .catch(function (resposta) {
-          console.log(`#ERRO: ${resposta}`);
-        });
-    }
-  </script>
+					if (resposta.ok) {
+						cardErro.style.display = "block";
+
+						mensagem_erro.innerHTML =
+							"Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+						setTimeout(() => {
+							window.location = "login.html";
+						}, "2000");
+
+						limparFormulario();
+						finalizarAguardar();
+					} else {
+						throw "Houve um erro ao tentar realizar o cadastro!";
+					}
+				})
+				.catch(function (resposta) {
+					console.log(`#ERRO: ${resposta}`);
+					finalizarAguardar();
+				});
+
+			return false;
+
+		}
+	}
+
+	function sumirMensagem() {
+		cardErro.style.display = "none";
+	}
+
+	function listar() {
+		fetch("/empresas/listar", {
+			method: "GET",
+		})
+			.then(function (resposta) {
+				resposta.json().then((empresas) => {
+					empresas.forEach((Empresa) => {
+						listaEmpresas.innerHTML += `<option value ='${Empresa.idEmpresa}'>${Empresa.idEmpresa}</option>`;
+					});
+				});
+			})
+			.catch(function (resposta) {
+				console.log(`#ERRO: ${resposta}`);
+			});
+	}
+</script>
 </body>
 
 </html>

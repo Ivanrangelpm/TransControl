@@ -12,14 +12,6 @@ a{
   color: #fff;
 }
 
-.background {
-  background-image: url('./img/Background.png');
-  background-size: cover;
-  background-position: center;
-  height: 140vh;
-  flex-direction: column;
-  display: flex;
-}
 
 .Cadastro {
   background-color: #ffffff7e;
