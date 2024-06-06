@@ -159,7 +159,7 @@ header {
 
 .servico-card {
 	width: 350px;
-	height: 200px;
+	height: 500px;
 	margin: 20px;
 	padding: 20px;
 	background-color: #fff;
@@ -204,6 +204,12 @@ header {
 #sobre-nos {
 	background-color: #fff;
 	padding: 50px 0;
+
+
+}
+
+#sobre-nos .card:hover{
+	transform: translateY(-5px);
 }
 
 .titulo-sobreNos {
@@ -235,6 +241,8 @@ header {
 	align-items: center;
 	overflow: auto;
 	text-align: center;
+	transition: transform 0.3s ease;
+
 }
 
 .card-imagem {

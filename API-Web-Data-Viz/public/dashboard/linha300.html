@@ -8,6 +8,7 @@
 	<!-- <script src="../js/sessao.js"></script> -->
 	<link rel="stylesheet" href="../css/dashboard.css">
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<link rel="shortcut icon" href="../css/img/LOGO.png" type="image/x-icon">
 </head>
 
 <body onload="validarSessao()">
@@ -64,16 +65,19 @@
 		<div class="content">
 			<div class="header">
 				<header>
-					<div class="itemsHeader">
-						<h4><a href="../pages/index.html">INICIO</a></h4>
-						<h4><a href="../pages/index.html#sobre-nos">SOBRE NÓS</a></h4>
-						<h4>||</h4>
-						<button class="botao" onclick="opcaoHeader()"></button>
-						<div id="options" style="left: 94%;" class="options">
-							<a href="#">Perfil</a>
-							<a href="#">Configurações</a>
-							<a href="#">Sair</a>
-						</div>
+					<h4><a href="../pages/index.html">INICIO</a></h4>
+					<h4><a href="../pages/index.html#sobre-nos">SOBRE NÓS</a></h4>
+					<h4>||</h4>
+
+					<div class="botao">
+					</div>
+					<nav class="menu">
+						<ul> <br> <br>
+							<li><a href="#">Perfil</a></li> <br>
+							<li><a href="#">Configurações</a></a></li> <br>
+							<li><a href="../login.html">Sair</a></a></li> <br>
+						</ul>
+					</nav>
 					</div>
 				</header>
 			</div>
@@ -119,3 +123,24 @@
 </body>
 
 </html>
+<script>
+	// Seleciona o botão do menu
+	const menuToggle = document.querySelector('.botao');
+	// Seleciona o menu de navegação
+	const menu = document.querySelector('.menu');
+
+	// Adiciona um evento de clique ao botão do menu
+	menuToggle.addEventListener('click', function () {
+	// Alterna a classe 'active' no menu de navegação
+	menu.classList.toggle('active');
+	});
+
+	// Adiciona um evento de clique ao documento inteiro
+	document.addEventListener('click', function (event) {
+		// Verifica se o clique ocorreu fora do menu
+	if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
+			// Fecha o menu
+		menu.classList.remove('active');
+		}
+	});
+</script>
