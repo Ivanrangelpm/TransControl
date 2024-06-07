@@ -122,12 +122,36 @@
 			empresaVar == ""
 		) {
 			cardErro.style.display = "block";
-			mensagem_erro.innerHTML =
-				"(Mensagem de erro para todos os campos em branco)";
+			alert("Preencha todos os campos");
 
 			finalizarAguardar();
 			return false;
-		} else {
+		} if (cpfVar.indexOf('.') !== -1 || cpfVar.indexOf('-') !== -1 || isNaN(cpfVar) || cpfVar.length !== 11) {
+        alert("CPF invalido! O CPF deve conter 11 caracteres");
+        finalizarAguardar();
+        return false;
+     	}
+
+      	if (emailVar.indexOf('@') === -1 || emailVar.indexOf('.') === -1) {
+        alert("E-mail inválido! O email deve conter '@' e '.'");
+        finalizarAguardar();
+        return false;
+      	}
+
+      	if (senhaVar.length < 6) {
+        alert("A senha deve ter pelo menos 6 caracteres");
+        finalizarAguardar();
+        return false;
+      	}
+
+      	if (senhaVar !== confirmacaoSenhaVar) {
+        alert("As senhas não coincidem");
+        finalizarAguardar();
+        return false;
+      	} else {
+
+			
+    	}
 
 			// Enviando o valor da nova input
 
@@ -150,9 +174,7 @@
 
 					if (resposta.ok) {
 						cardErro.style.display = "block";
-
-						mensagem_erro.innerHTML =
-							"Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+						alert("Cadastro realizado com sucesso! Redirecionando para tela de Login...");
 
 						setTimeout(() => {
 							window.location = "login.html";
@@ -172,7 +194,7 @@
 			return false;
 
 		}
-	}
+	
 
 	function sumirMensagem() {
 		cardErro.style.display = "none";

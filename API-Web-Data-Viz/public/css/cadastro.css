@@ -71,7 +71,6 @@ body {
 
 .image {
     flex: 1;
-
     background-size: cover;
     background-position: center;
     border-top-right-radius: 8px;
@@ -179,7 +178,7 @@ header {
   .link{
 	color: blue;
 	text-align: center;
-	margin: 80px;
+	margin: 100px;
 	white-space: nowrap;
   }
 
