@@ -36,7 +36,7 @@
 	<div class="container">
 		<div class="form">
 			<h2>Cadastro</h2>
-			<form>
+			<div>
 				<select style="width: 90%;" name="Empresas" id="listaEmpresas">
 					<option selected>Selecione uma empresa</option>
 				</select>
@@ -45,7 +45,7 @@
 				<input type="password" id="ipt_senha" placeholder="Senha">
 				<input type="password" id="ipt_senhaConfirm" placeholder="Confirmar Senha">
 				<button class="buttonCadastrar" onclick="cadastrar()">Cadastrar</button>
-			</form>
+			</div>
 		</div>
 		<div class="image">
 			<img src="./css/img/icone.png	" alt="">
@@ -126,11 +126,7 @@
 
 			finalizarAguardar();
 			return false;
-		} if (cpfVar.indexOf('.') !== -1 || cpfVar.indexOf('-') !== -1 || isNaN(cpfVar) || cpfVar.length !== 11) {
-        alert("CPF invalido! O CPF deve conter 11 caracteres");
-        finalizarAguardar();
-        return false;
-     	}
+		} 	
 
       	if (emailVar.indexOf('@') === -1 || emailVar.indexOf('.') === -1) {
         alert("E-mail inválido! O email deve conter '@' e '.'");

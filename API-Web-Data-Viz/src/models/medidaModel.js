@@ -1,35 +1,41 @@
-var database = require("../database/config");
+const database = require("../database/config");
 
-function buscarUltimasMedidas(idAquario, limite_linhas) {
-
-    var instrucaoSql = `SELECT 
-        dht11_temperatura as temperatura, 
-        dht11_umidade as umidade,
-                        momento,
-                        DATE_FORMAT(momento,'%H:%i:%s') as momento_grafico
-                    FROM medida
-                    WHERE fk_aquario = ${idAquario}
-                    ORDER BY id DESC LIMIT ${limite_linhas}`;
-
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+function listarLinhas(idEmpresa) {
+    const query = `
+        SELECT o.idOnibus, l.idLinha, l.nome
+        FROM Onibus o
+        JOIN linhaOnibus l ON o.fkLinha = l.idLinha
+        WHERE o.fkEmpresaOnibus = ${idEmpresa}
+    `;
+    return database.executar(query);
 }
 
-function buscarMedidasEmTempoReal(idAquario) {
-
-    var instrucaoSql = `SELECT 
-        dht11_temperatura as temperatura, 
-        dht11_umidade as umidade,
-                        DATE_FORMAT(momento,'%H:%i:%s') as momento_grafico, 
-                        fk_aquario 
-                        FROM medida WHERE fk_aquario = ${idAquario} 
-                    ORDER BY id DESC LIMIT 1`;
-
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+function getFluxo(idEmpresa, idLinha) {
+    const query = `
+    SELECT
+        e.idEmpresa,
+        l.nome,
+        s.idSensor,
+        o.idOnibus,
+        HOUR(d.horarioAtivacao) AS Hora,
+        COUNT(*) AS Total_Pessoas
+    FROM
+        dados AS d
+        JOIN Sensor AS s ON d.fkSensor = s.idSensor
+        JOIN Onibus AS o ON s.fkOnibusSensor = o.idOnibus
+        JOIN linhaOnibus AS l ON o.fkLinha = l.idLinha
+        JOIN Empresa AS e ON o.fkEmpresaOnibus = e.idEmpresa
+    WHERE
+        e.idEmpresa = ${idEmpresa}
+        AND l.idLinha = ${idLinha}
+        AND DATE(d.horarioAtivacao) = CURDATE()
+    GROUP BY
+        s.idSensor, o.idOnibus, HOUR(d.horarioAtivacao);
+    `;
+    return database.executar(query);
 }
 
 module.exports = {
-    buscarUltimasMedidas,
-    buscarMedidasEmTempoReal
-}
+    listarLinhas,
+    getFluxo
+};
