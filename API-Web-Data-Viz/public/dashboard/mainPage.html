@@ -2,179 +2,201 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Main page</title>
-    <link rel="stylesheet" href="../css/dashboard.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="shortcut icon" href="../css/img/LOGO.png" type="image/x-icon">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Dashboard - Main page</title>
+	<link rel="stylesheet" href="../css/dashboard.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<link rel="shortcut icon" href="../css/img/LOGO.png" type="image/x-icon">
 </head>
 
 <body onload="listar();">
-    <div class="wrapper">
-        <div class="sidebar">
-            <div class="img">
-                <img src="../dashboard/img/logo.png" alt="">
-            </div>
-            <button class="botaoSidebar" onclick="window.location.href='mainPage.html'">
-                <img src="../dashboard/img/mainPage.png">
-                <div class="h3">
-                    <h3>Main page</h3>
-                </div>
-            </button>
-            <div class="dropdown-container">
-                <button class="botaoSidebar" id="linhasButton">
-                    <img src="../dashboard/img/mainPage.png">
-                    <div class="h3">
-                        <h3>Linhas</h3>
-                    </div>
-                </button>
-                <div id="linhasDropdown" class="dropdown-content">
-                    <ul>
-                        <li><a href="comparacao.html">Comparações</a></li>
-                        <li><a href="linha104.html">Linha 104</a></li>
-                        <li><a href="linha200.html">Linha 200</a></li>
-                        <li><a href="linha300.html">Linha 300</a></li>
-                        <li><a href="linha400.html">Linha 400</a></li>
-                    </ul>
-                </div>
-            </div>
-            <button class="botaoSidebar" onclick="window.location.href='emergencia.html'">
-                <img src="../dashboard/img/mainPage.png">
-                <div class="h3">
-                    <h3>Emergência</h3>
-                </div>
-            </button>
-            <button class="botaoSidebar" onclick="window.location.href='longoPrazo.html'">
-                <img src="../dashboard/img/mainPage.png">
-                <div class="h3">
-                    <h3>Longo prazo</h3>
-                </div>
-            </button>
-        </div>
-        <div class="content">
-            <div class="header">
-                <header>
-                    <div class="itemsHeader">
-                        <h4><a href="../index.html">INICIO</a></h4>
-                        <h4><a href="../index.html#sobre-nos">SOBRE NÓS</a></h4>
-                        <h4>||</h4>
-                        <div class="botao">
-                        </div>
-                        <nav class="menu">
-                            <ul> <br> <br>
-                                <li><a href="#">Perfil</a></li> <br>
-                                <li><a href="https://transcontrol.atlassian.net/servicedesk/customer/portals">HelpDesk</a></a></li> <br>
-                                <li><a href="../login.html">Sair</a></a></li> <br>
-                            </ul>
-                        </nav>
-                    </div>
-                </header>
-            </div>
-            <div class="main-content">
-                <div class="container_api">
-                    <div class="grafico grafico-total">
-                        <div class="h2">
-                            <h2 style="color: white;">Total de Ônibus Rodando</h2>
-                            <h2 style="color: chartreuse; font-size: 40px;">267</h2>
-                        </div>
-                    </div>
-                    <div class="grafico-total">
-                        <div class="h2">
-                            <h2 style="color: white;">Média de Fluxo de Pessoas</h2>
-                            <h2 style="color: chartreuse; font-size: 40px;">270.7</h2>
-                        </div>
-                    </div>
-                    <select name="linhas" id="listaLinhas">
-                        <option selected>Selecione uma linha</option>
-                    </select>
-                    <button onclick="carregarGrafico()">Carregar Gráfico</button>
-                    <div class="comparacao-main">
-                        <div class="h2">
-                            <h2 style="color: white;">Comparação por semana</h2>
-                        </div>
-                        <canvas id="comparisonChart" width="700" height="190"></canvas>
-                    </div>
-                    <div class="alertas">
-                        <div class="emergencia" onclick="window.location.href='emergencia.html'">
-                            <div class="divAlertText">Emergência: 2</div>
-                        </div>
-                        <div class="atencao">
-                            <div class="divAlertText">Atenção: 2</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="wrapper">
+		<div class="sidebar">
+			<div class="img">
+				<img src="../dashboard/img/logo.png" alt="">
+			</div>
+			<button class="botaoSidebar" onclick="window.location.href='mainPage.html'">
+				<img src="../dashboard/img/mainPage.png">
+				<div class="h3">
+					<h3>Main page</h3>
+				</div>
+			</button>
+			<div class="dropdown-container">
+				<button class="botaoSidebar" id="linhasButton">
+					<img src="../dashboard/img/mainPage.png">
+					<div class="h3">
+						<h3>Linhas</h3>
+					</div>
+				</button>
+				<div id="linhasDropdown" class="dropdown-content">
+					<ul>
+						<li><a href="comparacao.html">Comparações</a></li>
+						<li><a href="linha104.html">Linha 104</a></li>
+						<li><a href="linha200.html">Linha 200</a></li>
+						<li><a href="linha300.html">Linha 300</a></li>
+						<li><a href="linha400.html">Linha 400</a></li>
+					</ul>
+				</div>
+			</div>
+			<button class="botaoSidebar" onclick="window.location.href='emergencia.html'">
+				<img src="../dashboard/img/mainPage.png">
+				<div class="h3">
+					<h3>Emergência</h3>
+				</div>
+			</button>
+			<button class="botaoSidebar" onclick="window.location.href='longoPrazo.html'">
+				<img src="../dashboard/img/mainPage.png">
+				<div class="h3">
+					<h3>Longo prazo</h3>
+				</div>
+			</button>
+		</div>
+		<div class="content">
+			<div class="header">
+				<header>
+					<div class="itemsHeader">
+						<h4><a href="../index.html">INICIO</a></h4>
+						<h4><a href="../index.html#sobre-nos">SOBRE NÓS</a></h4>
+						<h4>||</h4>
+						<div class="botao">
+						</div>
+						<nav class="menu">
+							<ul> <br> <br>
+								<li><a href="#">Perfil</a></li> <br>
+								<li><a
+										href="https://transcontrol.atlassian.net/servicedesk/customer/portals">HelpDesk</a></a>
+								</li> <br>
+								<li><a href="../login.html">Sair</a></a></li> <br>
+							</ul>
+						</nav>
+					</div>
+				</header>
+			</div>
+			<div class="main-content">
+				<div class="container_api">
+					<div class="grafico grafico-total">
+						<div class="h2">
+							<h2 style="color: white;">Total de Ônibus Rodando</h2>
+							<h2 style="color: chartreuse; font-size: 40px;">267</h2>
+						</div>
+					</div>
+					<div class="grafico-total">
+						<div class="h2">
+							<h2 style="color: white;">Média de Fluxo de Pessoas</h2>
+							<h2 style="color: chartreuse; font-size: 40px;">270.7</h2>
+						</div>
+					</div>
+					<div id="dados">
+						<select name="linhas" id="listaLinhas">
+							<option selected>Selecione uma linha</option>
+						</select>
+						<button onclick="carregarGrafico()" class="btn-carregar">Carregar Gráfico</button>
+					</div>
+					<div class="comparacao-main">
+						<div class="h2">
+							<h2 style="color: white;">Comparação por semana</h2>
+						</div>
+						<canvas id="comparisonChart" width="700" height="190"></canvas>
+					</div>
+					<div class="alertas">
+						<div class="emergencia" onclick="window.location.href='emergencia.html'">
+							<div class="divAlertText">Emergência: 2</div>
+						</div>
+						<div class="atencao">
+							<div class="divAlertText">Atenção: 2</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <script>
+	<script>
 
-			function listar() {
-							const idEmpresa = sessionStorage.EMPRESAS;
-							fetch(`/medidas/listarLinhas/${idEmpresa}`, { method: "GET" })
-									.then(response => response.json())
-									.then(linhas => {
-											const listaLinhas = document.getElementById('listaLinhas');
-											linhas.forEach(linha => {
-													listaLinhas.innerHTML += `<option value="${linha.idLinha}">${linha.nome}</option>`;
-											});
-									})
-									.catch(error => {
-											console.error("Erro ao listar linhas:", error);
-									});
+		function listar() {
+			const idEmpresa = sessionStorage.EMPRESAS;
+			fetch(`/medidas/listarLinhas/${idEmpresa}`, { method: "GET" })
+				.then(response => response.json())
+				.then(linhas => {
+					const listaLinhas = document.getElementById('listaLinhas');
+					linhas.forEach(linha => {
+						listaLinhas.innerHTML += `<option value="${linha.idLinha}">${linha.nome}</option>`;
+					});
+				})
+				.catch(error => {
+					console.error("Erro ao listar linhas:", error);
+				});
+		}
+
+
+		function carregarGrafico() {
+			const idEmpresa = sessionStorage.getItem("EMPRESAS");
+			const idLinha = document.getElementById('listaLinhas').value;
+
+			fetch(`/medidas/fluxo/${idEmpresa}/${idLinha}`, { method: "GET" })
+				.then(response => {
+					if (!response.ok) {
+						throw new Error('Erro na resposta da rede');
+					}
+					return response.json();
+				})
+				.then(data => {
+					const ctx = document.getElementById('comparisonChart').getContext('2d');
+					if (window.chartInstance) {
+						window.chartInstance.destroy();
+					}
+					window.chartInstance = new Chart(ctx, {
+						type: 'line',
+						data: {
+							labels: data.map(item => item.Hora),
+							datasets: [{
+								label: 'Total Pessoas',
+								data: data.map(item => item.Total_Pessoas),
+								backgroundColor: 'rgba(54, 162, 235, 0.2)',
+								borderColor: 'rgba(54, 162, 235, 1)',
+								borderWidth: 1
+							}]
+						},
+						options: {
+							scales: {
+								x: {
+									ticks: { color: '#fff' },
+									grid: { color: 'rgba(255, 255, 255, 0.25)' }
+								},
+								y: {
+									ticks: { color: '#fff' },
+									grid: { color: 'rgba(255, 255, 255, 0.25)' }
+								}
+							}
+						}
+					});
+				})
+				.catch(error => {
+					console.error("Erro ao carregar gráfico:", error);
+				});
+		}
+
+		// Seleciona o botão do menu
+		const menuToggle = document.querySelector('.botao');
+		// Seleciona o menu de navegação
+		const menu = document.querySelector('.menu');
+
+		// Adiciona um evento de clique ao botão do menu
+		menuToggle.addEventListener('click', function () {
+			// Alterna a classe 'active' no menu de navegação
+			menu.classList.toggle('active');
+		});
+
+		// Adiciona um evento de clique ao documento inteiro
+		document.addEventListener('click', function (event) {
+			// Verifica se o clique ocorreu fora do menu
+			if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
+				// Fecha o menu
+				menu.classList.remove('active');
 			}
-
-			
-			function carregarGrafico() {
-    const idEmpresa = sessionStorage.getItem("EMPRESAS");
-    const idLinha = document.getElementById('listaLinhas').value;
-
-    fetch(`/medidas/fluxo/${idEmpresa}/${idLinha}`, { method: "GET" })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Erro na resposta da rede');
-            }
-            return response.json();
-        })
-        .then(data => {
-            const ctx = document.getElementById('comparisonChart').getContext('2d');
-            if (window.chartInstance) {
-                window.chartInstance.destroy();
-            }
-            window.chartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: data.map(item => item.Hora),
-                    datasets: [{
-                        label: 'Total Pessoas',
-                        data: data.map(item => item.Total_Pessoas),
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        x: {
-                            ticks: { color: '#fff' },
-                            grid: { color: 'rgba(255, 255, 255, 0.25)' }
-                        },
-                        y: {
-                            ticks: { color: '#fff' },
-                            grid: { color: 'rgba(255, 255, 255, 0.25)' }
-                        }
-                    }
-                }
-            });
-        })
-        .catch(error => {
-            console.error("Erro ao carregar gráfico:", error);
-        });
-}
-
-    </script>
+		});
+	</script>
 </body>
 
 </html>
-					
