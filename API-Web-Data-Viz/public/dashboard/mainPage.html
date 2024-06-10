@@ -87,24 +87,33 @@
 							<h2 style="color: chartreuse; font-size: 40px;">270.7</h2>
 						</div>
 					</div>
-					<div id="dados">
+					<div id="dados" style="margin-top: 6vh;">
 						<select name="linhas" id="listaLinhas">
 							<option selected>Selecione uma linha</option>
 						</select>
-						<button onclick="carregarGrafico()" class="btn-carregar">Carregar Gráfico</button>
+						<select name="periodo" id="listaPeriodos">
+							<option selected>Selecione um período</option>
+							<option value="hoje">Horas de Hoje</option>
+							<option value="dia_semana">Dia da Semana</option>
+							<option value="semana_mes">Semana do Mês</option>
+							<option value="mes_ano">Meses do Ano</option>
+						</select>
 					</div>
-					<div class="comparacao-main">
+					<div class="comparacao-main" id="comparacaoMain">
 						<div class="h2">
-							<h2 style="color: white;">Comparação por semana</h2>
+							<h2 style="color: white;" id="Titulo_Fluxo"></h2>
 						</div>
 						<canvas id="comparisonChart" width="700" height="190"></canvas>
 					</div>
 					<div class="alertas">
-						<div class="emergencia" onclick="window.location.href='emergencia.html'">
-							<div class="divAlertText">Emergência: 2</div>
+						<div class="tudoBem">
+							<div class="divAlertText">Lucrando</div>
 						</div>
 						<div class="atencao">
-							<div class="divAlertText">Atenção: 2</div>
+							<div class="divAlertText">Atenção</div>
+						</div>
+						<div class="emergencia" onclick="window.location.href='emergencia.html'">
+							<div class="divAlertText">Emergência</div>
 						</div>
 					</div>
 				</div>
@@ -112,8 +121,9 @@
 		</div>
 	</div>
 
-	<script>
 
+	<script>
+		// Função para listar as opções
 		function listar() {
 			const idEmpresa = sessionStorage.EMPRESAS;
 			fetch(`/medidas/listarLinhas/${idEmpresa}`, { method: "GET" })
@@ -129,12 +139,16 @@
 				});
 		}
 
-
 		function carregarGrafico() {
 			const idEmpresa = sessionStorage.getItem("EMPRESAS");
 			const idLinha = document.getElementById('listaLinhas').value;
+			const periodo = document.getElementById('listaPeriodos').value;
+			const title = document.getElementById('Titulo_Fluxo');
+			const dados = document.getElementById('dados');
+			dados.style.marginBottom = '7vh';
 
-			fetch(`/medidas/fluxo/${idEmpresa}/${idLinha}`, { method: "GET" })
+
+			fetch(`/medidas/fluxo/${idEmpresa}/${idLinha}/${periodo}`, { method: "GET" })
 				.then(response => {
 					if (!response.ok) {
 						throw new Error('Erro na resposta da rede');
@@ -146,56 +160,169 @@
 					if (window.chartInstance) {
 						window.chartInstance.destroy();
 					}
-					window.chartInstance = new Chart(ctx, {
-						type: 'line',
-						data: {
-							labels: data.map(item => item.Hora),
-							datasets: [{
-								label: 'Total Pessoas',
-								data: data.map(item => item.Total_Pessoas),
-								backgroundColor: 'rgba(54, 162, 235, 0.2)',
-								borderColor: 'rgba(54, 162, 235, 1)',
-								borderWidth: 1
-							}]
-						},
-						options: {
-							scales: {
-								x: {
-									ticks: { color: '#fff' },
-									grid: { color: 'rgba(255, 255, 255, 0.25)' }
-								},
-								y: {
-									ticks: { color: '#fff' },
-									grid: { color: 'rgba(255, 255, 255, 0.25)' }
-								}
+					let labels, datasetLabel, backgroundColor, borderColor;
+
+					if (periodo === 'hoje') {
+						labels = data.map(item => item.Hora);
+						datasetLabel = 'Total Pessoas';
+						title.textContent = 'Fluxo das Horas do Dia Atual';
+					} else if (periodo === 'dia_semana') {
+						labels = data.map(item => item.Dia_Semana);
+						datasetLabel = 'Total Pessoas';
+						title.textContent = 'Fluxo dos Dias da Semana Atual';
+					} else if (periodo === 'semana_mes') {
+						labels = data.map(item => item.Semana_Do_Mes);
+						datasetLabel = 'Total Pessoas';
+						title.textContent = 'Fluxo das Semanas do Mês Atual';
+					} else if (periodo === 'mes_ano') {
+						labels = data.map(item => item.Mes_Ano);
+						datasetLabel = 'Total Pessoas';
+						title.textContent = 'Fluxo dos Meses do Ano Atual';
+					}
+
+					calcularSomaValores(data); // Chama a função para calcular a soma dos valores e definir as cores
+
+					if (data.length > 0) {
+						const total = data.reduce((acc, curr) => acc + curr.Total_Pessoas, 0);
+						// Definição das cores de acordo com o total
+						if (periodo === 'hoje') {
+							if (total < 700) {
+								backgroundColor = 'rgba(255, 0, 0, 0.2)';
+								borderColor = 'rgba(255, 0, 0, 1)';
+							} else if (total >= 700 && total < 1200) {
+								backgroundColor = 'rgba(255, 255, 0, 0.5)';
+								borderColor = 'rgba(255, 255, 0, 1)';
+							} else {
+								backgroundColor = 'rgba(50, 205, 50, 0.2)';
+								borderColor = 'rgba(50, 205, 50, 1)';
+							}
+						} else if (periodo === 'dia_semana') {
+							if (total < 1500) {
+								backgroundColor = 'rgba(255, 0, 0, 0.2)';
+								borderColor = 'rgba(255, 0, 0, 1)';
+							} else if (total >= 1500 && total < 2000) {
+								backgroundColor = 'rgba(255, 255, 0, 0.5)';
+								borderColor = 'rgba(255, 255, 0, 1)';
+							} else {
+								backgroundColor = 'rgba(50, 205, 50, 0.2)';
+								borderColor = 'rgba(50, 205, 50, 1)';
+							}
+						} else if (periodo === 'semana_mes') {
+							if (total < 2500) {
+								backgroundColor = 'rgba(255, 0, 0, 0.2)';
+								borderColor = 'rgba(255, 0, 0, 1)';
+							} else if (total >= 2500 && total < 3000) {
+								backgroundColor = 'rgba(255, 255, 0, 0.5)';
+								borderColor = 'rgba(255, 255, 0, 1)';
+							} else {
+								backgroundColor = 'rgba(50, 205, 50, 0.2)';
+								borderColor = 'rgba(50, 205, 50, 1)';
+							}
+						} else if (periodo === 'mes_ano') {
+							if (total < 15000) {
+								backgroundColor = 'rgba(255, 0, 0, 0.2)';
+								borderColor = 'rgba(255, 0, 0, 1)';
+							} else if (total >= 15000 && total < 20000) {
+								backgroundColor = 'rgba(255, 255, 0, 0.5)';
+								borderColor = 'rgba(255, 255, 0, 1)';
+							} else {
+								backgroundColor = 'rgba(50, 205, 50, 0.2)';
+								borderColor = 'rgba(50, 205, 50, 1)';
 							}
 						}
-					});
+
+						// Atualizar o estilo da div comparacaoMain
+						const comparacaoMain = document.getElementById('comparacaoMain');
+						comparacaoMain.style.backgroundColor = backgroundColor;
+						comparacaoMain.style.border = `2px solid ${borderColor}`;
+
+						// Criar uma linha reta representando a meta conforme os valores verdes
+						const meta = 1500; // Você pode ajustar o valor da meta conforme necessário
+
+						const metaLine = {
+							label: 'Meta',
+							data: new Array(labels.length).fill(meta),
+							backgroundColor: 'rgba(0, 255, 0, 0.2)', // Cor verde claro
+							borderColor: 'rgba(0, 255, 0, 1)', // Cor verde sólido
+							borderWidth: 2,
+							fill: false,
+							borderDash: [5, 5] // Linha tracejada
+						};
+
+						window.chartInstance = new Chart(ctx, {
+							type: 'line',
+							data: {
+								labels: labels,
+								datasets: [
+									{
+										label: datasetLabel,
+										data: data.map(item => item.Total_Pessoas),
+										backgroundColor: backgroundColor,
+										borderColor: borderColor,
+										borderWidth: 1
+									},
+									metaLine // Adicionando a linha da meta
+								]
+							},
+							options: {
+								plugins: {
+									legend: {
+										labels: {
+											color: 'white' // Define a cor do texto da legenda como branco
+										}
+									}
+								},
+								scales: {
+									x: {
+										ticks: { color: '#fff' },
+										grid: { color: 'rgba(255, 255, 255, 0.25)' }
+									},
+									y: {
+										ticks: { color: '#fff' },
+										grid: { color: 'rgba(255, 255, 255, 0.25)' }
+									}
+								}
+							}
+						});
+					} else {
+						document.getElementById('comparacaoMain').style.display = 'none';
+						alert('Não há dados disponíveis para o período e linha selecionada.');
+						dados.style.marginBottom = '0vh';
+					}
 				})
 				.catch(error => {
-					console.error("Erro ao carregar gráfico:", error);
+					console.error('Erro ao carregar o gráfico:', error);
 				});
 		}
 
-		// Seleciona o botão do menu
-		const menuToggle = document.querySelector('.botao');
-		// Seleciona o menu de navegação
-		const menu = document.querySelector('.menu');
+		function calcularSomaValores(data) {
+			let total = 0;
 
-		// Adiciona um evento de clique ao botão do menu
-		menuToggle.addEventListener('click', function () {
-			// Alterna a classe 'active' no menu de navegação
-			menu.classList.toggle('active');
-		});
+			data.forEach(item => {
+				total += item.Total_Pessoas;
+			});
 
-		// Adiciona um evento de clique ao documento inteiro
-		document.addEventListener('click', function (event) {
-			// Verifica se o clique ocorreu fora do menu
-			if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
-				// Fecha o menu
-				menu.classList.remove('active');
+			const comparacaoMain = document.getElementById('comparacaoMain');
+			comparacaoMain.style.display = 'block';
+
+			if (total == 0) {
+				comparacaoMain.style.backgroundColor = '#05448091';
+				comparacaoMain.style.border = '2px solid #09d4db';
 			}
-		});
+			else if (total < 700) {
+				comparacaoMain.style.backgroundColor = '#fa010165';
+				comparacaoMain.style.border = '2px solid red';
+			} else if (total >= 700 && total < 1200) {
+				comparacaoMain.style.backgroundColor = 'rgba(255, 255, 0, 0.5)';
+				comparacaoMain.style.border = '2px solid yellow';
+			} else {
+				comparacaoMain.style.backgroundColor = 'rgba(50, 205, 50, 0.404)';
+				comparacaoMain.style.border = '2px solid green';
+			}
+		}
+
+		document.getElementById('listaLinhas').addEventListener('change', carregarGrafico);
+		document.getElementById('listaPeriodos').addEventListener('change', carregarGrafico);
 	</script>
 </body>
 
