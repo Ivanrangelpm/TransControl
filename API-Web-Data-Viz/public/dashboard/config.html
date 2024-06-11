@@ -5,127 +5,54 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Dashboard - Main page</title>
-	<link rel="stylesheet" href="../css/dashboard.css">
+	<!-- <link rel="stylesheet" href="../css/dashboard.css"> -->
+	<link rel="stylesheet" href="../css/config.css">
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<link rel="shortcut icon" href="../css/img/LOGO.png" type="image/x-icon">
 </head>
 
 <body onload="listar();">
-	<div class="wrapper">
-		<div class="sidebar">
-			<div class="img">
-				<img src="../dashboard/img/logo.png" alt="">
-			</div>
-			<button class="botaoSidebar" onclick="window.location.href='mainPage.html'">
-				<img src="../dashboard/img/mainPage.png">
-				<div class="h3">
-					<h3>Main page</h3>
+
+	<div class="header">
+		<header>
+			<div class="itemsHeader">
+				<h4><a href="../index.html">INICIO</a></h4>
+				<h4><a href="../index.html#sobre-nos">SOBRE NÓS</a></h4>
+				<h4>||</h4>
+				<div class="botao">
 				</div>
-			</button>
-			<div class="dropdown-container">
-				<button class="botaoSidebar" id="linhasButton">
-					<img src="../dashboard/img/mainPage.png">
-					<div class="h3">
-						<h3 onclick="window.location.href='emergencia.html'">Linhas</h3>
-					</div>
-				</button>
-				<div id="linhasDropdown" class="dropdown-content">
-					<ul>
-						<li><a href="comparacao.html">Comparações</a></li>
-						<li><a href="linha104.html">Linha 104</a></li>
-						<li><a href="linha200.html">Linha 200</a></li>
-						<li><a href="linha300.html">Linha 300</a></li>
-						<li><a href="linha400.html">Linha 400</a></li>
+				<nav class="menu">
+					<ul> <br> <br>
+						<li><a href="#">Perfil</a></li> <br>
+						<li><a href="config.html">Configurações</a></a>
+						</li> <br>
+						<li><a href="../login.html">Sair</a></a></li> <br>
 					</ul>
+				</nav>
+			</div>
+		</header>
+	</div>
+	
+	<div class="container">
+
+		
+		<div class="form">
+			<div class="card-container">
+				<div class="card">
+					<h2>Help Desk</h2>
+					<p>Este é um exemplo de card usando CSS.</p>
+					<a href="#" class="card-button">Clique Aqui</a>
+				</div>
+
+				<div class="card2">
+					<h2>Manual de Instalação</h2>
+					<p>Este é outro exemplo de card com um estilo diferente.</p>
+					<a href="#" class="card-button">Clique Aqui</a>
 				</div>
 			</div>
-			<button class="botaoSidebar" onclick="window.location.href='emergencia.html'">
-				<img src="../dashboard/img/mainPage.png">
-				<div class="h3">
-					<h3>Emergência</h3>
-				</div>
-			</button>
-			<button class="botaoSidebar" onclick="window.location.href='longoPrazo.html'">
-				<img src="../dashboard/img/mainPage.png">
-				<div class="h3">
-					<h3>Longo prazo</h3>
-				</div>
-			</button>
 		</div>
-		<div class="content">
-			<div class="header">
-				<header>
-					<div class="itemsHeader">
-						<h4><a href="../index.html">INICIO</a></h4>
-						<h4><a href="../index.html#sobre-nos">SOBRE NÓS</a></h4>
-						<h4>||</h4>
-						<div class="botao">
-						</div>
-						<nav class="menu">
-							<ul> <br> <br>
-								<li><a href="#">Perfil</a></li> <br>
-								<li><a href="config.html">Configurações</a></a>
-								</li> <br>
-								<li><a href="../login.html">Sair</a></a></li> <br>
-							</ul>
-						</nav>
-					</div>
-				</header>
-			</div>
-			<div class="main-content">
-				<div class="container_api">
-					<div class="grafico grafico-total">
-						<div class="h2">
-							<h2 style="color: white;">Total de Ônibus Rodando</h2>
-							<h2 style="color: chartreuse; font-size: 40px;">267</h2>
-						</div>
-					</div>
-					<div class="grafico-total">
-						<div class="h2">
-							<h2 style="color: white;">Média de Fluxo de Pessoas</h2>
-							<h2 style="color: chartreuse; font-size: 40px;">270.7</h2>
-						</div>
-					</div>
-					<div id="dados" style="margin-top: 8vh;">
-						<select name="linhas" id="listaLinhas">
-							<option selected>Selecione uma linha</option>
-						</select>
-						<select name="periodo" id="listaPeriodos">
-							<option selected>Selecione um período</option>
-							<option value="hoje">Horas de Hoje</option>
-							<option value="dia_semana">Dia da Semana</option>
-							<option value="semana_mes">Semana do Mês</option>
-							<option value="mes_ano">Meses do Ano</option>
-						</select>
-					</div>
-					<div class="comparacao-main" id="comparacaoMain">
-						<div class="h2">
-							<h2 style="color: white;" id="Titulo_Fluxo"></h2>
-						</div>
-						<canvas id="comparisonChart" width="700" height="190"></canvas>
-					</div>
-					<div class="alertas">
-						<div class="tudoBem">
-							<div class="div-alert-img">
-								<img src="./img/like.png" style="width: 30px; height: 30px;">
-							</div>
-							<div class="divAlertText"><b>Lucrando</b></div>
-						</div>
-						<div class="atencao">
-							<div class="div-alert-img">
-								<img src="./img/atencao.png" style="width: 35px; height: 35px;">
-							</div>
-							<div class="divAlertText"><b>Atenção</b></div>
-						</div>
-						<div class="emergencia" onclick="window.location.href='emergencia.html'">
-							<div class="div-alert-img">
-								<b><img src="./img/like.png" style="width: 30px; height: 30px; transform: scaleY(-1);">
-							</div>
-							<div class="divAlertText"><b>Emergência</b></div>
-						</div>
-					</div>
-				</div>
-			</div>
+		<div class="image">
+			<img src="../css/img/help.png" alt="">
 		</div>
 	</div>
 
