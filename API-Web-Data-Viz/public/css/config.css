@@ -20,6 +20,64 @@ body {
 	width: 100%;
 }
 
+.botao {
+	width: 20px;
+	height: 15px;
+	background-color: yellow;
+	border: none;
+	border-right: 45px;
+	padding: 3vh 3vh;
+	border-radius: 100%;
+	cursor: pointer;
+	transition: 0.3s;
+	justify-content: center;
+
+}
+
+.botao:hover {
+	background-color: #f1f1f1;
+}
+
+.menu {
+	display: none; /* Inicialmente oculto */
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 240px; /* Largura do menu */
+	height: 100%; /* Altura igual à altura da tela */
+	background-color: #001d3d; /* Cor de fundo do menu */
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra para efeito de destaque */	
+  }
+  
+  .menu ul li {
+	margin-right: 30px; /* Espaçamento entre os itens da lista */
+	border-bottom: 1px solid black; /* Adicionar uma linha inferior */
+  }
+  
+  .menu.active {
+	display: block; /* Exibido quando ativo */
+  }
+  
+  .menu ul {
+	list-style-type: none;
+	padding: 0;
+  }
+  
+  .menu li {
+	padding: 10px;
+  }
+  
+  .menu a {
+	text-decoration: none;
+	color: #ffffff;
+	font-size: 3vh;
+	font-family: "Cinzel", serif;
+  }
+  
+  .menu a:hover {
+	color: #f5cc00;
+  }
+  
 .tela {
   width: 100%;
 }
