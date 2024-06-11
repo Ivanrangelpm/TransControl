@@ -64,7 +64,7 @@ SELECT * FROM Empresa;
 
 
 -- TABELA 4 (FUNCIONARIO)
-
+ select * from usuario;
 create table usuario(
 id int primary key auto_increment,
 nome varchar (45) not null,

@@ -341,14 +341,15 @@ do "@media (max-width: 768px)" */
 }
 
 .main-content .alertas .emergencia {
-    height: 100px;
-    width: 100px;
-    background-color: rgba(255, 0, 0, 0.694);
-	border: 1px solid red;
+    height: 60px;
+    width: 200px;
+    background-color: rgb(240, 36, 36);
+	border: 2px solid rgb(175, 7, 7);
     transition: 1s;
     display: flex;
     justify-content: center;
 	align-items: center;
+	border-radius: 15px;
 }
 
 .main-content .alertas .divAlertText {
@@ -360,21 +361,20 @@ do "@media (max-width: 768px)" */
 }
 
 .main-content .alertas .emergencia:hover {
-    height: 100px;
-    width: 100px;
     background-color: red;
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
 } 
 
 .main-content .alertas .atencao {
-	height: 100px;
-    width: 100px;
-    background-color: rgba(255, 255, 0, 0.404);
-	border: 1px solid yellow;
+	height: 60px;
+    width: 200px;
+    background-color: rgb(212, 212, 34);
+	border: 2px solid rgb(165, 165, 4);
     transition: 1s;
     display: flex;
     justify-content: center;
 	align-items: center;
+	border-radius: 15px;
 }
 
 .main-content .alertas .atencao:hover {
@@ -384,14 +384,15 @@ do "@media (max-width: 768px)" */
 
 
 .main-content .alertas .tudoBem {
-	height: 100px;
-	width: 100px;
-	background-color: rgba(50, 205, 50, 0.404);
-	border: 1px solid #32CD32;
+	height: 60px;
+	width: 200px;
+	background-color: #32CD32;
+	border: 2px solid #166e16;
 	transition: 1s;
 	display: flex;
     justify-content: center;
 	align-items: center;
+	border-radius: 15px;
 }
 
 .main-content .alertas .tudoBem:hover {
@@ -399,6 +400,13 @@ do "@media (max-width: 768px)" */
 	box-shadow: 0 0 10px rgba(50, 205, 50, 0.8);
 }
 
+.main-content .alertas .tudoBem, .atencao, .emergencia {
+	padding-left: 7px;
+}
+
+.main-content .alertas .tudoBem .div-alert-img, .atencao .div-alert-img, .emergencia .div-alert-img {
+	margin-right: 10px;
+}
 
 
 /* Estilização do dropdown "Linhas" */

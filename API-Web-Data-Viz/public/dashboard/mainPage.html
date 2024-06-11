@@ -26,7 +26,7 @@
 				<button class="botaoSidebar" id="linhasButton">
 					<img src="../dashboard/img/mainPage.png">
 					<div class="h3">
-						<h3>Linhas</h3>
+						<h3 onclick="window.location.href='emergencia.html'">Linhas</h3>
 					</div>
 				</button>
 				<div id="linhasDropdown" class="dropdown-content">
@@ -107,13 +107,22 @@
 					</div>
 					<div class="alertas">
 						<div class="tudoBem">
-							<div class="divAlertText">Lucrando</div>
+							<div class="div-alert-img">
+								<img src="./img/like.png"  style="width: 30px; height: 30px;">
+							</div>
+							<div class="divAlertText"><b>Lucrando</b></div>
 						</div>
 						<div class="atencao">
-							<div class="divAlertText">Atenção</div>
+							<div class="div-alert-img">
+								<img src="./img/atencao.png"  style="width: 35px; height: 35px;">
+							</div>
+							<div class="divAlertText"><b>Atenção</b></div>
 						</div>
 						<div class="emergencia" onclick="window.location.href='emergencia.html'">
-							<div class="divAlertText">Emergência</div>
+							<div class="div-alert-img">
+								<b><img src="./img/like.png"  style="width: 30px; height: 30px; transform: scaleY(-1);">
+							</div>
+							<div class="divAlertText"><b>Emergência</b></div>
 						</div>
 					</div>
 				</div>
@@ -324,7 +333,28 @@
 		}
 
 		
+		
 		document.getElementById('listaPeriodos').addEventListener('change', carregarGrafico);
+
+				// Seleciona o botão do menu
+				const menuToggle = document.querySelector('.botao');
+	// Seleciona o menu de navegação
+	const menu = document.querySelector('.menu');
+
+	// Adiciona um evento de clique ao botão do menu
+	menuToggle.addEventListener('click', function () {
+		// Alterna a classe 'active' no menu de navegação
+		menu.classList.toggle('active');
+	});
+
+	// Adiciona um evento de clique ao documento inteiro
+	document.addEventListener('click', function (event) {
+		// Verifica se o clique ocorreu fora do menu
+		if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
+			// Fecha o menu
+			menu.classList.remove('active');
+		}
+	});
 	</script>
 </body>
 
