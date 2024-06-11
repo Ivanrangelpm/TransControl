@@ -12,12 +12,12 @@ body {
   background-size: cover;
   }
 
+
 .header {
 	background-color: #001d3d;
 	color: #fff;
 	border-bottom: 1px solid white;
 	width: 100%;
-  display: flex;
 }
 
 .tela {
@@ -98,7 +98,7 @@ height: 70px;
 font-weight: bold;
 display: flex;
 align-items: center;
-justify-content: space-between;
+justify-content: flex-end;
 background-color: #001d3d;
 z-index: 1;
 }
