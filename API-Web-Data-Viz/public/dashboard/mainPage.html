@@ -22,33 +22,10 @@
 					<h3>Main page</h3>
 				</div>
 			</button>
-			<div class="dropdown-container">
-				<button class="botaoSidebar" id="linhasButton">
-					<img src="../dashboard/img/mainPage.png">
-					<div class="h3">
-						<h3 onclick="window.location.href='emergencia.html'">Linhas</h3>
-					</div>
-				</button>
-				<div id="linhasDropdown" class="dropdown-content">
-					<ul>
-						<li><a href="comparacao.html">Comparações</a></li>
-						<li><a href="linha104.html">Linha 104</a></li>
-						<li><a href="linha200.html">Linha 200</a></li>
-						<li><a href="linha300.html">Linha 300</a></li>
-						<li><a href="linha400.html">Linha 400</a></li>
-					</ul>
-				</div>
-			</div>
-			<button class="botaoSidebar" onclick="window.location.href='emergencia.html'">
+			<button class="botaoSidebar" onclick="window.location.href='comparacao.html'">
 				<img src="../dashboard/img/mainPage.png">
 				<div class="h3">
-					<h3>Emergência</h3>
-				</div>
-			</button>
-			<button class="botaoSidebar" onclick="window.location.href='longoPrazo.html'">
-				<img src="../dashboard/img/mainPage.png">
-				<div class="h3">
-					<h3>Longo prazo</h3>
+					<h3>Comparação</h3>
 				</div>
 			</button>
 		</div>
@@ -64,13 +41,14 @@
 						<nav class="menu">
 							<ul> <br> <br>
 								<li><a href="#">Perfil</a></li> <br>
-								<li><a href="config.html">Suporte</a></li> <br> 	
+								<li><a href="config.html">Suporte</a></li> <br>
 								<li><a href="../login.html">Sair</a></a></li> <br>
 							</ul>
 						</nav>
 					</div>
 				</header>
 			</div>
+			<div id="mensagemComparacao"></div>
 			<div class="main-content">
 				<div class="container_api">
 					<div class="grafico grafico-total">
@@ -101,7 +79,7 @@
 						<div class="h2">
 							<h2 style="color: white;" id="Titulo_Fluxo"></h2>
 						</div>
-						<canvas id="comparisonChart" width="700" height="190"></canvas>
+						<canvas id="comparisonChart" width="700" height="250"></canvas>
 					</div>
 					<div class="alertas">
 						<div class="tudoBem">
@@ -130,7 +108,9 @@
 
 
 	<script>
-		// Função para listar as opções
+
+		let linhasMap = {};
+		
 		function listar() {
 			const idEmpresa = sessionStorage.EMPRESAS;
 			fetch(`/medidas/listarLinhas/${idEmpresa}`, { method: "GET" })
@@ -138,10 +118,12 @@
 				.then(linhas => {
 					const listaLinhas = document.getElementById('listaLinhas');
 					linhas.forEach(linha => {
+						linhasMap[linha.idLinha] = linha.nome; 
 						listaLinhas.innerHTML += `<option value="${linha.idLinha}">${linha.nome}</option>`;
 					});
 				})
-				.catch(error => {
+				.catch
+				(error => {
 					console.error("Erro ao listar linhas:", error);
 				});
 		}
@@ -153,7 +135,6 @@
 			const title = document.getElementById('Titulo_Fluxo');
 			const dados = document.getElementById('dados');
 			dados.style.marginBottom = '7vh';
-
 
 			fetch(`/medidas/fluxo/${idEmpresa}/${idLinha}/${periodo}`, { method: "GET" })
 				.then(response => {
@@ -167,6 +148,7 @@
 					if (window.chartInstance) {
 						window.chartInstance.destroy();
 					}
+
 					let labels, datasetLabel, backgroundColor, borderColor;
 
 					if (periodo === 'hoje') {
@@ -187,18 +169,20 @@
 						title.textContent = 'Fluxo dos Meses do Ano Atual';
 					}
 
-					calcularSomaValores(data); // Chama a função para calcular a soma dos valores e definir as cores
+					calcularSomaValores(data); 
 
 					if (data.length > 0) {
 						const total = data.reduce((acc, curr) => acc + curr.Total_Pessoas, 0);
+						console.log(total);
+						console.log(data);
 						var meta = 0;
-						// Definição das cores de acordo com o total
+
 						if (periodo === 'hoje') {
-							meta = 1200;
-							if (total < 700) {
+							meta = 350;
+							if (total < 5000) {
 								backgroundColor = 'rgba(255, 0, 0, 0.2)';
 								borderColor = 'rgba(255, 0, 0, 1)';
-							} else if (total >= 700 && total < 1200) {
+							} else if (total >= 5000 && total < 6500) {
 								backgroundColor = 'rgba(255, 255, 0, 0.5)';
 								borderColor = 'rgba(255, 255, 0, 1)';
 							} else {
@@ -207,10 +191,10 @@
 							}
 						} else if (periodo === 'dia_semana') {
 							meta = 2000;
-							if (total < 1500) {
+							if (total < 15000) {
 								backgroundColor = 'rgba(255, 0, 0, 0.2)';
 								borderColor = 'rgba(255, 0, 0, 1)';
-							} else if (total >= 1500 && total < 2000) {
+							} else if (total >= 15000 && total < 19000) {
 								backgroundColor = 'rgba(255, 255, 0, 0.5)';
 								borderColor = 'rgba(255, 255, 0, 1)';
 							} else {
@@ -219,10 +203,10 @@
 							}
 						} else if (periodo === 'semana_mes') {
 							meta = 3000;
-							if (total < 2500) {
+							if (total < 25000) {
 								backgroundColor = 'rgba(255, 0, 0, 0.2)';
 								borderColor = 'rgba(255, 0, 0, 1)';
-							} else if (total >= 2500 && total < 3000) {
+							} else if (total >= 25000 && total < 30000) {
 								backgroundColor = 'rgba(255, 255, 0, 0.5)';
 								borderColor = 'rgba(255, 255, 0, 1)';
 							} else {
@@ -230,11 +214,11 @@
 								borderColor = 'rgba(50, 205, 50, 1)';
 							}
 						} else if (periodo === 'mes_ano') {
-							meta = 20000;
-							if (total < 15000) {
+							meta = 10000;
+							if (total < 100000) {
 								backgroundColor = 'rgba(255, 0, 0, 0.2)';
 								borderColor = 'rgba(255, 0, 0, 1)';
-							} else if (total >= 15000 && total < 20000) {
+							} else if (total >= 100000 && total < 150000) {
 								backgroundColor = 'rgba(255, 255, 0, 0.5)';
 								borderColor = 'rgba(255, 255, 0, 1)';
 							} else {
@@ -243,7 +227,6 @@
 							}
 						}
 
-						// Atualizar o estilo da div comparacaoMain
 						const comparacaoMain = document.getElementById('comparacaoMain');
 						comparacaoMain.style.backgroundColor = backgroundColor;
 						comparacaoMain.style.border = `2px solid ${borderColor}`;
@@ -251,11 +234,11 @@
 						const metaLine = {
 							label: 'Meta',
 							data: new Array(labels.length).fill(meta),
-							backgroundColor: 'rgba(0, 255, 0, 0.2)', // Cor verde claro
-							borderColor: 'rgba(0, 255, 0, 1)', // Cor verde sólido
+							backgroundColor: 'rgba(0, 255, 0, 0.2)', 
+							borderColor: 'rgba(0, 255, 0, 1)', 
 							borderWidth: 2,
 							fill: false,
-							borderDash: [5, 5] // Linha tracejada
+							borderDash: [5, 5] 
 						};
 
 						window.chartInstance = new Chart(ctx, {
@@ -270,14 +253,14 @@
 										borderColor: borderColor,
 										borderWidth: 1
 									},
-									metaLine // Adicionando a linha da meta
+									metaLine
 								]
 							},
 							options: {
 								plugins: {
 									legend: {
 										labels: {
-											color: 'white' // Define a cor do texto da legenda como branco
+											color: 'white' 
 										}
 									}
 								},
@@ -293,16 +276,70 @@
 								}
 							}
 						});
-					} else {
-						document.getElementById('comparacaoMain').style.display = 'none';
-						alert('Não há dados disponíveis para o período e linha selecionada.');
-						dados.style.marginBottom = '0vh';
+
+						const mensagemComparacao = document.getElementById('mensagemComparacao');
+						mensagemComparacao.innerHTML = ``;
+
+						const sortedData = data.sort((a, b) => a.Total_Pessoas - b.Total_Pessoas);
+						const menoresValores = sortedData.slice(0, 3).map(item => item.Total_Pessoas);
+						const menoresLabels = sortedData.slice(0, 3).map(item => {
+
+							if (periodo === 'hoje') {
+								return item.Hora;
+							} else if (periodo === 'dia_semana') {
+								return item.Dia_Semana;
+							} else if (periodo === 'semana_mes') {
+								return item.Semana_Do_Mes;
+							} else if (periodo === 'mes_ano') {
+								return item.Mes_Ano;
+							}
+
+						});
+
+						const nomeLinha1 = linhasMap[idLinha];
+
+						let mensagem = ``;
+
+						if (backgroundColor === 'rgba(255, 255, 0, 0.5)') {
+							if (periodo === 'hoje') {
+								mensagem = `<strong style="color: yellow;">Atenção!</strong> A linha ${nomeLinha1} precisa de atenção nos horários das ${menoresLabels.join(', ')} horas com fluxo de ${menoresValores.join(', ')} pessoas, abaixo do esperado.`;
+							} else if (periodo === 'dia_semana') {
+								mensagem = `<strong style="color: yellow;">Atenção!</strong> A linha ${nomeLinha1} precisa de atenção nos dias ${menoresLabels.join(', ')} com fluxo de ${menoresValores.join(', ')} pessoas, abaixo do esperado.`;
+							} else if (periodo === 'semana_mes') {
+								mensagem = `<strong style="color: yellow;">Atenção!</strong> A linha ${nomeLinha1} precisa de atenção nas semanas ${menoresLabels.join(', ')} com fluxo de ${menoresValores.join(', ')} pessoas, abaixo do esperado.`;
+							} else if (periodo === 'mes_ano') {
+								mensagem = `<strong style="color: yellow;">Atenção!</strong> A linha ${nomeLinha1} precisa de atenção nos meses ${menoresLabels.join(', ')} com fluxo de ${menoresValores.join(', ')} pessoas, abaixo do esperado.`;
+							}
+						} else if (backgroundColor === 'rgba(255, 0, 0, 0.2)') {
+							if (periodo === 'hoje') {
+								mensagem = `<strong style="color: red;">Alerta vermelho!</strong> A linha ${nomeLinha1} tem fluxo muito baixo hoje nos horários das ${menoresLabels.join(', ')} horas com fluxo de ${menoresValores.join(', ')} pessoas, <strong style = "color: black">MUITO</strong> abaixo do esperado.`;
+							} else if (periodo === 'dia_semana') {
+								mensagem = `<strong style="color: red;">Alerta vermelho!</strong> A linha ${nomeLinha1} tem fluxo muito baixo nos dias ${menoresLabels.join(', ')} com fluxo de ${menoresValores.join(', ')} pessoas, <strong style = "color: black">MUITO</strong> abaixo do esperado.`;
+							} else if (periodo === 'semana_mes') {
+								mensagem = `<strong style="color: red;">Alerta vermelho!</strong> A linha ${nomeLinha1} tem fluxo muito baixo nas semanas ${menoresLabels.join(', ')} com fluxo de ${menoresValores.join(', ')} pessoas, <strong style = "color: black">MUITO</strong> abaixo do esperado.`;
+							} else if (periodo === 'mes_ano') {
+								mensagem = `<strong style="color: red;">Alerta vermelho!</strong> A linha ${nomeLinha1} tem fluxo muito baixo nos meses ${menoresLabels.join(', ')} com fluxo de ${menoresValores.join(', ')} pessoas, <strong style = "color: black">MUITO</strong> abaixo do esperado.`;
+							}
+						} else if (backgroundColor === 'rgba(50, 205, 50, 0.2)') {
+							mensagem = `A linha ${nomeLinha1} está com bom desempenho.`;
+						}
+
+						mensagemComparacao.innerHTML = mensagem;
+						mensagemComparacao.style.display = 'block';
+					}	else {
+						const nomeLinha1 = linhasMap[idLinha];
+						const comparacaoMain = document.getElementById('comparacaoMain');
+						comparacaoMain.style.display = 'none';
+						alert(`A linha ${nomeLinha1} não possui valores registrados!`);
+						mensagemComparacao.style.display = 'none';
+						dados.style.marginBottom = '-1vh';
 					}
 				})
 				.catch(error => {
-					console.error('Erro ao carregar o gráfico:', error);
+					console.error('Erro ao buscar os dados:', error);
 				});
 		}
+
 
 		function calcularSomaValores(data) {
 			let total = 0;
@@ -314,42 +351,36 @@
 			const comparacaoMain = document.getElementById('comparacaoMain');
 			comparacaoMain.style.display = 'block';
 
-			if (total == 0) {
-				comparacaoMain.style.backgroundColor = '#05448091';
-				comparacaoMain.style.border = '2px solid #09d4db';
-			}
-			else if (total < 700) {
-				comparacaoMain.style.backgroundColor = '#fa010165';
-				comparacaoMain.style.border = '2px solid red';
-			} else if (total >= 700 && total < 1200) {
-				comparacaoMain.style.backgroundColor = 'rgba(255, 255, 0, 0.5)';
-				comparacaoMain.style.border = '2px solid yellow';
+
+			if (total <= 350) {
+				comparacaoMain.style.backgroundColor = 'rgba(50, 205, 50, 0.2);'; 
+				comparacaoMain.style.border = '2px solid rgb(50, 205, 50);';
+			} else if (total <= 700) {
+				comparacaoMain.style.backgroundColor = 'rgba(255, 255, 0, 0.5)'; 
+				comparacaoMain.style.border = '2px solid rgba(255, 255, 0, 1)';
 			} else {
-				comparacaoMain.style.backgroundColor = 'rgba(50, 205, 50, 0.404)';
-				comparacaoMain.style.border = '2px solid green';
+				comparacaoMain.style.backgroundColor = 'rgba(50, 205, 50, 0.2)'; 
+				comparacaoMain.style.border = '2px solid rgba(50, 205, 50, 1)';
 			}
 		}
 
-
-
+		document.getElementById('listaLinhas').addEventListener('change', carregarGrafico);
 		document.getElementById('listaPeriodos').addEventListener('change', carregarGrafico);
 
-		// Seleciona o botão do menu
+		
 		const menuToggle = document.querySelector('.botao');
-		// Seleciona o menu de navegação
+		
 		const menu = document.querySelector('.menu');
 
-		// Adiciona um evento de clique ao botão do menu
+		
 		menuToggle.addEventListener('click', function () {
-			// Alterna a classe 'active' no menu de navegação
+			
 			menu.classList.toggle('active');
 		});
 
-		// Adiciona um evento de clique ao documento inteiro
 		document.addEventListener('click', function (event) {
-			// Verifica se o clique ocorreu fora do menu
+			
 			if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
-				// Fecha o menu
 				menu.classList.remove('active');
 			}
 		});

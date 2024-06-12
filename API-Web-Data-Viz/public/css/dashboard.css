@@ -188,11 +188,12 @@ input {
 	width: 200px;
 	border-right: 1px solid white;
 	height: 250vh;
+	padding: 10px;
 }
 
 
 .wrapper .sidebar .botaoSidebar {
-	width: 90%;
+	
 	height: 5%;
 	display: flex;
 	background-color: transparent;
@@ -207,7 +208,7 @@ input {
 .wrapper .sidebar .botaoSidebar img {
 	width: 9vh;
 	height: 8vh;
-
+	margin-right: 5px;
 }
 
 
@@ -333,11 +334,10 @@ do "@media (max-width: 768px)" */
 	width: 90%;
 	height: auto;
 	display: flex;
-	justify-content: space-around;
-	align-items: flex-start;
-	flex-wrap: wrap;
+	justify-content: center;
 	padding: 2%;
 	border-radius: 15px;
+	margin-left: 0.5vw;
 }
 
 .main-content .alertas .emergencia {
@@ -350,6 +350,7 @@ do "@media (max-width: 768px)" */
     justify-content: center;
 	align-items: center;
 	border-radius: 15px;
+	margin: 35px;
 }
 
 .main-content .alertas .divAlertText {
@@ -375,6 +376,7 @@ do "@media (max-width: 768px)" */
     justify-content: center;
 	align-items: center;
 	border-radius: 15px;
+	margin: 35px;
 }
 
 .main-content .alertas .atencao:hover {
@@ -393,6 +395,7 @@ do "@media (max-width: 768px)" */
     justify-content: center;
 	align-items: center;
 	border-radius: 15px;
+	margin: 35px;
 }
 
 .main-content .alertas .tudoBem:hover {
@@ -543,4 +546,38 @@ do "@media (max-width: 768px)" */
 	padding: 10px;
 	border: none;
 	border-radius: 10px;
+}
+
+#listaLinhas1{
+	width: 11..5%;
+	padding: 10px;
+	border: none;
+	border-radius: 10px;
+}
+
+#listaLinhas2{
+	width: 11..5%;
+	padding: 10px;
+	border: none;
+	border-radius: 10px;
+}
+
+#listaPeriodos{
+	width: 11..5%;
+	padding: 10px;
+	border: none;
+	border-radius: 10px;
+}
+
+#mensagemComparacao {
+	background-color: rgba(255, 255, 255, 0.424);
+	color: white;
+	padding: 15px;
+	right: 10px;
+	position: fixed;
+	border-radius: 8px;
+	display: none;
+	max-width: 300px;
+	margin: 25px;
+	text-shadow: 2px 2px 5px black;
 }

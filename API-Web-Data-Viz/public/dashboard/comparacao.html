@@ -5,60 +5,27 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Dashboard - Comparação</title>
-	<!-- <script src="../js/sessao.js"></script> -->
 	<link rel="stylesheet" href="../css/dashboard.css">
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<link rel="shortcut icon" href="../css/img/LOGO.png" type="image/x-icon">
 </head>
 
-<body onload="validarSessao()">
+<body onload="listarLinhas()">
 	<div class="wrapper">
 		<div class="sidebar">
-			<!-- Conteúdo do sidebar -->
-
 			<div class="img">
 				<img src="../dashboard/img/logo.png" alt="">
 			</div>
-
-			<!-- Botão "Main page" -->
 			<button class="botaoSidebar" onclick="window.location.href='mainPage.html'">
 				<img src="../dashboard/img/mainPage.png">
 				<div class="h3">
 					<h3>Main page</h3>
 				</div>
 			</button>
-
-			<div class="dropdown-container">
-				<button class="botaoSidebar" id="linhasButton">
-					<img src="../dashboard/img/mainPage.png">
-					<div class="h3">
-						<h3>Linhas</h3>
-					</div>
-				</button>
-				<div id="linhasDropdown" class="dropdown-content">
-					<ul>
-						<li><a href="comparacao.html">Comparações</li></a>
-						<li><a href="linha104.html">Linha 104</li></a>
-						<li><a href="linha200.html">Linha 200</li></a>
-						<li><a href="linha300.html">Linha 300</li></a>
-						<li><a href="linha400.html">Linha 400</li></a>
-					</ul>
-				</div>
-			</div>
-
-			<!-- Botão "Teste3" -->
-			<button class="botaoSidebar" onclick="window.location.href='emergencia.html'">
+			<button class="botaoSidebar" onclick="window.location.href='comparacao.html'">
 				<img src="../dashboard/img/mainPage.png">
 				<div class="h3">
-					<h3>Emergência</h3>
-				</div>
-			</button>
-
-			<!-- Botão "Teste4" -->
-			<button class="botaoSidebar" onclick="window.location.href='longoPrazo.html'">
-				<img src="../dashboard/img/mainPage.png">
-				<div class="h3">
-					<h3>Longo prazo</h3>
+					<h3>Comparação</h3>
 				</div>
 			</button>
 		</div>
@@ -69,45 +36,40 @@
 						<h4><a href="../index.html">INICIO</a></h4>
 						<h4><a href="../index.html#sobre-nos">SOBRE NÓS</a></h4>
 						<h4>||</h4>
-
 						<div class="botao">
 						</div>
 						<nav class="menu">
 							<ul> <br> <br>
 								<li><a href="#">Perfil</a></li> <br>
-								<li><a href="#">Configurações</a></a></li> <br>
-								<li><a href="../login.html">Sair</a></a></li> <br>
+								<li><a href="#">Configurações</a></li> <br>
+								<li><a href="../login.html">Sair</a></li> <br>
 							</ul>
 						</nav>
 					</div>
 				</header>
 			</div>
 			<div class="main-content">
-				<!-- Conteúdo principal principal -->
-
 				<div class="container_api">
-					<div class="grafico">
-						<div class="h2">
-							<h2 style="color: white;">Comparação no Fluxo - Linhas 104 e 200</h2>
+					<div class="grafico" style="width: auto; padding: 15px; height: auto;">
+						<div id="dados" style="margin-top: 8vh;">
+							<select name="linhas1" id="listaLinhas1">
+								<option selected>Selecione a primeira linha</option>
+							</select>
+							<select name="linhas2" id="listaLinhas2">
+								<option selected>Selecione a segunda linha</option>
+							</select>
+							<select name="periodo" id="listaPeriodos">
+								<option selected>Selecione um período</option>
+								<option value="hoje">Horas de Hoje</option>
+								<option value="dia_semana">Dia da Semana</option>
+								<option value="semana_mes">Semana do Mês</option>
+								<option value="mes_ano">Meses do Ano</option>
+							</select>
 						</div>
-						<canvas id="comparisonChart"></canvas>
-					</div>
-					<!-- Adicionando a nova div abaixo do gráfico de comparação -->
-					<div class="informacoes-onibus">
-						<div id="infoLinha104" class="caixa-onibus">Ônibus na Linha 104: --</div>
-						<div id="infoLinha200" class="caixa-onibus">Ônibus na Linha 200: --</div>
-					</div>
-
-					<div class="grafico">
-						<div class="h2">
-							<h2 style="color: white;">Comparação no Fluxo - Linhas 300 e 400</h2>
-						</div>
-						<canvas id="comparisonChart2"></canvas>
-					</div>
-					<!-- Adicionando a nova div abaixo do segundo gráfico de comparação -->
-					<div class="informacoes-onibus">
-						<div id="infoLinha300" class="caixa-onibus">Ônibus na Linha 300: 18</div>
-						<div id="infoLinha400" class="caixa-onibus">Ônibus na Linha 400: 25</div>
+						<h2 id="Titulo_Fluxo" style="color: white; margin-top: 3vh;">Selecione para exibir o gráfico!
+						</h2>
+						<div id="mensagemComparacao" style="color: white; margin-top: -30vh;"></div>
+						<canvas id="comparisonChart" style="width: 50vw;"></canvas>
 					</div>
 				</div>
 			</div>
@@ -117,190 +79,233 @@
 
 </html>
 
+
 <script>
-	// Seleciona o botão do menu
-		const menuToggle = document.querySelector('.botao');
-	// Seleciona o menu de navegação
-	const menu = document.querySelector('.menu');
+	let linhasMap = {};
 
-	// Adiciona um evento de clique ao botão do menu
-	menuToggle.addEventListener('click', function () {
-	// Alterna a classe 'active' no menu de navegação
-	menu.classList.toggle('active');
-	});
-
-	// Adiciona um evento de clique ao documento inteiro
-	document.addEventListener('click', function (event) {
-		// Verifica se o clique ocorreu fora do menu
-	if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
-			// Fecha o menu
-		menu.classList.remove('active');
-		}
-	});
-
-	// Função para gerar um número aleatório entre min (inclusive) e max (exclusive)
-	function numeroAleatorio(min, max) {
-		return Math.floor(Math.random() * (max - min) + min);
+	function listarLinhas() {
+		const idEmpresa = sessionStorage.EMPRESAS;
+		fetch(`/medidas/listarLinhas/${idEmpresa}`, { method: "GET" })
+			.then(response => response.json())
+			.then(linhas => {
+				const listaLinhas1 = document.getElementById('listaLinhas1');
+				const listaLinhas2 = document.getElementById('listaLinhas2');
+				linhas.forEach(linha => {
+					linhasMap[linha.idLinha] = linha.nome;
+					listaLinhas1.innerHTML += `<option value="${linha.idLinha}">${linha.nome}</option>`;
+					listaLinhas2.innerHTML += `<option value="${linha.idLinha}">${linha.nome}</option>`;
+				});
+			})
+			.catch(error => {
+				console.error("Erro ao listar linhas:", error);
+			});
 	}
 
-	// Função para gerar dados aleatórios para o gráfico de comparação
-	function gerarDadosAleatorios() {
-		return [numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000), numeroAleatorio(10000, 30000)];
+	function carregarGraficoComparacao() {
+		const idEmpresa = sessionStorage.getItem("EMPRESAS");
+		const idLinha1 = document.getElementById('listaLinhas1').value;
+		const idLinha2 = document.getElementById('listaLinhas2').value;
+		const periodo = document.getElementById('listaPeriodos').value;
+
+		if (idLinha1 === idLinha2) {
+			alert('Por favor, selecione duas linhas diferentes.');
+			document.getElementById('listaLinhas1').value = '';
+			document.getElementById('listaLinhas2').value = '';
+			return;
+		}
+
+		if (!idLinha1 || !idLinha2 || !periodo) {
+			alert('Selecione duas linhas e um período.');
+			return;
+		}
+
+		const nomeLinha1 = linhasMap[idLinha1];
+		const nomeLinha2 = linhasMap[idLinha2];
+
+		const title = document.getElementById('Titulo_Fluxo');
+		title.textContent = `Comparação de Fluxo: Linha ${nomeLinha1} vs Linha ${nomeLinha2}`;
+
+		fetch(`/medidas/fluxo/${idEmpresa}/${idLinha1}/${periodo}`, { method: "GET" })
+			.then(response1 => response1.json())
+			.then(data1 => {
+				if (data1.length === 0) {
+					alert('Nenhum dado disponível para a linha selecionada.');
+					document.getElementById('comparisonChart').style.display = 'none';
+					title.textContent = '';
+					return;
+				}
+				fetch(`/medidas/fluxo/${idEmpresa}/${idLinha2}/${periodo}`, { method: "GET" })
+					.then(response2 => response2.json())
+					.then(data2 => {
+						if (data2.length === 0) {
+							alert('Nenhum dado disponível para a linha selecionada.');
+							document.getElementById('comparisonChart').style.display = 'none';
+							title.textContent = '';
+							return;
+						}
+
+						document.getElementById('comparisonChart').style.display = 'block';
+						const ctx = document.getElementById('comparisonChart').getContext('2d');
+						if (window.chartInstance) {
+							window.chartInstance.destroy();
+						}
+
+						let labels = [];
+						let dataset1 = [];
+						let dataset2 = [];
+						let mensagem = '';
+
+						let maiorFluxoLinha1 = 0, maiorFluxoLinha2 = 0;
+						let labelMaiorFluxoLinha1, labelMaiorFluxoLinha2;
+
+						if (periodo === 'hoje') {
+							labels = data1.map(item => item.Hora);
+							dataset1 = data1.map(item => item.Total_Pessoas);
+							dataset2 = data2.map(item => item.Total_Pessoas);
+
+							data1.forEach(item => {
+								if (item.Total_Pessoas > maiorFluxoLinha1) {
+									maiorFluxoLinha1 = item.Total_Pessoas;
+									labelMaiorFluxoLinha1 = item.Hora;
+								}
+							});
+
+							data2.forEach(item => {
+								if (item.Total_Pessoas > maiorFluxoLinha2) {
+									maiorFluxoLinha2 = item.Total_Pessoas;
+									labelMaiorFluxoLinha2 = item.Hora;
+								}
+							});
+
+							mensagem = `A linha ${nomeLinha1} tem maior demanda no horário das ${labelMaiorFluxoLinha1} horas do que a linha ${nomeLinha2} que tem maior demanda no horário das ${labelMaiorFluxoLinha2} horas.`;
+
+						} else if (periodo === 'dia_semana') {
+							labels = data1.map(item => item.Dia_Semana);
+							dataset1 = data1.map(item => item.Total_Pessoas);
+							dataset2 = data2.map(item => item.Total_Pessoas);
+
+							data1.forEach(item => {
+								if (item.Total_Pessoas > maiorFluxoLinha1) {
+									maiorFluxoLinha1 = item.Total_Pessoas;
+									labelMaiorFluxoLinha1 = item.Dia_Semana;
+								}
+							});
+
+							data2.forEach(item => {
+								if (item.Total_Pessoas > maiorFluxoLinha2) {
+									maiorFluxoLinha2 = item.Total_Pessoas;
+									labelMaiorFluxoLinha2 = item.Dia_Semana;
+								}
+							});
+
+							mensagem = `A linha ${nomeLinha1} tem maior demanda no dia ${labelMaiorFluxoLinha1} do que a linha ${nomeLinha2} que tem maior demanda no dia ${labelMaiorFluxoLinha2}.`;
+
+						} else if (periodo === 'semana_mes') {
+							labels = data1.map(item => item.Semana_Do_Mes);
+							dataset1 = data1.map(item => item.Total_Pessoas);
+							dataset2 = data2.map(item => item.Total_Pessoas);
+
+							data1.forEach(item => {
+								if (item.Total_Pessoas > maiorFluxoLinha1) {
+									maiorFluxoLinha1 = item.Total_Pessoas;
+									labelMaiorFluxoLinha1 = item.Semana_Do_Mes;
+								}
+							});
+
+							data2.forEach(item => {
+								if (item.Total_Pessoas > maiorFluxoLinha2) {
+									maiorFluxoLinha2 = item.Total_Pessoas;
+									labelMaiorFluxoLinha2 = item.Semana_Do_Mes;
+								}
+							});
+
+							mensagem = `A linha ${nomeLinha1} tem maior demanda na semana ${labelMaiorFluxoLinha1} do que a linha ${nomeLinha2} que tem maior demanda na semana ${labelMaiorFluxoLinha2}.`;
+
+						} else if (periodo === 'mes_ano') {
+							labels = data1.map(item => item.Mes_Ano);
+							dataset1 = data1.map(item => item.Total_Pessoas);
+							dataset2 = data2.map(item => item.Total_Pessoas);
+
+							data1.forEach(item => {
+								if (item.Total_Pessoas > maiorFluxoLinha1) {
+									maiorFluxoLinha1 = item.Total_Pessoas;
+									labelMaiorFluxoLinha1 = item.Mes_Ano;
+								}
+							});
+
+							data2.forEach(item => {
+								if (item.Total_Pessoas > maiorFluxoLinha2) {
+									maiorFluxoLinha2 = item.Total_Pessoas;
+									labelMaiorFluxoLinha2 = item.Mes_Ano;
+								}
+							});
+
+							mensagem = `A linha ${nomeLinha1} tem maior demanda no mês ${labelMaiorFluxoLinha1} do que a linha ${nomeLinha2} que tem maior demanda no mês ${labelMaiorFluxoLinha2}.`;
+						}
+
+						window.chartInstance = new Chart(ctx, {
+							type: 'line',
+							data: {
+								labels: labels,
+								datasets: [
+									{
+										label: `Linha ${nomeLinha1}`,
+										data: dataset1,
+										backgroundColor: 'yellow',
+										borderColor: 'yellow',
+										borderWidth: 1
+									},
+									{
+										label: `Linha ${nomeLinha2}`,
+										data: dataset2,
+										backgroundColor: 'white',
+										borderColor: 'white',
+										borderWidth: 1
+									}
+								]
+							},
+							options: {
+								plugins: {
+									legend: {
+										labels: {
+											color: 'white'
+										}
+									}
+								},
+								scales: {
+									x: {
+										ticks: { color: '#fff' },
+										grid: { color: 'rgba(255, 255, 255, 0.25)' }
+									},
+									y: {
+										ticks: { color: '#fff' },
+										grid: { color: 'rgba(255, 255, 255, 0.25)' }
+									}
+								}
+							}
+						});
+
+						const mensagemComparacao = document.getElementById('mensagemComparacao');
+						mensagemComparacao.textContent = mensagem;
+						mensagemComparacao.style.display = 'block';
+
+					})
+					.catch(error => {
+						console.error('Erro ao carregar os dados da linha 2:', error);
+					});
+			})
+			.catch(error => {
+				console.error('Erro ao carregar os dados da linha 1:', error);
+			});
 	}
 
-	// GRÁFICO DE COMPARAÇÃO
-	var contextoComparacao = document.getElementById('comparisonChart').getContext('2d');
+	document.getElementById('listaLinhas1').addEventListener('change', carregarGraficoComparacao);
+	document.getElementById('listaLinhas2').addEventListener('change', carregarGraficoComparacao);
+	document.getElementById('listaPeriodos').addEventListener('change', carregarGraficoComparacao);
 
-	var graficoComparacao = new Chart(contextoComparacao, {
-		type: 'line',
-		data: {
-			labels: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-			datasets: [{
-				label: 'Linha 104',
-				data: gerarDadosAleatorios(),
-				borderColor: '#FF5733',
-				backgroundColor: 'rgba(255, 87, 51, 0.2)',
-				pointRadius: 5,
-				pointBackgroundColor: '#FF5733',
-				pointBorderColor: '#fff',
-				pointHoverRadius: 7,
-				pointHoverBackgroundColor: '#fff',
-				pointHoverBorderColor: '#FF5733',
-				pointHitRadius: 10,
-				pointBorderWidth: 2
-			},
-			{
-				label: 'Linha 200',
-				data: gerarDadosAleatorios(),
-				borderColor: '#33FF57',
-				backgroundColor: 'rgba(51, 255, 87, 0.2)',
-				pointRadius: 5,
-				pointBackgroundColor: '#33FF57',
-				pointBorderColor: '#fff',
-				pointHoverRadius: 7,
-				pointHoverBackgroundColor: '#fff',
-				pointHoverBorderColor: '#33FF57',
-				pointHitRadius: 10,
-				pointBorderWidth: 2
-			}]
-		},
-		options: {
-			scales: {
-				x: {
-					beginAtZero: true
-				},
-				y: {
-					scaleLabel: {
-						display: true
-					},
-					ticks: {
-						beginAtZero: true
-					}
-				}
-			},
-			animation: {
-				duration: 1
-			}
-		}
-	});
-
-	// GRÁFICO DE COMPARAÇÃO 2
-	var contextoComparacao2 = document.getElementById('comparisonChart2').getContext('2d');
-
-	var graficoComparacao2 = new Chart(contextoComparacao2, {
-		type: 'line',
-		data: {
-			labels: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-			datasets: [{
-				label: 'Linha 300',
-				data: gerarDadosAleatorios(),
-				borderColor: '#FF5733',
-				backgroundColor: 'rgba(255, 87, 51, 0.2)',
-				pointRadius: 5,
-				pointBackgroundColor: '#FF5733',
-				pointBorderColor: '#fff',
-				pointHoverRadius: 7,
-				pointHoverBackgroundColor: '#fff',
-				pointHoverBorderColor: '#FF5733',
-				pointHitRadius: 10,
-				pointBorderWidth: 2
-			},
-			{
-				label: 'Linha 400',
-				data: gerarDadosAleatorios(),
-				borderColor: '#33FF57',
-				backgroundColor: 'rgba(51, 255, 87, 0.2)',
-				pointRadius: 5,
-				pointBackgroundColor: '#33FF57',
-				pointBorderColor: '#fff',
-				pointHoverRadius: 7,
-				pointHoverBackgroundColor: '#fff',
-				pointHoverBorderColor: '#33FF57',
-				pointHitRadius: 10,
-				pointBorderWidth: 2
-			}]
-		},
-		options: {
-			scales: {
-				x: {
-					beginAtZero: true
-				},
-				y: {
-					scaleLabel: {
-						display: true
-					},
-					ticks: {
-						beginAtZero: true
-					}
-				}
-			},
-			animation: {
-				duration: 1
-			}
-		}
-	});
-
-	document.addEventListener('DOMContentLoaded', function () {
-		// Atualizar dados aleatórios para o gráfico de comparação
-		function atualizarGraficoComparacao() {
-			graficoComparacao.data.datasets[0].data = gerarDadosAleatorios();
-			graficoComparacao.data.datasets[1].data = gerarDadosAleatorios();
-			graficoComparacao.update();
-		}
-
-		function atualizarGraficoComparacao2() {
-			graficoComparacao2.data.datasets[0].data = gerarDadosAleatorios();
-			graficoComparacao2.data.datasets[1].data = gerarDadosAleatorios();
-			graficoComparacao2.update();
-		}
-
-		// Atualizar informações sobre os ônibus
-		function atualizarInfoOnibus() {
-			document.getElementById('infoLinha104').innerText = `Ônibus na Linha 104: ${numeroAleatorio(10, 30)}`;
-			document.getElementById('infoLinha200').innerText = `Ônibus na Linha 200: ${numeroAleatorio(10, 30)}`;
-			document.getElementById('infoLinha300').innerText = `Ônibus na Linha 300: ${numeroAleatorio(10, 30)}`;
-			document.getElementById('infoLinha400').innerText = `Ônibus na Linha 400: ${numeroAleatorio(10, 30)}`;
-		}
-
-		// Chamando as funções para atualizar os dados ao carregar a página
-		window.onload = function () {
-			atualizarGraficoComparacao();
-			atualizarGraficoComparacao2();
-			atualizarInfoOnibus();
-		};
-
-		// Chamando as funções para atualizar os dados ao recarregar a página
-		window.addEventListener('load', function () {
-			atualizarGraficoComparacao();
-			atualizarGraficoComparacao2();
-			atualizarInfoOnibus();
-		});
-	});
 </script>
 
 <script>
-
-	//Função para o botão do usuário
 	function opcaoHeader() {
 		var options = document.getElementById("options");
 		if (options.style.display === "block") {
@@ -310,7 +315,6 @@
 		}
 	}
 
-	// JavaScript para o dropdown "Linhas"
 	document.addEventListener('DOMContentLoaded', (event) => {
 		const linhasButton = document.getElementById('linhasButton');
 		const linhasDropdown = document.getElementById('linhasDropdown');

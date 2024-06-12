@@ -28,7 +28,7 @@ function getFluxoHoje(idEmpresa, idLinha) {
         WHERE
             e.idEmpresa = ${idEmpresa}
             AND l.idLinha = ${idLinha}
-            AND DATE(d.horarioAtivacao) = CURDATE()
+            AND DATE(d.horarioAtivacao) = '2024-06-13'
         GROUP BY
             s.idSensor, o.idOnibus, HOUR(d.horarioAtivacao);
     `;
@@ -38,10 +38,6 @@ function getFluxoHoje(idEmpresa, idLinha) {
 function getFluxoDiaSemana(idEmpresa, idLinha) {
     const query = `
         SELECT
-            s.idSensor,
-            o.idOnibus,
-            e.idEmpresa,
-            l.nome,
             DAYNAME(d.horarioAtivacao) AS Dia_Semana,
             COUNT(*) AS Total_Pessoas
         FROM
@@ -53,9 +49,9 @@ function getFluxoDiaSemana(idEmpresa, idLinha) {
         WHERE
             e.idEmpresa = ${idEmpresa}
             AND l.idLinha = ${idLinha}
-            AND WEEK(d.horarioAtivacao, 1) = WEEK(CURDATE(), 1)
+            and week(d.horarioAtivacao) = week(curdate())
         GROUP BY
-            DAYNAME(d.horarioAtivacao), s.idSensor, o.idOnibus, e.idEmpresa, l.nome; 
+            DAYNAME(d.horarioAtivacao);
     `;
     return database.executar(query);
 }
