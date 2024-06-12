@@ -18,7 +18,7 @@ function getFluxoHoje(idEmpresa, idLinha) {
             s.idSensor,
             o.idOnibus,
             HOUR(d.horarioAtivacao) AS Hora,
-            COUNT(*) AS Total_Pessoas
+            SUM(ativacao) AS Total_Pessoas
         FROM
             dados AS d
             JOIN Sensor AS s ON d.fkSensor = s.idSensor
@@ -28,7 +28,7 @@ function getFluxoHoje(idEmpresa, idLinha) {
         WHERE
             e.idEmpresa = ${idEmpresa}
             AND l.idLinha = ${idLinha}
-            AND DATE(d.horarioAtivacao) = '2024-06-13'
+            AND DATE(d.horarioAtivacao) = curdate()
         GROUP BY
             s.idSensor, o.idOnibus, HOUR(d.horarioAtivacao);
     `;
@@ -39,7 +39,7 @@ function getFluxoDiaSemana(idEmpresa, idLinha) {
     const query = `
         SELECT
             DAYNAME(d.horarioAtivacao) AS Dia_Semana,
-            COUNT(*) AS Total_Pessoas
+            SUM(ativacao) AS Total_Pessoas
         FROM
             dados AS d
             JOIN Sensor AS s ON d.fkSensor = s.idSensor
@@ -64,7 +64,7 @@ function getFluxoSemanaMes(idEmpresa, idLinha) {
             e.idEmpresa,
             l.nome,
             FLOOR((DAYOFMONTH(d.horarioAtivacao)-1)/7)+1 AS Semana_Do_Mes,
-            COUNT(*) AS Total_Pessoas
+            SUM(ativacao) AS Total_Pessoas
         FROM
             dados AS d
             JOIN Sensor AS s ON d.fkSensor = s.idSensor
@@ -91,7 +91,7 @@ function getFluxoMesAno(idEmpresa, idLinha) {
             e.idEmpresa,
             l.nome,
             MONTHNAME(d.horarioAtivacao) AS Mes_Ano,
-            COUNT(*) AS Total_Pessoas
+            SUM(ativacao) AS Total_Pessoas
         FROM
             dados AS d
             JOIN Sensor AS s ON d.fkSensor = s.idSensor

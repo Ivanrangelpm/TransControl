@@ -193,7 +193,7 @@
 					calcularSomaValores(data);
 
 					if (data.length > 0) {
-						const total = data.reduce((acc, curr) => acc + curr.Total_Pessoas, 0);
+						const total = parseInt(data.reduce((acc, curr) => acc + parseInt(curr.Total_Pessoas), 0));
 						console.log(total);
 						console.log(data);
 						var media = total / data.length;
@@ -202,11 +202,11 @@
 						var meta = 0;
 
 						if (periodo === 'hoje') {
-							meta = 350;
-							if (total < 5000) {
+							meta = 550;
+							if (total < 10000) {
 								backgroundColor = 'rgba(255, 0, 0, 0.2)';
 								borderColor = 'rgba(255, 0, 0, 1)';
-							} else if (total >= 5000 && total < 6500) {
+							} else if (total >= 10000 && total < 15000) {
 								backgroundColor = 'rgba(255, 255, 0, 0.5)';
 								borderColor = 'rgba(255, 255, 0, 1)';
 							} else {
@@ -214,11 +214,11 @@
 								borderColor = 'rgba(50, 205, 50, 1)';
 							}
 						} else if (periodo === 'dia_semana') {
-							meta = 2000;
-							if (total < 15000) {
+							meta = 12500;
+							if (total < 47000) {
 								backgroundColor = 'rgba(255, 0, 0, 0.2)';
 								borderColor = 'rgba(255, 0, 0, 1)';
-							} else if (total >= 15000 && total < 19000) {
+							} else if (total >= 47000 && total < 65000) {
 								backgroundColor = 'rgba(255, 255, 0, 0.5)';
 								borderColor = 'rgba(255, 255, 0, 1)';
 							} else {
@@ -238,11 +238,11 @@
 								borderColor = 'rgba(50, 205, 50, 1)';
 							}
 						} else if (periodo === 'mes_ano') {
-							meta = 10000;
-							if (total < 100000) {
+							meta = 100000;
+							if (total < 70000) {
 								backgroundColor = 'rgba(255, 0, 0, 0.2)';
 								borderColor = 'rgba(255, 0, 0, 1)';
-							} else if (total >= 100000 && total < 150000) {
+							} else if (total >= 70000 && total < 100000) {
 								backgroundColor = 'rgba(255, 255, 0, 0.5)';
 								borderColor = 'rgba(255, 255, 0, 1)';
 							} else {
