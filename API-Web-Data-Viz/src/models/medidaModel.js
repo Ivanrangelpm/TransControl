@@ -109,10 +109,89 @@ function getFluxoMesAno(idEmpresa, idLinha) {
     return database.executar(query);
 }
 
+function getMediaFluxoHoje(idEmpresa, idLinha) {
+    const query = `
+        SELECT AVG(Total_Pessoas) AS Media_Fluxo
+        FROM (
+            SELECT COUNT(*) AS Total_Pessoas
+            FROM dados AS d
+            JOIN Sensor AS s ON d.fkSensor = s.idSensor
+            JOIN Onibus AS o ON s.fkOnibusSensor = o.idOnibus
+            JOIN linhaOnibus AS l ON o.fkLinha = l.idLinha
+            JOIN Empresa AS e ON o.fkEmpresaOnibus = e.idEmpresa
+            WHERE e.idEmpresa = ${idEmpresa}
+            AND l.idLinha = ${idLinha}
+            AND DATE(d.horarioAtivacao) = CURDATE()
+            GROUP BY HOUR(d.horarioAtivacao)
+        ) AS fluxo;
+    `;
+    return database.executar(query);
+}
+
+function getMediaFluxoDiaSemana(idEmpresa, idLinha) {
+    const query = `
+        SELECT AVG(Total_Pessoas) AS Media_Fluxo
+        FROM (
+            SELECT COUNT(*) AS Total_Pessoas
+            FROM dados AS d
+            JOIN Sensor AS s ON d.fkSensor = s.idSensor
+            JOIN Onibus AS o ON s.fkOnibusSensor = o.idOnibus
+            JOIN linhaOnibus AS l ON o.fkLinha = l.idLinha
+            JOIN Empresa AS e ON o.fkEmpresaOnibus = e.idEmpresa
+            WHERE e.idEmpresa = ${idEmpresa}
+            AND l.idLinha = ${idLinha}
+            AND WEEK(d.horarioAtivacao) = WEEK(CURDATE())
+            GROUP BY DAYOFWEEK(d.horarioAtivacao)
+        ) AS fluxo;
+    `;
+    return database.executar(query);
+}
+
+function getMediaFluxoSemanaMes(idEmpresa, idLinha) {
+    const query = `
+        SELECT AVG(Total_Pessoas) AS Media_Fluxo
+        FROM (
+            SELECT COUNT(*) AS Total_Pessoas
+            FROM dados AS d
+            JOIN Sensor AS s ON d.fkSensor = s.idSensor
+            JOIN Onibus AS o ON s.fkOnibusSensor = o.idOnibus
+            JOIN linhaOnibus AS l ON o.fkLinha = l.idLinha
+            JOIN Empresa AS e ON o.fkEmpresaOnibus = e.idEmpresa
+            WHERE e.idEmpresa = ${idEmpresa}
+            AND l.idLinha = ${idLinha}
+            AND MONTH(d.horarioAtivacao) = MONTH(CURDATE())
+            GROUP BY FLOOR((DAYOFMONTH(d.horarioAtivacao) - 1) / 7) + 1
+        ) AS fluxo;
+    `;
+    return database.executar(query);
+}
+
+function getMediaFluxoMesAno(idEmpresa, idLinha) {
+    const query = `
+        SELECT AVG(Total_Pessoas) AS Media_Fluxo
+        FROM (
+            SELECT COUNT(*) AS Total_Pessoas
+            FROM dados AS d
+            JOIN Sensor AS s ON d.fkSensor = s.idSensor
+            JOIN Onibus AS o ON s.fkOnibusSensor = o.idOnibus
+            JOIN linhaOnibus AS l ON o.fkLinha = l.idLinha
+            JOIN Empresa AS e ON o.fkEmpresaOnibus = e.idEmpresa
+            WHERE e.idEmpresa = ${idEmpresa}
+            AND l.idLinha = ${idLinha}
+            GROUP BY MONTH(d.horarioAtivacao)
+        ) AS fluxo;
+    `;
+    return database.executar(query);
+}
+
 module.exports = {
     listarLinhas,
     getFluxoHoje,
     getFluxoDiaSemana,
     getFluxoSemanaMes,
-    getFluxoMesAno
+    getFluxoMesAno,
+    getMediaFluxoHoje,
+    getMediaFluxoDiaSemana,
+    getMediaFluxoSemanaMes,
+    getMediaFluxoMesAno
 };

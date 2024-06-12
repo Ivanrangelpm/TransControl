@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Dashboard - Main page</title>
+	<link rel="stylesheet" href="../css/dashboard.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<link rel="shortcut icon" href="../css/img/LOGO.png" type="image/x-icon">
+</head>
+
+<body onload="listar();">
+	<div class="wrapper">
+		<div class="sidebar">
+			<div class="img">
+				<img src="../dashboard/img/logo.png" alt="">
+			</div>
+			<button class="botaoSidebar" onclick="window.location.href='mainPage.html'">
+				<img src="../dashboard/img/mainPage.png">
+				<div class="h3">
+					<h3>Main page</h3>
+				</div>
+			</button>
+			<button class="botaoSidebar" onclick="window.location.href='comparacao.html'">
+				<img src="../dashboard/img/mainPage.png">
+				<div class="h3">
+					<h3>Comparação</h3>
+				</div>
+			</button>
+		</div>
+		<div class="content">
+			<div class="header">
+				<header>
+					<div class="itemsHeader">
+						<h4><a href="../index.html">INICIO</a></h4>
+						<h4><a href="../index.html#sobre-nos">SOBRE NÓS</a></h4>
+						<h4>||</h4>
+						<div class="botao">
+						</div>
+						<nav class="menu">
+							<ul> <br> <br>
+								<li><a href="#">Perfil</a></li> <br>
+								<li><a href="config.html">Suporte</a></li> <br>
+								<li><a href="../login.html">Sair</a></a></li> <br>
+							</ul>
+						</nav>
+					</div>
+				</header>
+			</div>
+			<div id="mensagemComparacao"></div>
+			<div class="main-content">
+				<div class="container_api">
+					<div class="grafico grafico-total">
+						<div class="h2">
+							<h2 style="color: white;">Total de Ônibus Rodando</h2>
+							<h2 style="color: chartreuse; font-size: 40px;">267</h2>
+						</div>
+					</div>
+					<div class="grafico-total">
+						<div class="h2">
+							<h2 style="color: white;">Média de Fluxo de Pessoas</h2>
+							<h2 style="color: chartreuse; font-size: 40px;" id="kpiMedia"></h2>
+						</div>
+					</div>
+					<div id="dados" style="margin-top: 8vh;">
+						<select name="linhas" id="listaLinhas">
+							<option selected>Selecione uma linha</option>
+						</select>
+						<select name="periodo" id="listaPeriodos">
+							<option selected>Selecione um período</option>
+							<option value="hoje">Horas de Hoje</option>
+							<option value="dia_semana">Dia da Semana</option>
+							<option value="semana_mes">Semana do Mês</option>
+							<option value="mes_ano">Meses do Ano</option>
+						</select>
+					</div>
+					<div class="comparacao-main" id="comparacaoMain" style="height: auto; padding: 15px;">
+						<div class="h2">
+							<h2 style="color: white;" id="Titulo_Fluxo"></h2>
+						</div>
+						<canvas id="comparisonChart" width="700" height="250"></canvas>
+					</div>
+					<div class="alertas">
+						<div class="tudoBem">
+							<div class="div-alert-img">
+								<img src="./img/like.png" style="width: 30px; height: 30px;">
+							</div>
+							<div class="divAlertText"><b>Lucrando</b></div>
+						</div>
+						<div class="atencao">
+							<div class="div-alert-img">
+								<img src="./img/atencao.png" style="width: 35px; height: 35px;">
+							</div>
+							<div class="divAlertText"><b>Atenção</b></div>
+						</div>
+						<div class="emergencia" onclick="window.location.href='emergencia.html'">
+							<div class="div-alert-img">
+								<b><img src="./img/like.png" style="width: 30px; height: 30px; transform: scaleY(-1);">
+							</div>
+							<div class="divAlertText"><b>Emergência</b></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script>
+
+		let linhasMap = {};
+		
+		function listar() {
+    const idEmpresa = sessionStorage.EMPRESAS;
+    
+    // Listar linhas
+    fetch(`/medidas/listarLinhas/${idEmpresa}`, { method: "GET" })
+        .then(response => response.json())
+        .then(linhas => {
+            const listaLinhas = document.getElementById('listaLinhas');
+            linhas.forEach(linha => {
+                linhasMap[linha.idLinha] = linha.nome; 
+                listaLinhas.innerHTML += `<option value="${linha.idLinha}">${linha.nome}</option>`;
+            });
+        })
+        .catch(error => {
+            console.error("Erro ao listar linhas:", error);
+        });
+}
+
+
+		function carregarGrafico() {
+			const idEmpresa = sessionStorage.getItem("EMPRESAS");
+			const idLinha = document.getElementById('listaLinhas').value;
+			const periodo = document.getElementById('listaPeriodos').value;
+			const title = document.getElementById('Titulo_Fluxo');
+			const dados = document.getElementById('dados');
+			dados.style.marginBottom = '7vh';
+
+			fetch(`/medidas/mediaFluxo/${idEmpresa}/${idLinha}/${periodo}`, { method: "GET" })
+                .then(response => response.json())
+                .then(data => {
+                    let mediaFluxo = data[0].Media_Fluxo;
+                    console.log(mediaFluxo);
+                    kpiMedia.innerHTML = `${mediaFluxo.toFixed(0)}`;
+
+                    let kpiTitle;
+                    if (periodo === 'hoje') {
+                        kpiTitle = "Média de Fluxo de Pessoas por Hora";
+                    } else if (periodo === 'dia_semana') {
+                        kpiTitle = "Média de Fluxo de Pessoas por Dia da Semana";
+                    } else if (periodo === 'semana_mes') {
+                        kpiTitle = "Média de Fluxo de Pessoas por Semana do Mês";
+                    } else if (periodo === 'mes_ano') {
+                        kpiTitle = "Média de Fluxo de Pessoas por Mês do Ano";
+                    }
+                    document.getElementById('kpiMediaTitle').innerHTML = kpiTitle;
+                })
+                .catch(error => {
+                    console.error("Erro ao buscar média de fluxo:", error);
+                });
+
+			fetch(`/medidas/fluxo/${idEmpresa}/${idLinha}/${periodo}`, { method: "GET" })
+				.then(response => {
+					if (!response.ok) {
+						throw new Error('Erro na resposta da rede');
+					}
+					return response.json();
+				})
+				.then(data => {
+					const ctx = document.getElementById('comparisonChart').getContext('2d');
+					if (window.chartInstance) {
+						window.chartInstance.destroy();
+					}
+
+					let labels, datasetLabel, backgroundColor, borderColor;
+
+					if (periodo === 'hoje') {
+						labels = data.map(item => item.Hora);
+						datasetLabel = 'Total Pessoas';
+						title.textContent = 'Fluxo das Horas do Dia Atual';
+					} else if (periodo === 'dia_semana') {
+						labels = data.map(item => item.Dia_Semana);
+						datasetLabel = 'Total Pessoas';
+						title.textContent = 'Fluxo dos Dias da Semana Atual';
+					} else if (periodo === 'semana_mes') {
+						labels = data.map(item => item.Semana_Do_Mes);
+						datasetLabel = 'Total Pessoas';
+						title.textContent = 'Fluxo das Semanas do Mês Atual';
+					} else if (periodo === 'mes_ano') {
+						labels = data.map(item => item.Mes_Ano);
+						datasetLabel = 'Total Pessoas';
+						title.textContent = 'Fluxo dos Meses do Ano Atual';
+					}
+
+					calcularSomaValores(data); 
+
+					if (data.length > 0) {
+						const total = data.reduce((acc, curr) => acc + curr.Total_Pessoas, 0);
+						console.log(total);
+						console.log(data);
+						var media = total / data.length;
+						kpiMedia.innerHTML = `${media.toFixed(0)}`;
+					} else {
+						kpiMedia.innerHTML = "N/A";
+					}
+
+					const values = data.map(item => item.Total_Pessoas);
+					const colors = data.map(item => item.Total_Pessoas > 100 ? 'red' : 'blue');
+
+					window.chartInstance = new Chart(ctx, {
+						type: 'bar',
+						data: {
+							labels: labels,
+							datasets: [{
+								label: datasetLabel,
+								data: values,
+								backgroundColor: colors,
+								borderColor: colors,
+								borderWidth: 1
+							}]
+						},
+						options: {
+							scales: {
+								y: {
+									beginAtZero: true
+								}
+							}
+						}
+					});
+				})
+				.catch(error => {
+					console.error('Erro ao carregar dados:', error);
+				});
+		}
+
+		function calcularSomaValores(dados) {
+			const totalValores = dados.reduce((acumulador, item) => acumulador + item.Total_Pessoas, 0);
+			console.log(totalValores);
+			return totalValores;
+		}
+		
+		document.getElementById('listaLinhas').addEventListener('change', carregarGrafico);
+		document.getElementById('listaPeriodos').addEventListener('change', carregarGrafico);
+	</script>
+</body>
+
+</html>

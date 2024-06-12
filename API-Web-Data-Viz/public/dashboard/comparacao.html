@@ -303,6 +303,22 @@
 	document.getElementById('listaLinhas2').addEventListener('change', carregarGraficoComparacao);
 	document.getElementById('listaPeriodos').addEventListener('change', carregarGraficoComparacao);
 
+	const menuToggle = document.querySelector('.botao');
+		
+	const menu = document.querySelector('.menu');
+
+	menuToggle.addEventListener('click', function () {
+			
+			menu.classList.toggle('active');
+		});
+
+		document.addEventListener('click', function (event) {
+			
+			if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
+				menu.classList.remove('active');
+			}
+		});
+
 </script>
 
 <script>

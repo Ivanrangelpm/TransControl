@@ -43,7 +43,41 @@ function getFluxo(req, res) {
         });
 }
 
+function getMediaFluxo(req, res) {
+    const idEmpresa = req.params.idEmpresa;
+    const idLinha = req.params.idLinha;
+    const periodo = req.params.periodo;
+
+    let mediaFluxoFunction;
+
+    switch (periodo) {
+        case 'hoje':
+            mediaFluxoFunction = medidaModel.getMediaFluxoHoje;
+            break;
+        case 'dia_semana':
+            mediaFluxoFunction = medidaModel.getMediaFluxoDiaSemana;
+            break;
+        case 'semana_mes':
+            mediaFluxoFunction = medidaModel.getMediaFluxoSemanaMes;
+            break;
+        case 'mes_ano':
+            mediaFluxoFunction = medidaModel.getMediaFluxoMesAno;
+            break;
+        default:
+            res.status(400).json({ error: 'Período inválido' });
+            return;
+    }
+
+    mediaFluxoFunction(idEmpresa, idLinha)
+        .then(resultado => res.status(200).json(resultado))
+        .catch(erro => {
+            console.log("Houve um erro ao buscar a média de fluxo.", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 module.exports = {
     listarLinhas,
-    getFluxo
+    getFluxo,
+    getMediaFluxo  
 };

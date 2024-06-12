@@ -50,23 +50,14 @@
 			</div>
 			<div id="mensagemComparacao"></div>
 			<div class="main-content">
-				<div class="container_api">
-					<div class="grafico grafico-total">
-						<div class="h2">
-							<h2 style="color: white;">Total de Ônibus Rodando</h2>
-							<h2 style="color: chartreuse; font-size: 40px;">267</h2>
-						</div>
-					</div>
+				<div class="container_api">	
 					<div class="grafico-total">
-						<div class="h2">
-							<h2 style="color: white;">Média de Fluxo de Pessoas</h2>
-							<h2 style="color: chartreuse; font-size: 40px;">270.7</h2>
+						<div class="h2" style="height: auto; padding: 15px;">
+							<h2 style="color: white; font-size: 35px;" id="kpiMediaTitle">Média de Fluxo de Pessoas</h2>
+							<h2 style="color: chartreuse; font-size: 25px;" id="kpiMedia">Selecione uma linha e um periodo</h2>
 						</div>
 					</div>
 					<div id="dados" style="margin-top: 8vh;">
-						<select name="linhas" id="listaLinhas">
-							<option selected>Selecione uma linha</option>
-						</select>
 						<select name="periodo" id="listaPeriodos">
 							<option selected>Selecione um período</option>
 							<option value="hoje">Horas de Hoje</option>
@@ -74,8 +65,11 @@
 							<option value="semana_mes">Semana do Mês</option>
 							<option value="mes_ano">Meses do Ano</option>
 						</select>
+						<select name="linhas" id="listaLinhas">
+							<option selected>Selecione uma linha</option>
+						</select>
 					</div>
-					<div class="comparacao-main" id="comparacaoMain">
+					<div class="comparacao-main" id="comparacaoMain" style="height: auto; padding: 15px;">
 						<div class="h2">
 							<h2 style="color: white;" id="Titulo_Fluxo"></h2>
 						</div>
@@ -110,23 +104,25 @@
 	<script>
 
 		let linhasMap = {};
-		
+
 		function listar() {
 			const idEmpresa = sessionStorage.EMPRESAS;
+
+			// Listar linhas
 			fetch(`/medidas/listarLinhas/${idEmpresa}`, { method: "GET" })
 				.then(response => response.json())
 				.then(linhas => {
 					const listaLinhas = document.getElementById('listaLinhas');
 					linhas.forEach(linha => {
-						linhasMap[linha.idLinha] = linha.nome; 
+						linhasMap[linha.idLinha] = linha.nome;
 						listaLinhas.innerHTML += `<option value="${linha.idLinha}">${linha.nome}</option>`;
 					});
 				})
-				.catch
-				(error => {
+				.catch(error => {
 					console.error("Erro ao listar linhas:", error);
 				});
 		}
+
 
 		function carregarGrafico() {
 			const idEmpresa = sessionStorage.getItem("EMPRESAS");
@@ -134,7 +130,32 @@
 			const periodo = document.getElementById('listaPeriodos').value;
 			const title = document.getElementById('Titulo_Fluxo');
 			const dados = document.getElementById('dados');
+			var tituloMedia = document.getElementById('kpiMediaTitle');
 			dados.style.marginBottom = '7vh';
+
+			if (periodo === 'hoje') {
+							tituloMedia = "Média de 	Fluxo de Pessoas por Hora";
+						} else if (periodo === 'dia_semana') {
+							tituloMedia = "Média de Fluxo de Pessoas por Dia da Semana";
+						} else if (periodo === 'semana_mes') {
+							tituloMedia = "Média de Fluxo de Pessoas por Semana do Mês";
+						} else if (periodo === 'mes_ano') {
+							tituloMedia = "Média de Fluxo de Pessoas por Mês do Ano";
+						}
+						
+			kpiMediaTitle.innerHTML = tituloMedia;
+
+			fetch(`/medidas/mediaFluxo/${idEmpresa}/${idLinha}/${periodo}`, { method: "GET" })
+				.then(response => response.json())
+				.then(data => {
+					let mediaFluxo = data[0].Media_Fluxo;
+					console.log(mediaFluxo);
+					kpiMedia.innerHTML = `${mediaFluxo.toFixed(2)}`;
+
+				})
+				.catch(error => {
+					console.error("Erro ao buscar média de fluxo:", error);
+				});
 
 			fetch(`/medidas/fluxo/${idEmpresa}/${idLinha}/${periodo}`, { method: "GET" })
 				.then(response => {
@@ -169,12 +190,15 @@
 						title.textContent = 'Fluxo dos Meses do Ano Atual';
 					}
 
-					calcularSomaValores(data); 
+					calcularSomaValores(data);
 
 					if (data.length > 0) {
 						const total = data.reduce((acc, curr) => acc + curr.Total_Pessoas, 0);
 						console.log(total);
 						console.log(data);
+						var media = total / data.length;
+						kpiMedia.innerHTML = `${media.toFixed(0)}`
+
 						var meta = 0;
 
 						if (periodo === 'hoje') {
@@ -234,11 +258,11 @@
 						const metaLine = {
 							label: 'Meta',
 							data: new Array(labels.length).fill(meta),
-							backgroundColor: 'rgba(0, 255, 0, 0.2)', 
-							borderColor: 'rgba(0, 255, 0, 1)', 
+							backgroundColor: 'rgba(0, 255, 0, 0.2)',
+							borderColor: 'rgba(0, 255, 0, 1)',
 							borderWidth: 2,
 							fill: false,
-							borderDash: [5, 5] 
+							borderDash: [5, 5]
 						};
 
 						window.chartInstance = new Chart(ctx, {
@@ -260,7 +284,7 @@
 								plugins: {
 									legend: {
 										labels: {
-											color: 'white' 
+											color: 'white'
 										}
 									}
 								},
@@ -326,13 +350,15 @@
 
 						mensagemComparacao.innerHTML = mensagem;
 						mensagemComparacao.style.display = 'block';
-					}	else {
+					} else {
 						const nomeLinha1 = linhasMap[idLinha];
 						const comparacaoMain = document.getElementById('comparacaoMain');
 						comparacaoMain.style.display = 'none';
 						alert(`A linha ${nomeLinha1} não possui valores registrados!`);
 						mensagemComparacao.style.display = 'none';
 						dados.style.marginBottom = '-1vh';
+						kpiMedia.innerHTML = `A linha não tem dados`
+						kpiMediaTitle.innerHTML = `Selecione uma linha e um periodo`;
 					}
 				})
 				.catch(error => {
@@ -353,33 +379,35 @@
 
 
 			if (total <= 350) {
-				comparacaoMain.style.backgroundColor = 'rgba(50, 205, 50, 0.2);'; 
+				comparacaoMain.style.backgroundColor = 'rgba(50, 205, 50, 0.2);';
 				comparacaoMain.style.border = '2px solid rgb(50, 205, 50);';
 			} else if (total <= 700) {
-				comparacaoMain.style.backgroundColor = 'rgba(255, 255, 0, 0.5)'; 
+				comparacaoMain.style.backgroundColor = 'rgba(255, 255, 0, 0.5)';
 				comparacaoMain.style.border = '2px solid rgba(255, 255, 0, 1)';
 			} else {
-				comparacaoMain.style.backgroundColor = 'rgba(50, 205, 50, 0.2)'; 
+				comparacaoMain.style.backgroundColor = 'rgba(50, 205, 50, 0.2)';
 				comparacaoMain.style.border = '2px solid rgba(50, 205, 50, 1)';
 			}
+
+
 		}
 
 		document.getElementById('listaLinhas').addEventListener('change', carregarGrafico);
 		document.getElementById('listaPeriodos').addEventListener('change', carregarGrafico);
 
-		
+
 		const menuToggle = document.querySelector('.botao');
-		
+
 		const menu = document.querySelector('.menu');
 
-		
+
 		menuToggle.addEventListener('click', function () {
-			
+
 			menu.classList.toggle('active');
 		});
 
 		document.addEventListener('click', function (event) {
-			
+
 			if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
 				menu.classList.remove('active');
 			}
