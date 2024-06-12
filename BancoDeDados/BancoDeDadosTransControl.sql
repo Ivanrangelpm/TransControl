@@ -774,3 +774,54 @@ SELECT sum(ativacao),fkSensor from dados group by fkSensor;
 
 SELECT s.idSensor, s.portaSensor, sum(d.ativacao) as ativacao from Sensor as s, dados as d 
 group by s.idSensor, s.portaSensor;
+
+
+insert into dados values
+	(default, round(rand() * 1000, 0) ,'2024-06-15 01:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 02:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 03:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 04:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 05:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 06:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 07:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 08:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 09:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 10:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 11:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 12:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 13:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 14:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 15:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 16:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 17:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 18:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 19:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 20:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 21:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 22:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-15 23:00:00', 81);
+
+	insert into dados values
+	(default, round(rand() * 1000, 0) ,'2024-06-22 01:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 02:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 03:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 04:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 05:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 06:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 07:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 08:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 09:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 10:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 11:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 12:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 13:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 14:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 15:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 16:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 17:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 18:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 19:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 20:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 21:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 22:00:00', 81),
+	(default, round(rand() * 1000, 0) ,'2024-06-22 23:00:00', 81);
