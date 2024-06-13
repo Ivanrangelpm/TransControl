@@ -52,6 +52,12 @@
 				<div class="container_api">
 					<div class="grafico" style="width: auto; padding: 15px; height: auto;">
 						<div id="dados" style="margin-top: 8vh;">
+                            <select id="tipoGrafico">
+                                <option value="0">Selecione um Tipo</option>
+                                <option value="line">Gráfico de Linha</option>
+                                <option value="bar">Gráfico de Barra</option>
+                                <option value="scatter">Gráfico de Bolha</option>
+                            </select>
 							<select name="linhas1" id="listaLinhas1">
 								<option selected>Selecione a primeira linha</option>
 							</select>
@@ -102,203 +108,166 @@
 	}
 
 	function carregarGraficoComparacao() {
-		const idEmpresa = sessionStorage.getItem("EMPRESAS");
-		const idLinha1 = document.getElementById('listaLinhas1').value;
-		const idLinha2 = document.getElementById('listaLinhas2').value;
-		const periodo = document.getElementById('listaPeriodos').value;
+    const idEmpresa = sessionStorage.getItem("EMPRESAS");
+    const idLinha1 = document.getElementById('listaLinhas1').value;
+    const idLinha2 = document.getElementById('listaLinhas2').value;
+    const periodo = document.getElementById('listaPeriodos').value;
+    const tipoGrafico = document.getElementById('tipoGrafico').value;
 
-		if (idLinha1 === idLinha2) {
-			alert('Por favor, selecione duas linhas diferentes.');
-			document.getElementById('listaLinhas1').value = '';
-			document.getElementById('listaLinhas2').value = '';
-			return;
-		}
+    if (idLinha1 === idLinha2) {
+        alert('Por favor, selecione duas linhas diferentes.');
+        document.getElementById('listaLinhas1').value = '';
+        document.getElementById('listaLinhas2').value = '';
+        return;
+    }
 
-		if (!idLinha1 || !idLinha2 || !periodo) {
-			alert('Selecione duas linhas e um período.');
-			return;
-		}
+    if (!idLinha1 || !idLinha2 || !periodo) {
+        alert('Selecione duas linhas e um período.');
+        return;
+    }
 
-		const nomeLinha1 = linhasMap[idLinha1];
-		const nomeLinha2 = linhasMap[idLinha2];
+    const nomeLinha1 = linhasMap[idLinha1];
+    const nomeLinha2 = linhasMap[idLinha2];
 
-		const title = document.getElementById('Titulo_Fluxo');
-		title.textContent = `Comparação de Fluxo: Linha ${nomeLinha1} vs Linha ${nomeLinha2}`;
+    const title = document.getElementById('Titulo_Fluxo');
+    title.textContent = `Comparação de Fluxo: Linha ${nomeLinha1} vs Linha ${nomeLinha2}`;
 
-		fetch(`/medidas/fluxo/${idEmpresa}/${idLinha1}/${periodo}`, { method: "GET" })
-			.then(response1 => response1.json())
-			.then(data1 => {
-				if (data1.length === 0) {
-					alert('Nenhum dado disponível para a linha selecionada.');
-					document.getElementById('comparisonChart').style.display = 'none';
-					title.textContent = '';
-					return;
-				}
-				fetch(`/medidas/fluxo/${idEmpresa}/${idLinha2}/${periodo}`, { method: "GET" })
-					.then(response2 => response2.json())
-					.then(data2 => {
-						if (data2.length === 0) {
-							alert('Nenhum dado disponível para a linha selecionada.');
-							document.getElementById('comparisonChart').style.display = 'none';
-							title.textContent = '';
-							return;
-						}
+    fetch(`/medidas/fluxo/${idEmpresa}/${idLinha1}/${periodo}`, { method: "GET" })
+        .then(response1 => response1.json())
+        .then(data1 => {
+            if (data1.length === 0) {
+                alert('Nenhum dado disponível para a linha selecionada.');
+                document.getElementById('comparisonChart').style.display = 'none';
+                title.textContent = '';
+                return;
+            }
+            fetch(`/medidas/fluxo/${idEmpresa}/${idLinha2}/${periodo}`, { method: "GET" })
+                .then(response2 => response2.json())
+                .then(data2 => {
+                    if (data2.length === 0) {
+                        alert('Nenhum dado disponível para a linha selecionada.');
+                        document.getElementById('comparisonChart').style.display = 'none';
+                        title.textContent = '';
+                        return;
+                    }
 
-						document.getElementById('comparisonChart').style.display = 'block';
-						const ctx = document.getElementById('comparisonChart').getContext('2d');
-						if (window.chartInstance) {
-							window.chartInstance.destroy();
-						}
+                    document.getElementById('comparisonChart').style.display = 'block';
+                    const ctx = document.getElementById('comparisonChart').getContext('2d');
+                    if (window.chartInstance) {
+                        window.chartInstance.destroy();
+                    }
 
-						let labels = [];
-						let dataset1 = [];
-						let dataset2 = [];
-						let mensagem = '';
+                    let labels = [];
+                    let dataset1 = [];
+                    let dataset2 = [];
+                    let mensagem = '';
 
-						let maiorFluxoLinha1 = 0, maiorFluxoLinha2 = 0;
-						let labelMaiorFluxoLinha1, labelMaiorFluxoLinha2;
+                    const getMaxValue = (data, labelField) => {
+                        let maxVal = 0;
+                        let maxLabel = '';
+                        data.forEach(item => {
+                            const totalPessoas = Number(item.Total_Pessoas);
+                            if (totalPessoas > maxVal) {
+                                maxVal = totalPessoas;
+                                maxLabel = item[labelField];
+                            }
+                        });
+                        return { maxVal, maxLabel };
+                    };
 
-						if (periodo === 'hoje') {
-							labels = data1.map(item => item.Hora);
-							dataset1 = data1.map(item => item.Total_Pessoas);
-							dataset2 = data2.map(item => item.Total_Pessoas);
+                    if (periodo === 'hoje') {
+                        labels = data1.map(item => item.Hora);
+                        dataset1 = data1.map(item => Number(item.Total_Pessoas));
+                        dataset2 = data2.map(item => Number(item.Total_Pessoas));
 
-							data1.forEach(item => {
-								if (item.Total_Pessoas > maiorFluxoLinha1) {
-									maiorFluxoLinha1 = item.Total_Pessoas;
-									labelMaiorFluxoLinha1 = item.Hora;
-								}
-							});
+                        const maxLinha1 = getMaxValue(data1, 'Hora');
+                        const maxLinha2 = getMaxValue(data2, 'Hora');
+                        mensagem = `A linha ${nomeLinha1} tem maior demanda no horário das ${maxLinha1.maxLabel} horas do que a linha ${nomeLinha2} que tem maior demanda no horário das ${maxLinha2.maxLabel} horas.`;
+                    } else if (periodo === 'dia_semana') {
+                        labels = data1.map(item => item.Dia_Semana);
+                        dataset1 = data1.map(item => Number(item.Total_Pessoas));
+                        dataset2 = data2.map(item => Number(item.Total_Pessoas));
 
-							data2.forEach(item => {
-								if (item.Total_Pessoas > maiorFluxoLinha2) {
-									maiorFluxoLinha2 = item.Total_Pessoas;
-									labelMaiorFluxoLinha2 = item.Hora;
-								}
-							});
+                        const maxLinha1 = getMaxValue(data1, 'Dia_Semana');
+                        const maxLinha2 = getMaxValue(data2, 'Dia_Semana');
+                        mensagem = `A linha ${nomeLinha1} tem maior demanda no dia ${maxLinha1.maxLabel} do que a linha ${nomeLinha2} que tem maior demanda no dia ${maxLinha2.maxLabel}.`;
+                    } else if (periodo === 'semana_mes') {
+                        labels = data1.map(item => item.Semana_Do_Mes);
+                        dataset1 = data1.map(item => Number(item.Total_Pessoas));
+                        dataset2 = data2.map(item => Number(item.Total_Pessoas));
 
-							mensagem = `A linha ${nomeLinha1} tem maior demanda no horário das ${labelMaiorFluxoLinha1} horas do que a linha ${nomeLinha2} que tem maior demanda no horário das ${labelMaiorFluxoLinha2} horas.`;
+                        const maxLinha1 = getMaxValue(data1, 'Semana_Do_Mes');
+                        const maxLinha2 = getMaxValue(data2, 'Semana_Do_Mes');
+                        mensagem = `A linha ${nomeLinha1} tem maior demanda na semana ${maxLinha1.maxLabel} do que a linha ${nomeLinha2} que tem maior demanda na semana ${maxLinha2.maxLabel}.`;
+                    } else if (periodo === 'mes_ano') {
+                        labels = data1.map(item => item.Mes_Ano);
+                        dataset1 = data1.map(item => Number(item.Total_Pessoas));
+                        dataset2 = data2.map(item => Number(item.Total_Pessoas));
 
-						} else if (periodo === 'dia_semana') {
-							labels = data1.map(item => item.Dia_Semana);
-							dataset1 = data1.map(item => item.Total_Pessoas);
-							dataset2 = data2.map(item => item.Total_Pessoas);
+                        const maxLinha1 = getMaxValue(data1, 'Mes_Ano');
+                        const maxLinha2 = getMaxValue(data2, 'Mes_Ano');
+                        mensagem = `A linha ${nomeLinha1} tem maior demanda no mês ${maxLinha1.maxLabel} do que a linha ${nomeLinha2} que tem maior demanda no mês ${maxLinha2.maxLabel}.`;
+                    }
 
-							data1.forEach(item => {
-								if (item.Total_Pessoas > maiorFluxoLinha1) {
-									maiorFluxoLinha1 = item.Total_Pessoas;
-									labelMaiorFluxoLinha1 = item.Dia_Semana;
-								}
-							});
+                    window.chartInstance = new Chart(ctx, {
+                        type: tipoGrafico,
+                        data: {
+                            labels: labels,
+                            datasets: [
+                                {
+                                    label: `Linha ${nomeLinha1}`,
+                                    data: dataset1,
+                                    backgroundColor: 'yellow',
+                                    borderColor: 'yellow',
+                                    borderWidth: 1
+                                },
+                                {
+                                    label: `Linha ${nomeLinha2}`,
+                                    data: dataset2,
+                                    backgroundColor: 'white',
+                                    borderColor: 'white',
+                                    borderWidth: 1
+                                }
+                            ]
+                        },
+                        options: {
+                            plugins: {
+                                legend: {
+                                    labels: {
+                                        color: 'white'
+                                    }
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    ticks: { color: '#fff' },
+                                    grid: { color: 'rgba(255, 255, 255, 0.25)' }
+                                },
+                                y: {
+                                    ticks: { color: '#fff' },
+                                    grid: { color: 'rgba(255, 255, 255, 0.25)' }
+                                }
+                            }
+                        }
+                    });
 
-							data2.forEach(item => {
-								if (item.Total_Pessoas > maiorFluxoLinha2) {
-									maiorFluxoLinha2 = item.Total_Pessoas;
-									labelMaiorFluxoLinha2 = item.Dia_Semana;
-								}
-							});
+                    const mensagemComparacao = document.getElementById('mensagemComparacao');
+                    mensagemComparacao.textContent = mensagem;
+                    mensagemComparacao.style.display = 'block';
 
-							mensagem = `A linha ${nomeLinha1} tem maior demanda no dia ${labelMaiorFluxoLinha1} do que a linha ${nomeLinha2} que tem maior demanda no dia ${labelMaiorFluxoLinha2}.`;
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar os dados da linha 2:', error);
+                });
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os dados da linha 1:', error);
+        });
+}   
 
-						} else if (periodo === 'semana_mes') {
-							labels = data1.map(item => item.Semana_Do_Mes);
-							dataset1 = data1.map(item => item.Total_Pessoas);
-							dataset2 = data2.map(item => item.Total_Pessoas);
+    setInterval(carregarGraficoComparacao, 5000); 
 
-							data1.forEach(item => {
-								if (item.Total_Pessoas > maiorFluxoLinha1) {
-									maiorFluxoLinha1 = item.Total_Pessoas;
-									labelMaiorFluxoLinha1 = item.Semana_Do_Mes;
-								}
-							});
-
-							data2.forEach(item => {
-								if (item.Total_Pessoas > maiorFluxoLinha2) {
-									maiorFluxoLinha2 = item.Total_Pessoas;
-									labelMaiorFluxoLinha2 = item.Semana_Do_Mes;
-								}
-							});
-
-							mensagem = `A linha ${nomeLinha1} tem maior demanda na semana ${labelMaiorFluxoLinha1} do que a linha ${nomeLinha2} que tem maior demanda na semana ${labelMaiorFluxoLinha2}.`;
-
-						} else if (periodo === 'mes_ano') {
-							labels = data1.map(item => item.Mes_Ano);
-							dataset1 = data1.map(item => item.Total_Pessoas);
-							dataset2 = data2.map(item => item.Total_Pessoas);
-
-							data1.forEach(item => {
-								if (item.Total_Pessoas > maiorFluxoLinha1) {
-									maiorFluxoLinha1 = item.Total_Pessoas;
-									labelMaiorFluxoLinha1 = item.Mes_Ano;
-								}
-							});
-
-							data2.forEach(item => {
-								if (item.Total_Pessoas > maiorFluxoLinha2) {
-									maiorFluxoLinha2 = item.Total_Pessoas;
-									labelMaiorFluxoLinha2 = item.Mes_Ano;
-								}
-							});
-
-							mensagem = `A linha ${nomeLinha1} tem maior demanda no mês ${labelMaiorFluxoLinha1} do que a linha ${nomeLinha2} que tem maior demanda no mês ${labelMaiorFluxoLinha2}.`;
-						}
-
-						window.chartInstance = new Chart(ctx, {
-							type: 'bar',
-							data: {
-								labels: labels,
-								datasets: [
-									{
-										label: `Linha ${nomeLinha1}`,
-										data: dataset1,
-										backgroundColor: 'yellow',
-										borderColor: 'yellow',
-										borderWidth: 1
-									},
-									{
-										label: `Linha ${nomeLinha2}`,
-										data: dataset2,
-										backgroundColor: 'white',
-										borderColor: 'white',
-										borderWidth: 1
-									}
-								]
-							},
-							options: {
-								plugins: {
-									legend: {
-										labels: {
-											color: 'white'
-										}
-									}
-								},
-								scales: {
-									x: {
-										ticks: { color: '#fff' },
-										grid: { color: 'rgba(255, 255, 255, 0.25)' }
-									},
-									y: {
-										ticks: { color: '#fff' },
-										grid: { color: 'rgba(255, 255, 255, 0.25)' }
-									}
-								}
-							}
-						});
-
-						const mensagemComparacao = document.getElementById('mensagemComparacao');
-						mensagemComparacao.textContent = mensagem;
-						mensagemComparacao.style.display = 'block';
-
-					})
-					.catch(error => {
-						console.error('Erro ao carregar os dados da linha 2:', error);
-					});
-			})
-			.catch(error => {
-				console.error('Erro ao carregar os dados da linha 1:', error);
-			});
-	}
-
+    document.getElementById('tipoGrafico').addEventListener('change', carregarGraficoComparacao);
 	document.getElementById('listaLinhas1').addEventListener('change', carregarGraficoComparacao);
 	document.getElementById('listaLinhas2').addEventListener('change', carregarGraficoComparacao);
 	document.getElementById('listaPeriodos').addEventListener('change', carregarGraficoComparacao);

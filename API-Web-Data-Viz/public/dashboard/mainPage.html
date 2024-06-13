@@ -58,6 +58,12 @@
 						</div>
 					</div>
 					<div id="dados" style="margin-top: 8vh;">
+						<select id="tipoGrafico">
+							<option value="0">Selecione um Tipo</option>
+                            <option value="line">Gráfico de Linha</option>
+                            <option value="bar">Gráfico de Barra</option>
+                            <option value="scatter">Gráfico de Bolha</option>
+                        </select>
 						<select name="periodo" id="listaPeriodos">
 							<option selected>Selecione um período</option>
 							<option value="hoje">Horas de Hoje</option>
@@ -130,6 +136,7 @@
 			const periodo = document.getElementById('listaPeriodos').value;
 			const title = document.getElementById('Titulo_Fluxo');
 			const dados = document.getElementById('dados');
+			const tipoGrafico = document.getElementById('tipoGrafico').value;
 			var tituloMedia = document.getElementById('kpiMediaTitle');
 			dados.style.marginBottom = '7vh';
 
@@ -266,7 +273,7 @@
 						};
 
 						window.chartInstance = new Chart(ctx, {
-							type: 'line',
+							type: tipoGrafico,
 							data: {
 								labels: labels,
 								datasets: [
@@ -326,26 +333,62 @@
 
 						if (backgroundColor === 'rgba(255, 255, 0, 0.2)') {
 							if (periodo === 'hoje') {
-								mensagem = `<strong style="color: yellow;">Atenção!</strong> A linha ${nomeLinha1} precisa de atenção nos horários das ${menoresLabels.join(', ')} horas com fluxo de ${menoresValores.join(', ')} pessoas, abaixo do esperado.`;
+								mensagem = ` 
+								<div class="div-alert-img" style = 'width: auto; height: auto; border-radius: 5px; background-color: yellow'>
+								<img src="./img/atencao.png" style="width: 35px; height: 35px;">
+								</div><br>
+								<strong style="color: yellow;">Atenção!</strong> A linha ${nomeLinha1} precisa de atenção nos horários das ${menoresLabels.join(', ')} horas com fluxo de ${menoresValores.join(', ')} pessoas, abaixo do esperado.`;
 							} else if (periodo === 'dia_semana') {
-								mensagem = `<strong style="color: yellow;">Atenção!</strong> A linha ${nomeLinha1} precisa de atenção nos dias ${menoresLabels.join(', ')} com fluxo de ${menoresValores.join(', ')} pessoas, abaixo do esperado.`;
+								mensagem = `
+								<div class="div-alert-img" style = 'width: auto; height: auto; border-radius: 5px; background-color: yellow;'>
+								<img src="./img/atencao.png" style="width: 35px; height: 30px;">
+								</div><br>
+								<strong style="color: yellow;">Atenção!</strong> A linha ${nomeLinha1} precisa de atenção nos dias ${menoresLabels.join(', ')} com fluxo de ${menoresValores.join(', ')} pessoas, abaixo do esperado.`;
 							} else if (periodo === 'semana_mes') {
-								mensagem = `<strong style="color: yellow;">Atenção!</strong> A linha ${nomeLinha1} precisa de atenção nas semanas ${menoresLabels.join(', ')} com fluxo de ${menoresValores.join(', ')} pessoas, abaixo do esperado.`;
+								mensagem = `
+								<div class="div-alert-img" style = 'width: auto; height: auto; border-radius: 5px; background-color: yellow'>
+								<img src="./img/atencao.png" style="width: 35px; height: 35px;">
+								</div><br>
+								<strong style="color: yellow;">Atenção!</strong> A linha ${nomeLinha1} precisa de atenção nas semanas ${menoresLabels.join(', ')} com fluxo de ${menoresValores.join(', ')} pessoas, abaixo do esperado.`;
 							} else if (periodo === 'mes_ano') {
-								mensagem = `<strong style="color: yellow;">Atenção!</strong> A linha ${nomeLinha1} precisa de atenção nos meses ${menoresLabels.join(', ')} com fluxo de ${menoresValores.join(', ')} pessoas, abaixo do esperado.`;
+								mensagem = `
+								<div class="div-alert-img" style = 'width: auto; height: auto; border-radius: 5px; background-color: yellow'>
+								<img src="./img/atencao.png" style="width: 35px; height: 35px;">
+								</div><br>
+								<strong style="color: yellow;">Atenção!</strong> A linha ${nomeLinha1} precisa de atenção nos meses ${menoresLabels.join(', ')} com fluxo de ${menoresValores.join(', ')} pessoas, abaixo do esperado.`;
 							}
 						} else if (backgroundColor === 'rgba(255, 0, 0, 0.2)') {
 							if (periodo === 'hoje') {
-								mensagem = `<strong style="color: red;">Alerta vermelho!</strong> A linha ${nomeLinha1} tem fluxo muito baixo hoje nos horários das ${menoresLabels.join(', ')} horas com fluxo de ${menoresValores.join(', ')} pessoas, <strong style = "color: black">MUITO</strong> abaixo do esperado.`;
+								mensagem = `
+								<div class="div-alert-img"  style = 'width: auto; height: auto; border-radius: 5px; background-color: red; padding-top: 5px;'>
+								<b><img src="./img/like.png" style="width: 30px; height: 30px; transform: scaleY(-1);">
+								</div><br>
+								<strong style="color: red;">Emergência!</strong> A linha ${nomeLinha1} tem fluxo baixo hoje nos horários das ${menoresLabels.join(', ')} horas com fluxo de ${menoresValores.join(', ')} pessoas, <strong style = "color: black">MUITO</strong> abaixo do esperado.`;
 							} else if (periodo === 'dia_semana') {
-								mensagem = `<strong style="color: red;">Alerta vermelho!</strong> A linha ${nomeLinha1} tem fluxo muito baixo nos dias ${menoresLabels.join(', ')} com fluxo de ${menoresValores.join(', ')} pessoas, <strong style = "color: black">MUITO</strong> abaixo do esperado.`;
+								mensagem = `
+								<div class="div-alert-img"  style = 'width: auto; height: auto; border-radius: 5px; background-color: red; padding-top: 5px;'>
+								<b><img src="./img/like.png" style="width: 30px; height: 30px; transform: scaleY(-1);">
+								</div><br>
+								<strong style="color: red;">Emergência!</strong> A linha ${nomeLinha1} tem fluxo baixo nos dias ${menoresLabels.join(', ')} com fluxo de ${menoresValores.join(', ')} pessoas, <strong style = "color: black">MUITO</strong> abaixo do esperado.`;
 							} else if (periodo === 'semana_mes') {
-								mensagem = `<strong style="color: red;">Alerta vermelho!</strong> A linha ${nomeLinha1} tem fluxo muito baixo nas semanas ${menoresLabels.join(', ')} com fluxo de ${menoresValores.join(', ')} pessoas, <strong style = "color: black">MUITO</strong> abaixo do esperado.`;
+								mensagem = `
+								<div class="div-alert-img"  style = 'width: auto; height: auto; border-radius: 5px; background-color: red; padding-top: 5px;'>
+								<b><img src="./img/like.png" style="width: 30px; height: 30px; transform: scaleY(-1);">
+								</div><br>
+								<strong style="color: red;">Emergência!</strong> A linha ${nomeLinha1} tem fluxo baixo nas semanas ${menoresLabels.join(', ')} com fluxo de ${menoresValores.join(', ')} pessoas, <strong style = "color: black">MUITO</strong> abaixo do esperado.`;
 							} else if (periodo === 'mes_ano') {
-								mensagem = `<strong style="color: red;">Alerta vermelho!</strong> A linha ${nomeLinha1} tem fluxo muito baixo nos meses ${menoresLabels.join(', ')} com fluxo de ${menoresValores.join(', ')} pessoas, <strong style = "color: black">MUITO</strong> abaixo do esperado.`;
+								mensagem = `
+								<div class="div-alert-img"  style = 'width: auto; height: auto; border-radius: 5px; background-color: red; padding-top: 5px;'>
+								<b><img src="./img/like.png" style="width: 30px; height: 30px; transform: scaleY(-1);">
+								</div><br>
+								<strong style="color: red;">Emergência!</strong> A linha ${nomeLinha1} tem fluxo baixo nos meses ${menoresLabels.join(', ')} com fluxo de ${menoresValores.join(', ')} pessoas, <strong style = "color: black">MUITO</strong> abaixo do esperado.`;
 							}
 						} else if (backgroundColor === 'rgba(50, 205, 50, 0.2)') {
-							mensagem = `A linha ${nomeLinha1} está com bom desempenho.`;
+							mensagem = `
+							<div class="div-alert-img" style = 'width: auto; height: auto; border-radius: 5px; background-color: #32CD32; padding-top: 5px;'>
+								<img src="./img/like.png" style="width: 30px; height: 30px;">
+							</div><br>
+							A linha ${nomeLinha1} está com bom desempenho.`;
 						}
 
 						mensagemComparacao.innerHTML = mensagem;
@@ -366,6 +409,7 @@
 				});
 		}
 
+		setInterval(carregarGrafico, 5000);
 
 		function calcularSomaValores(data) {
 			let total = 0;
@@ -392,6 +436,8 @@
 
 		}
 
+
+		document.getElementById('tipoGrafico').addEventListener('change', carregarGrafico);
 		document.getElementById('listaLinhas').addEventListener('change', carregarGrafico);
 		document.getElementById('listaPeriodos').addEventListener('change', carregarGrafico);
 
