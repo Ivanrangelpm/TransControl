@@ -28,7 +28,7 @@ function getFluxoHoje(idEmpresa, idLinha) {
         WHERE
             e.idEmpresa = ${idEmpresa}
             AND l.idLinha = ${idLinha}
-            AND DATE(d.horarioAtivacao) = '2024-06-12'
+            AND DATE(d.horarioAtivacao) = CURDATE()
         GROUP BY
             s.idSensor, o.idOnibus, HOUR(d.horarioAtivacao);
     `;
